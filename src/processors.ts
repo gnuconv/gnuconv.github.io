@@ -44,7 +44,7 @@ export const processors: Record<string, (str: string) => Transaction[]> = {
       .data.slice(1)
       .filter((c: any) => c.length > 1) as unknown as string[][];
     return rows.map((r) => ({
-      account: r[0],
+      account: `${r[0]} ${r[1]}`,
       date: mdyToYmd(r[2]),
       description: formatDesc(r[4], r[5]),
       destination: "Expenses:UNKNOWN",
