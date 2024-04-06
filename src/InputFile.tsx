@@ -1,6 +1,4 @@
 import { Button } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { setUpload } from "./redux/slices/upload";
 
 export interface Transaction {
   account: string;
@@ -10,15 +8,17 @@ export interface Transaction {
   amount: number;
 }
 
-export const InputFile = () => {
-  const dispatch = useDispatch();
+interface IProps {
+  onUpload: (f: File) => void;
+}
+
+export const InputFile = ({ onUpload }: IProps) => {
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (!event.target.files) return;
     const file = event.target.files[0];
-    const content = await file.text();
-    dispatch(setUpload(content));
+    onUpload(file);
   };
   return (
     <Button variant="contained" component="label">
