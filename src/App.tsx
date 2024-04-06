@@ -1,8 +1,7 @@
-import { Box, Card, Typography } from "@mui/material";
-import { FileTypeSelector } from "./fileTypeSelector";
-import { EditRules } from "./EditRules";
-import { InputFile } from "./InputFile";
-import { ProcessFiles } from "./ProcessFiles";
+import { Box, Card, Tab, Tabs } from "@mui/material";
+import { Converter } from "./Converter";
+import { useState } from "react";
+import { Chart } from "./Chart";
 
 export interface transaction {
   account: string;
@@ -12,30 +11,41 @@ export interface transaction {
   amount: number;
 }
 
-function App() {
+enum TAB {
+  CONVERT,
+  CHART,
+}
+
+export const App = () => {
+  const [tab, setTab] = useState(TAB.CONVERT);
   return (
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
         height: "100vh",
+        width: "100vw",
+        flexDirection: "column",
       }}
     >
-      <Card sx={{ display: "flex", flexDirection: "column", p: 4 }}>
-        <Box sx={{ p: 2 }}>
-          <EditRules />
-        </Box>
-        <Box sx={{ p: 2 }}>
-          <Typography variant="h4">File type</Typography>
-          <FileTypeSelector />
-        </Box>
-        <InputFile />
-        <ProcessFiles />
-      </Card>
+      <Box sx={{ width: "100vw" }}>
+        <Tabs value={tab} onChange={(e, v) => setTab(v)} variant="fullWidth">
+          <Tab label="Convert" value={TAB.CONVERT} />
+          <Tab label="Chart" value={TAB.CHART} />
+        </Tabs>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+        }}
+      >
+        <Card sx={{ display: "flex", flexDirection: "column", p: 4 }}>
+          {tab === TAB.CONVERT && <Converter />}
+          {tab === TAB.CHART && <Chart />}
+        </Card>
+      </Box>
     </Box>
   );
-}
-
-export default App;
+};
