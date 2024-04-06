@@ -35,10 +35,12 @@ export interface GNUTransaction {
   splits: GNUSplit[];
 }
 
+const calculate = (s: string): number => eval(s); // eslint-disable-line no-eval
+
 export const ExtractSplits = (doc: Element) => {
   return Array.from(doc.getElementsByTagName("trn:split")).map((s) => ({
     id: getFirst(s, "split:id")?.textContent ?? "",
-    value: eval(getFirst(s, "split:value").textContent ?? "0"),
+    value: calculate(getFirst(s, "split:value").textContent ?? "0"),
     account: getFirst(s, "split:account")?.textContent ?? "",
   }));
 };
@@ -48,7 +50,7 @@ export const ExtractTransactions = (doc: Document): GNUTransaction[] => {
   return Array.from(elements).map((e) => ({
     id: getFirst(e, "trn:id")?.textContent ?? "",
     description: getFirst(e, "trn:description")?.textContent ?? "",
-    value: eval(getFirst(e, "trn:split").getAttribute("quantity") ?? "0"),
+    value: calculate(getFirst(e, "trn:split").getAttribute("quantity") ?? "0"),
     splits: ExtractSplits(e),
     date:
       dayjs(
