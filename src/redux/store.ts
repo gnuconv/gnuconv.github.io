@@ -1,15 +1,30 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { fileTypeReducer } from "./slices/fileType";
-import { rulesReducer } from "./slices/rules";
-import { uploadReducer } from "./slices/upload";
-import { uploadChartReducer } from "./slices/uploadChart";
+import { fileTypeReducer, fileTypeSlice } from "./slices/fileType";
+import { rulesReducer, rulesSlice } from "./slices/rules";
+import {
+  transactionsFileContentReducer,
+  transactionsFileContentSlice,
+} from "./slices/transactionsFileContent";
+import { gnuFileReducer, gnuFileSlice } from "./slices/gnuFile";
+import { timeframeReducer, timeframeSlice } from "./slices/timeframe";
+import {
+  highlightedCategoryReducer,
+  highlightedCategorySlice,
+} from "./slices/highlightedCategory";
+import {
+  selectedCategoryReducer,
+  selectedCategorySlice,
+} from "./slices/selectedCategory";
 
 export const store = configureStore({
   reducer: {
-    fileType: fileTypeReducer,
-    rules: rulesReducer,
-    upload: uploadReducer,
-    uploadChart: uploadChartReducer,
+    [fileTypeSlice.name]: fileTypeReducer,
+    [rulesSlice.name]: rulesReducer,
+    [transactionsFileContentSlice.name]: transactionsFileContentReducer,
+    [gnuFileSlice.name]: gnuFileReducer,
+    [timeframeSlice.name]: timeframeReducer,
+    [highlightedCategorySlice.name]: highlightedCategoryReducer,
+    [selectedCategorySlice.name]: selectedCategoryReducer,
   },
 });
 

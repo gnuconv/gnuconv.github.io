@@ -2,10 +2,10 @@ import { DownloadButton } from "./DownloadButton";
 import { processors } from "./processors";
 import { useFileType } from "./redux/slices/fileType";
 import { useRules } from "./redux/slices/rules";
-import { useUpload } from "./redux/slices/upload";
+import { useTransactionsFileContent } from "./redux/slices/transactionsFileContent";
 
 export const ProcessFiles = () => {
-  const upload = useUpload();
+  const upload = useTransactionsFileContent();
   const rules = useRules();
   const fileType = useFileType();
   if (!upload || !rules || !fileType) return <></>;
