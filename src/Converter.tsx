@@ -4,13 +4,13 @@ import { InputFile } from "./InputFile";
 import { ProcessFiles } from "./ProcessFiles";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
-import { setUpload } from "./redux/slices/upload";
+import { setTransactionsFileContent } from "./redux/slices/transactionsFileContent";
 import { useDispatch } from "react-redux";
 
 export const Converter = () => {
   const dispatch = useDispatch();
   return (
-    <>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Box sx={{ p: 2 }}>
         <EditRules />
       </Box>
@@ -19,12 +19,13 @@ export const Converter = () => {
         <FileTypeSelector />
       </Box>
       <InputFile
-        onUpload={async (f: File) => {
+        isEmpty={true}
+        onChange={async (f: File) => {
           const content = await f.text();
-          dispatch(setUpload(content));
+          dispatch(setTransactionsFileContent(content));
         }}
       />
       <ProcessFiles />
-    </>
+    </Box>
   );
 };

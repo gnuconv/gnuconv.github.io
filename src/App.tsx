@@ -1,7 +1,7 @@
-import { Box, Card, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { Converter } from "./Converter";
 import { useState } from "react";
-import { Chart } from "./Chart";
+import { ExpensesPage } from "./ExpensesPage";
 
 export interface transaction {
   account: string;
@@ -13,7 +13,7 @@ export interface transaction {
 
 enum TAB {
   CONVERT,
-  CHART,
+  EXPENSES,
 }
 
 export const App = () => {
@@ -27,10 +27,14 @@ export const App = () => {
         flexDirection: "column",
       }}
     >
-      <Box sx={{ width: "100vw" }}>
+      <Box
+        sx={{
+          width: "100vw",
+        }}
+      >
         <Tabs value={tab} onChange={(e, v) => setTab(v)} variant="fullWidth">
-          <Tab label="Convert" value={TAB.CONVERT} />
-          <Tab label="Chart" value={TAB.CHART} />
+          <Tab label="convert" value={TAB.CONVERT} />
+          <Tab label="expenses" value={TAB.EXPENSES} />
         </Tabs>
       </Box>
       <Box
@@ -39,12 +43,12 @@ export const App = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100%",
+          width: "100%",
+          overflow: "scroll",
         }}
       >
-        <Card sx={{ display: "flex", flexDirection: "column", p: 4 }}>
-          {tab === TAB.CONVERT && <Converter />}
-          {tab === TAB.CHART && <Chart />}
-        </Card>
+        {tab === TAB.CONVERT && <Converter />}
+        {tab === TAB.EXPENSES && <ExpensesPage />}
       </Box>
     </Box>
   );
