@@ -1,12 +1,13 @@
 import { Transaction } from "./InputFile";
 import Papa from "papaparse";
+import { FileType } from "./redux/slices/fileType";
 
 const mdyToYmd = (date: string) => {
   const parts = date.split("/");
   return `${parts[2]}-${parts[0]}-${parts[1]}`;
 };
 
-export const processors: Record<string, (str: string) => Transaction[]> = {
+export const processors: Record<FileType, (str: string) => Transaction[]> = {
   TD: (str: string) => {
     const rows: string[][] = Papa.parse(str).data.filter(
       (c: any) => c.length > 1
@@ -49,6 +50,23 @@ export const processors: Record<string, (str: string) => Transaction[]> = {
       description: formatDesc(r[4], r[5]),
       destination: "Expenses:UNKNOWN",
       amount: parseFloat(r[6]),
+    }));
+  },
+  DESJARDINS: (str: string) => {
+    const rows = Papa.parse(str).data.filter(
+      (r: any) => r.length > 1
+    ) as string[];
+
+    const parseAmount = (plus: string, minus: string) => {
+      if (plus) return -parseFloat(plus);
+      return parseFloat(minus);
+    };
+    return rows.map((r) => ({
+      account: `${r[0]}-${r[1]}-${r[2]}`,
+      date: r[3].replaceAll("/", "-"),
+      description: r[5],
+      destination: "Expenses:UNKNOWN",
+      amount: parseAmount(r[7], r[8]),
     }));
   },
 };
