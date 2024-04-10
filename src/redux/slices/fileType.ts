@@ -4,13 +4,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 export interface FileTypeState {
-  value: string;
+  value: FileType;
 }
 
-export enum FileType {
-  TD = "TD",
-  RBC = "RBC",
-}
+export type FileType = "TD" | "RBC" | "DESJARDINS";
+export const FileTypes: FileType[] = ["TD", "RBC", "DESJARDINS"];
 
 const initialState: FileTypeState = {
   value: "TD",
@@ -20,7 +18,7 @@ export const fileTypeSlice = createSlice({
   name: "fileType",
   initialState,
   reducers: {
-    setFileType: (state, action: PayloadAction<string>) => {
+    setFileType: (state, action: PayloadAction<FileType>) => {
       state.value = action.payload;
     },
   },
