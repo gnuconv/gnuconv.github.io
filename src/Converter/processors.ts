@@ -1,16 +1,19 @@
 import { Transaction } from "./InputFile";
 import Papa from "papaparse";
-import { FileType } from "./redux/slices/fileType";
+import { FileType } from "../redux/slices/fileType";
 
 const mdyToYmd = (date: string) => {
   const parts = date.split("/");
   return `${parts[2]}-${parts[0]}-${parts[1]}`;
 };
 
+const parseCSV = (content: string): string[][] =>
+  Papa.parse(content).data as string[][];
+
 export const processors: Record<FileType, (str: string) => Transaction[]> = {
   TD: (str: string) => {
-    const rows: string[][] = Papa.parse(str).data.filter(
-      (c: any) => c.length > 1
+    const rows: string[][] = parseCSV(str).filter(
+      (c) => c.length > 1
     ) as unknown as string[][];
 
     const formatDate = (date: string) => {
@@ -41,9 +44,9 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
       if (desc2) x.push(desc2.trim());
       return x.join("/");
     };
-    const rows: string[][] = Papa.parse(str)
-      .data.slice(1)
-      .filter((c: any) => c.length > 1) as unknown as string[][];
+    const rows: string[][] = parseCSV(str)
+      .slice(1)
+      .filter((c) => c.length > 1) as unknown as string[][];
     return rows.map((r) => ({
       account: `${r[0]} ${r[1]}`,
       date: mdyToYmd(r[2]),
@@ -53,9 +56,7 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
     }));
   },
   DESJARDINS: (str: string) => {
-    const rows = Papa.parse(str).data.filter(
-      (r: any) => r.length > 1
-    ) as string[];
+    const rows = parseCSV(str).filter((r) => r.length > 1);
 
     const parseAmount = (plus: string, minus: string) => {
       if (plus) return -parseFloat(plus);

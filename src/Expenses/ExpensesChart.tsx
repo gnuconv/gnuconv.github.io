@@ -1,8 +1,8 @@
-import { useGNUFile } from "./redux/slices/gnuFile";
-import { useTimeframe } from "./redux/slices/timeframe";
+import { useGNUFile } from "../redux/slices/gnuFile";
+import { useTimeframe } from "../redux/slices/timeframe";
 import { Palette } from "./colors";
 import { Box, Typography } from "@mui/material";
-import { useSelectedCategory } from "./redux/slices/selectedCategory";
+import { useSelectedCategory } from "../redux/slices/selectedCategory";
 import { LegendTitle } from "./LegendTitle";
 import { SVGRow } from "./SVGRow";
 import { PopCategory } from "./PopCategory";
@@ -22,11 +22,12 @@ const findNode = (root: GraphNode, path: string[]): GraphNode => {
   return findNode(child, path.slice(1));
 };
 
-export const ExpensesChart = () => {
+export const ExpensesChart = (): React.ReactElement => {
   const { start, end } = useTimeframe();
   const selectedCategory = useSelectedCategory();
   const gnuFile = useGNUFile();
-  if (!start || !end || !gnuFile.content) return null;
+  if (!start || !end || !gnuFile.content) return <></>;
+  console.log(gnuFile.content);
   const tree = processChart(gnuFile.content, start, end);
 
   const root = findNode(tree, selectedCategory);

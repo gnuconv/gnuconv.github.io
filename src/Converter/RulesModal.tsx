@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Modal } from "./Modal";
+import { Modal } from "../Modal";
 import { Box, TextField } from "@mui/material";
 import { RulesValidation } from "./RulesValidation";
 import { useDispatch } from "react-redux";
-import { setRules } from "./redux/slices/rules";
+import { setRules } from "../redux/slices/rules";
 
 interface IProps {
   open: boolean;
@@ -25,6 +25,7 @@ export const RulesModal = ({ open, onClose }: IProps) => {
       const rules = JSON.parse(event.target.value);
       dispatch(setRules(rules));
     } catch (err) {
+      console.error(err);
       dispatch(setRules(undefined));
     }
   };

@@ -1,15 +1,7 @@
 import { Box, Tab, Tabs } from "@mui/material";
-import { Converter } from "./Converter";
+import { Converter } from "./Converter/Converter";
 import { useState } from "react";
-import { ExpensesPage } from "./ExpensesPage";
-
-export interface transaction {
-  account: string;
-  date: string;
-  description: string;
-  destination: string;
-  amount: number;
-}
+import { ExpensesPage } from "./Expenses/ExpensesPage";
 
 enum TAB {
   CONVERT,
@@ -32,7 +24,7 @@ export const App = () => {
           width: "100vw",
         }}
       >
-        <Tabs value={tab} onChange={(e, v) => setTab(v)} variant="fullWidth">
+        <Tabs value={tab} onChange={(_e, v) => setTab(v)} variant="fullWidth">
           <Tab label="convert" value={TAB.CONVERT} />
           <Tab label="expenses" value={TAB.EXPENSES} />
         </Tabs>

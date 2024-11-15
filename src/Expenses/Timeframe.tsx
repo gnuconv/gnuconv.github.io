@@ -3,10 +3,10 @@ import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Box, IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { setTimeframe, useTimeframe } from "./redux/slices/timeframe";
+import { setTimeframe, useTimeframe } from "../redux/slices/timeframe";
 import dayjs from "dayjs";
-import { clearCategories } from "./redux/slices/selectedCategory";
-import { setHighlightedCategory } from "./redux/slices/highlightedCategory";
+import { clearCategories } from "../redux/slices/selectedCategory";
+import { setHighlightedCategory } from "../redux/slices/highlightedCategory";
 
 export const Timeframe = () => {
   const dispatch = useDispatch();

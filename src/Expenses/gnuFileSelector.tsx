@@ -1,17 +1,22 @@
 import { useDispatch } from "react-redux";
-import { InputFile } from "./InputFile";
-import { setGNUFile, useGNUFile } from "./redux/slices/gnuFile";
+import { InputFile } from "../Converter/InputFile";
+import { setGNUFile, useGNUFile } from "../redux/slices/gnuFile";
 import { Box, Typography } from "@mui/material";
+
+const getFileContent = async (f: File): Promise<string> => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ds = new (window as any).DecompressionStream("gzip");
+  const decompressedStream = f.stream().pipeThrough(ds);
+  const resp = await new Response(decompressedStream).blob();
+  return await resp.text();
+};
 
 export const GNUFileSelector = () => {
   const dispatch = useDispatch();
   const { filename } = useGNUFile();
 
   const onChange = async (f: File) => {
-    let ds = new (window as any).DecompressionStream("gzip");
-    let decompressedStream = f.stream().pipeThrough(ds);
-    const resp = await new Response(decompressedStream).blob();
-    const text = await resp.text();
+    const text = await getFileContent(f);
     dispatch(setGNUFile({ filename: f.name, content: text }));
   };
 

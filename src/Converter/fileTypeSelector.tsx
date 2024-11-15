@@ -5,7 +5,7 @@ import {
   FileTypes,
   setFileType,
   useFileType,
-} from "./redux/slices/fileType";
+} from "../redux/slices/fileType";
 import { useDispatch } from "react-redux";
 
 export const FileTypeSelector = (): React.ReactElement => {
