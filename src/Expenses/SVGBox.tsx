@@ -2,8 +2,8 @@ import { useDispatch } from "react-redux";
 import {
   setHighlightedCategory,
   useHighlightedCategory,
-} from "./redux/slices/highlightedCategory";
-import { pushAllCategories } from "./redux/slices/selectedCategory";
+} from "../redux/slices/highlightedCategory";
+import { pushAllCategories } from "../redux/slices/selectedCategory";
 
 interface SVGBoxProps {
   x: number;

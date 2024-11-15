@@ -2,7 +2,7 @@ import React from "react";
 import { Typography } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { useRules } from "./redux/slices/rules";
+import { useRules } from "../redux/slices/rules";
 
 export const RulesValidation = (): React.ReactElement => {
   const rules = useRules();

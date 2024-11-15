@@ -134,6 +134,6 @@ export const processChart = (data: string, start: number, end: number) => {
 
   const out = convertAccountTree(accountTree);
   if (out.children)
-    out.children = out.children.filter((c: any) => !c.name.includes("UNKNOWN"));
+    out.children = out.children.filter((c) => !c.name.includes("UNKNOWN"));
   return out;
 };

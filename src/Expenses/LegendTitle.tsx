@@ -2,8 +2,8 @@ import { useDispatch } from "react-redux";
 import {
   setHighlightedCategory,
   useHighlightedCategory,
-} from "./redux/slices/highlightedCategory";
-import { pushCategory } from "./redux/slices/selectedCategory";
+} from "../redux/slices/highlightedCategory";
+import { pushCategory } from "../redux/slices/selectedCategory";
 import { Typography } from "@mui/material";
 
 interface LegendTitleProps {

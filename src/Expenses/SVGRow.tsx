@@ -14,6 +14,16 @@ interface SVGRowProps {
   categories: string[];
 }
 
+interface DataPoint {
+  name: string;
+  color: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  children: GraphNode[] | undefined;
+}
+
 export const SVGRow = ({
   categories,
   palette,
@@ -38,8 +48,8 @@ export const SVGRow = ({
     children: n.children,
   }));
 
-  const calculateWidth = (nodes: any) =>
-    nodes.reduce((acc: number, c: any) => acc + c.width, 0);
+  const calculateWidth = (nodes: DataPoint[]) =>
+    nodes.reduce((acc: number, c: DataPoint) => acc + c.width, 0);
 
   data.forEach(
     (n, i) => (n.x = x + calculateWidth(data.slice(0, i)) + width * margin * i)

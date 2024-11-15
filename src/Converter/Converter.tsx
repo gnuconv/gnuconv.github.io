@@ -4,7 +4,7 @@ import { InputFile } from "./InputFile";
 import { ProcessFiles } from "./ProcessFiles";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
-import { setTransactionsFileContent } from "./redux/slices/transactionsFileContent";
+import { setTransactionsFileContent } from "../redux/slices/transactionsFileContent";
 import { useDispatch } from "react-redux";
 
 export const Converter = () => {

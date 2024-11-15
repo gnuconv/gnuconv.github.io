@@ -1,8 +1,8 @@
 import { DownloadButton } from "./DownloadButton";
 import { processors } from "./processors";
-import { useFileType } from "./redux/slices/fileType";
-import { useRules } from "./redux/slices/rules";
-import { useTransactionsFileContent } from "./redux/slices/transactionsFileContent";
+import { useFileType } from "../redux/slices/fileType";
+import { useRules } from "../redux/slices/rules";
+import { useTransactionsFileContent } from "../redux/slices/transactionsFileContent";
 
 export const ProcessFiles = () => {
   const upload = useTransactionsFileContent();

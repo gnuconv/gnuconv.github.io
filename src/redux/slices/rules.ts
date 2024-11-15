@@ -19,6 +19,7 @@ const loadInitialRules = () => {
   try {
     return JSON.parse(rules);
   } catch (err) {
+    console.error(err);
     return undefined;
   }
 };

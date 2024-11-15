@@ -1,13 +1,13 @@
 import React from "react";
-import { transaction } from "./App";
 import { Button } from "@mui/material";
 import { saveAs } from "file-saver";
 import Papa from "papaparse";
 import DownloadIcon from "@mui/icons-material/Download";
+import { Transaction } from "./InputFile";
 
 interface IProps {
   AccountName: string;
-  Transactions: transaction[];
+  Transactions: Transaction[];
 }
 
 export const DownloadButton = ({
@@ -16,7 +16,7 @@ export const DownloadButton = ({
 }: IProps): React.ReactElement => {
   const onClick = () => {
     const lines = Papa.unparse(Transactions, { header: false });
-    var blob = new Blob([lines], {
+    const blob = new Blob([lines], {
       type: "text/plain",
     });
     saveAs(blob, `${AccountName}.csv`);
