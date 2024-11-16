@@ -25,6 +25,7 @@ export const AssetGraph = ({ accounts, transactions }: AssetGraphProps) => {
       return acc;
     }, {} as Record<string, boolean>)
   );
+  const [highlight, setHighlight] = useState("");
 
   const graphData = computeGraphMeta(allLines, visibleAccounts);
   const { dims, lines } = graphData;
@@ -58,6 +59,8 @@ export const AssetGraph = ({ accounts, transactions }: AssetGraphProps) => {
                 [l.name]: !visibleAccounts[l.name],
               }))
             }
+            onEnter={() => setHighlight(l.name)}
+            onLeave={() => setHighlight("")}
           />
         ))}
       </Box>
@@ -71,7 +74,12 @@ export const AssetGraph = ({ accounts, transactions }: AssetGraphProps) => {
         <YLabels graph={graphData} />
         <XLabels graph={graphData} />
         {lines.map((l, i) => (
-          <GraphLine key={i} graph={graphData} line={l} />
+          <GraphLine
+            key={i}
+            graph={graphData}
+            line={l}
+            highlight={highlight === l.name}
+          />
         ))}
       </svg>
     </Box>

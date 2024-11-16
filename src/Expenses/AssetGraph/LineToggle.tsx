@@ -5,9 +5,17 @@ interface LineToggleProps {
   account: Account;
   disabled: boolean;
   onClick: () => void;
+  onEnter: () => void;
+  onLeave: () => void;
 }
 
-export const LineToggle = ({ account, disabled, onClick }: LineToggleProps) => {
+export const LineToggle = ({
+  account,
+  disabled,
+  onClick,
+  onEnter,
+  onLeave,
+}: LineToggleProps) => {
   return (
     <Button
       sx={{
@@ -22,6 +30,8 @@ export const LineToggle = ({ account, disabled, onClick }: LineToggleProps) => {
         textDecoration: !disabled ? "" : "line-through",
       }}
       onClick={onClick}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
     >
       {account.name}
     </Button>

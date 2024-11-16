@@ -1,7 +1,6 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { AssetGraph } from "../Expenses/AssetGraph/AssetGraph";
-import { useTimeframe } from "../redux/slices/timeframe";
 import { useGNUFile } from "../redux/slices/gnuFile";
 import { processGNUFile } from "../Expenses/gnuProcessor";
 import { ExpensesPage } from "../Expenses/ExpensesPage";
