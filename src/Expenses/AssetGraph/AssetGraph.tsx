@@ -10,6 +10,7 @@ import { XLabels } from "./XLabels";
 import { processGraphData } from "./processor";
 import { computeGraphMeta } from "./graph";
 import { GraphLine } from "./GraphLine";
+import { GNUFileSelector } from "../gnuFileSelector";
 
 interface AssetGraphProps {
   accounts: GNUAccount[];
@@ -32,29 +33,20 @@ export const AssetGraph = ({ accounts, transactions }: AssetGraphProps) => {
     <Box
       sx={{
         display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
+        justifyContent: "center",
+        mt: 2,
       }}
     >
-      <svg
-        width={dims[0]}
-        height={dims[1]}
-        style={{ backgroundColor: "#121212" }}
-      >
-        <XAxis graph={graphData} />
-        <YAxis graph={graphData} />
-        <YLabels graph={graphData} />
-        <XLabels graph={graphData} />
-        {lines.map((l, i) => (
-          <GraphLine key={i} graph={graphData} line={l} />
-        ))}
-      </svg>
       <Box
         sx={{
           display: "flex",
-          alignItems: "center",
+          alignItems: "start",
+          justifyContent: "start",
+          flexDirection: "column",
+          mr: 2,
         }}
       >
+        <GNUFileSelector />
         {allLines.map((l, i) => (
           <LineToggle
             key={i}
@@ -69,6 +61,19 @@ export const AssetGraph = ({ accounts, transactions }: AssetGraphProps) => {
           />
         ))}
       </Box>
+      <svg
+        width={dims[0]}
+        height={dims[1]}
+        style={{ backgroundColor: "#121212" }}
+      >
+        <XAxis graph={graphData} />
+        <YAxis graph={graphData} />
+        <YLabels graph={graphData} />
+        <XLabels graph={graphData} />
+        {lines.map((l, i) => (
+          <GraphLine key={i} graph={graphData} line={l} />
+        ))}
+      </svg>
     </Box>
   );
 };
