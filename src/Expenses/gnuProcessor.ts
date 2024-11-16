@@ -109,7 +109,6 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
     out.size = calculateSize(out);
     return out;
   }
-  console.log("WRONG");
   return {
     name: "",
     color: "",
@@ -117,12 +116,22 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
   };
 };
 
-export const processChart = (data: string, start: number, end: number) => {
+export const processGNUFile = (
+  data: string
+): [GNUAccount[], GNUTransaction[]] => {
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(data, "text/xml");
   const accounts = ExtractAccounts(xmlDoc);
   const transactions = ExtractTransactions(xmlDoc);
+  return [accounts, transactions];
+};
 
+export const processChart = (
+  accounts: GNUAccount[],
+  transactions: GNUTransaction[],
+  start: number,
+  end: number
+) => {
   const expenses = accounts.find((a) => a.name === "Expenses")!;
   const accountTree = makeTreeNode(
     accounts,
