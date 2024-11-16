@@ -119,6 +119,7 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
 export const processGNUFile = (
   content: string
 ): [GNUAccount[], GNUTransaction[]] => {
+  if (!content) return [[], []];
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(content, "text/xml");
   const accounts = ExtractAccounts(xmlDoc);
