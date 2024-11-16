@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import type { RootState } from "../store";
 
 export interface FileTypeState {
   value: FileType;
@@ -26,5 +26,5 @@ export const fileTypeSlice = createSlice({
 
 export const { setFileType } = fileTypeSlice.actions;
 export const fileTypeReducer = fileTypeSlice.reducer;
-export const useFileType = () =>
+export const useFileType = (): FileType =>
   useSelector((state: RootState) => state.fileType.value);

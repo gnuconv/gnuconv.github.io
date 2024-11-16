@@ -13,23 +13,30 @@ export const Palette = [
   "#b43dc7",
 ];
 
-const darker = ([a, b, c]: number[]) => [
-  Math.pow(a, 0.96),
-  Math.pow(b, 0.96),
-  Math.pow(c, 0.96),
+const darkerExpo = 0.96;
+const darker = ([a, b, c]: number[]): number[] => [
+  Math.pow(a, darkerExpo),
+  Math.pow(b, darkerExpo),
+  Math.pow(c, darkerExpo),
 ];
 
-const toHex = (n: number) => Math.round(n).toString(16).padStart(2, "0");
+const base16 = 16;
+const hexComponentColorLength = 2;
+const hexComponentColorCount = 3;
+const toHex = (n: number): string =>
+  Math.round(n).toString(base16).padStart(hexComponentColorLength, "0");
 
-export const createPalette = (s: string, amt: number) => {
-  const m = s.match(/^#([0-9a-f]{6})$/i)![1];
-  if (!m) throw new Error("Invalid color");
-  const col = [
-    parseInt(m.slice(0, 2), 16),
-    parseInt(m.slice(2, 4), 16),
-    parseInt(m.slice(4, 6), 16),
-  ];
-  const rgbs = new Array(amt).fill([0, 0, 0]);
+export const createPalette = (s: string, amt: number): string[] => {
+  const m = /^#([0-9a-f]{6})$/i.exec(s)?.[1];
+  if (m === undefined) throw new Error("Invalid color");
+
+  const col: number[] = [];
+  for (let i = 0; i < hexComponentColorCount; i++) {
+    const j = i * hexComponentColorLength;
+    col.push(parseInt(m.slice(j, j + hexComponentColorLength), base16));
+  }
+
+  const rgbs = new Array<number[]>(amt).fill([0, 0, 0]);
   rgbs[0] = darker(col);
   for (let i = 1; i < amt; i++) {
     rgbs[i] = darker(rgbs[i - 1]);

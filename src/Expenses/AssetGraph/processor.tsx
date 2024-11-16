@@ -1,4 +1,4 @@
-import { GNUAccount, GNUTransaction } from "../chartUtils";
+import type { GNUAccount, GNUTransaction } from "../chartUtils";
 import { Palette } from "../colors";
 
 interface Point {
@@ -11,23 +11,6 @@ export interface Account {
   color: string;
   points: Point[];
 }
-
-export const processGraphData = (
-  accounts: GNUAccount[],
-  transactions: GNUTransaction[]
-): Account[] => {
-  const graphAccounts = accounts
-    .filter((a) => ["ASSET", "CREDIT"].includes(a.type))
-    .filter((a) =>
-      transactions.some((t) => t.splits.some((s) => s.account === a.id))
-    );
-
-  const lines = graphAccounts.map((a, i) =>
-    computeAccountGraphPoint(a, transactions, Palette[i])
-  );
-
-  return lines;
-};
 
 const computeAccountGraphPoint = (
   account: GNUAccount,
@@ -45,9 +28,9 @@ const computeAccountGraphPoint = (
       t.splits[1].account !== account.id
     )
       continue;
-    const splitIndex = t.splits[0].account === account?.id ? 0 : 1;
+    const splitIndex = t.splits[0].account === account.id ? 0 : 1;
     balance += t.splits[splitIndex].value;
-    if (transactions[i].date == transactions[i + 1]?.date) continue;
+    if (transactions[i].date === transactions[i + 1]?.date) continue;
     points.push({
       date: t.date,
       value: balance,
@@ -58,4 +41,21 @@ const computeAccountGraphPoint = (
     color: color,
     points: points,
   };
+};
+
+export const processGraphData = (
+  accounts: GNUAccount[],
+  transactions: GNUTransaction[]
+): Account[] => {
+  const graphAccounts = accounts
+    .filter((a) => ["ASSET", "CREDIT"].includes(a.type))
+    .filter((a) =>
+      transactions.some((t) => t.splits.some((s) => s.account === a.id))
+    );
+
+  const lines = graphAccounts.map((a, i) =>
+    computeAccountGraphPoint(a, transactions, Palette[i])
+  );
+
+  return lines;
 };

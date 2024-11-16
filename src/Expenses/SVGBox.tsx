@@ -17,15 +17,18 @@ interface SVGBoxProps {
   categories?: string[];
 }
 
-export const SVGBox = (n: SVGBoxProps) => {
+const half = 2;
+const margin = 0.05;
+
+export const SVGBox = (n: SVGBoxProps): React.ReactElement => {
   const border = 0.002;
   const dispatch = useDispatch();
   const highlightedCategory = useHighlightedCategory();
-  const onMouseEnter = () => {
+  const onMouseEnter = (): void => {
     if (!n.canHighlight) return;
     dispatch(setHighlightedCategory(n.name));
   };
-  const onClick = () => {
+  const onClick = (): void => {
     if (!n.canHighlight || !n.categories) return;
     dispatch(pushAllCategories(n.categories));
   };
@@ -46,9 +49,9 @@ export const SVGBox = (n: SVGBoxProps) => {
         style={{ cursor: n.canHighlight ? "pointer" : "default" }}
       ></rect>
       <text
-        x={n.x + n.width * 0.05}
-        y={n.y + n.height / 2}
-        fontSize={n.height / 2}
+        x={n.x + n.width * margin}
+        y={n.y + n.height / half}
+        fontSize={n.height / half}
         style={{ cursor: n.canHighlight ? "pointer" : "default" }}
         onMouseEnter={onMouseEnter}
         onClick={onClick}

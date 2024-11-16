@@ -1,11 +1,11 @@
-import { Graph } from "./graph";
+import type { Graph } from "./graph";
 import { computeY } from "./utils";
 
 interface XAxisProps {
   graph: Graph;
 }
 
-export const XAxis = ({ graph }: XAxisProps) => {
+export const XAxis = ({ graph }: XAxisProps): React.ReactElement => {
   const { dims, xMargins, yMargins, yRange } = graph;
   const heightOfBalanceZero = computeY(dims, yMargins, yRange, 0);
   if (heightOfBalanceZero < 0 || heightOfBalanceZero > dims[1]) return <></>;

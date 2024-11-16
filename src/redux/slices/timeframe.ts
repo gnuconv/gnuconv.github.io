@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import type { RootState } from "../store";
 import dayjs from "dayjs";
 
 export interface TimeframeState {
@@ -27,5 +27,5 @@ export const timeframeSlice = createSlice({
 
 export const { setTimeframe } = timeframeSlice.actions;
 export const timeframeReducer = timeframeSlice.reducer;
-export const useTimeframe = () =>
+export const useTimeframe = (): TimeframeState =>
   useSelector((state: RootState) => state.timeframe);

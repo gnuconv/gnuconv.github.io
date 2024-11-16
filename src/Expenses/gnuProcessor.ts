@@ -1,9 +1,5 @@
-import {
-  ExtractAccounts,
-  ExtractTransactions,
-  GNUAccount,
-  GNUTransaction,
-} from "./chartUtils";
+import type { GNUAccount, GNUTransaction } from "./chartUtils";
+import { ExtractAccounts, ExtractTransactions } from "./chartUtils";
 
 export const calculateSize = (n: GraphNode | GraphNode[]): number => {
   if (Array.isArray(n)) return n.reduce((acc, c) => acc + calculateSize(c), 0);
@@ -57,20 +53,26 @@ const makeTreeNode = (
       .filter((t) => t.splits.some((s) => s.account === account.id))
       .map((t) => ({
         name: t.description,
-        value: t.splits.find((s) => s.account === account.id)!.value,
+        value: t.splits.find((s) => s.account === account.id)?.value ?? 0,
       })),
   };
 };
 
-const stringToColour = (str: string) => {
+const bitShift = 5;
+const numColorComponents = 3;
+const base16 = 16;
+const hexComponentColorLength = 2;
+const colorMask = 0xff;
+const colorIncrement = 8;
+const stringToColour = (str: string): string => {
   let hash = 0;
   str.split("").forEach((char) => {
-    hash = char.charCodeAt(0) + ((hash << 5) - hash);
+    hash = char.charCodeAt(0) + ((hash << bitShift) - hash);
   });
   let colour = "#";
-  for (let i = 0; i < 3; i++) {
-    const value = (hash >> (i * 8)) & 0xff;
-    colour += value.toString(16).padStart(2, "0");
+  for (let i = 0; i < numColorComponents; i++) {
+    const value = (hash >> (i * colorIncrement)) & colorMask;
+    colour += value.toString(base16).padStart(hexComponentColorLength, "0");
   }
   return colour;
 };
@@ -85,7 +87,7 @@ export interface GraphNode {
 const convertAccountTree = (node: AccountTreeNode): GraphNode => {
   if (node.transactions) {
     const out = {
-      name: `${node.account.name}`,
+      name: node.account.name,
       color: stringToColour(node.account.name),
       children: node.transactions.map((t) => ({
         name: t.name,
@@ -132,8 +134,9 @@ export const processChart = (
   transactions: GNUTransaction[],
   start: number,
   end: number
-) => {
-  const expenses = accounts.find((a) => a.name === "Expenses")!;
+): GraphNode => {
+  const expenses = accounts.find((a) => a.name === "Expenses");
+  if (!expenses) throw new Error("no root Expenses node found");
   const accountTree = makeTreeNode(
     accounts,
     transactions,

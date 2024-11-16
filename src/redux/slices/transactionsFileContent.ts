@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import type { RootState } from "../store";
 
 export interface TransactionsFileContentState {
   value: string;
@@ -27,5 +27,5 @@ export const { setTransactionsFileContent } =
 export const transactionsFileContentReducer =
   transactionsFileContentSlice.reducer;
 
-export const useTransactionsFileContent = () =>
+export const useTransactionsFileContent = (): string =>
   useSelector((state: RootState) => state.transactionsFileContent.value);

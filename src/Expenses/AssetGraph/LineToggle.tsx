@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { Account } from "./processor";
+import type { Account } from "./processor";
 
 interface LineToggleProps {
   account: Account;
@@ -15,7 +15,7 @@ export const LineToggle = ({
   onClick,
   onEnter,
   onLeave,
-}: LineToggleProps) => {
+}: LineToggleProps): React.ReactElement => {
   return (
     <Button
       sx={{

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import type { RootState } from "../store";
 
 export interface GNUFileState {
   filename: string;
@@ -26,5 +26,5 @@ export const gnuFileSlice = createSlice({
 
 export const { setGNUFile } = gnuFileSlice.actions;
 export const gnuFileReducer = gnuFileSlice.reducer;
-export const useGNUFile = () =>
+export const useGNUFile = (): GNUFileState =>
   useSelector((state: RootState) => state.gnuFile);

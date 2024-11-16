@@ -17,7 +17,7 @@ export const getFirst = (
 
 export const ExtractAccounts = (doc: Document): GNUAccount[] => {
   const elems = doc.getElementsByTagName("gnc:account");
-  const accounts = new Array(elems.length);
+  const accounts = new Array<GNUAccount>(elems.length);
   for (let i = 0; i < elems.length; i++) {
     const e = elems.item(i);
     accounts[i] = {
@@ -44,12 +44,12 @@ export interface GNUTransaction {
   splits: GNUSplit[];
 }
 
-const calculate = (s: string): number => eval(s); // eslint-disable-line no-eval
+const calculate = (s: string): number => eval(s) as number; // eslint-disable-line no-eval
 
 export const ExtractSplits = (doc: Element | null): GNUSplit[] => {
   if (!doc) return [];
   const elems = doc.getElementsByTagName("trn:split");
-  const splits = new Array(elems.length);
+  const splits = new Array<GNUSplit>(elems.length);
   for (let i = 0; i < elems.length; i++) {
     const s = elems.item(i);
     splits[i] = {
@@ -63,7 +63,7 @@ export const ExtractSplits = (doc: Element | null): GNUSplit[] => {
 
 export const ExtractTransactions = (doc: Document): GNUTransaction[] => {
   const elems = doc.getElementsByTagName("gnc:transaction");
-  const transactions: GNUTransaction[] = new Array(elems.length);
+  const transactions = new Array<GNUTransaction>(elems.length);
   for (let i = 0; i < elems.length; i++) {
     const e = elems.item(i);
     transactions[i] = {
@@ -73,10 +73,9 @@ export const ExtractTransactions = (doc: Document): GNUTransaction[] => {
         getFirst(e, "trn:split")?.getAttribute("quantity") ?? "0"
       ),
       splits: ExtractSplits(e),
-      date:
-        dayjs(
-          getFirst(getFirst(e, "trn:date-posted"), "ts:date")?.textContent
-        ).unix() ?? 0,
+      date: dayjs(
+        getFirst(getFirst(e, "trn:date-posted"), "ts:date")?.textContent
+      ).unix(),
     };
   }
   return transactions;

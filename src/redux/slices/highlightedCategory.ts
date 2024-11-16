@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import type { RootState } from "../store";
 
 export interface HighlightedCategoryState {
   value: string;
@@ -23,5 +23,5 @@ export const highlightedCategorySlice = createSlice({
 
 export const { setHighlightedCategory } = highlightedCategorySlice.actions;
 export const highlightedCategoryReducer = highlightedCategorySlice.reducer;
-export const useHighlightedCategory = () =>
+export const useHighlightedCategory = (): string =>
   useSelector((state: RootState) => state.highlightedCategory.value);

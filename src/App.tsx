@@ -4,11 +4,11 @@ import { useState } from "react";
 import { AnalyzePage } from "./Analyze/AnalyzePage";
 
 enum TAB {
-  CONVERT,
-  ANALYZE,
+  CONVERT = "CONVERT",
+  ANALYZE = "ANALYZE",
 }
 
-export const App = () => {
+export const App = (): React.ReactElement => {
   const [tab, setTab] = useState(TAB.CONVERT);
   return (
     <Box
@@ -24,9 +24,15 @@ export const App = () => {
           width: "100vw",
         }}
       >
-        <Tabs value={tab} onChange={(_e, v) => setTab(v)} variant="fullWidth">
-          <Tab label="convert" value={TAB.CONVERT} />
-          <Tab label="analyze" value={TAB.ANALYZE} />
+        <Tabs
+          value={tab}
+          onChange={(_e, v) => {
+            setTab(v as TAB);
+          }}
+          variant="fullWidth"
+        >
+          <Tab label={TAB.CONVERT} value={TAB.CONVERT} />
+          <Tab label={TAB.ANALYZE} value={TAB.ANALYZE} />
         </Tabs>
       </Box>
       <Box

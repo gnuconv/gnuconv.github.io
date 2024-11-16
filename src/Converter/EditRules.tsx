@@ -7,7 +7,9 @@ import { RulesValidation } from "./RulesValidation";
 export const EditRules = (): React.ReactElement => {
   const [editOpen, setEditOpenState] = useState(false);
 
-  const setEditOpen = (open: boolean) => () => setEditOpenState(open);
+  const setEditOpen = (open: boolean) => (): void => {
+    setEditOpenState(open);
+  };
 
   return (
     <>

@@ -11,12 +11,21 @@ interface LegendTitleProps {
   amount: number;
 }
 
-export const LegendTitle = ({ name, amount }: LegendTitleProps) => {
+const centsPrecision = 2;
+
+export const LegendTitle = ({
+  name,
+  amount,
+}: LegendTitleProps): React.ReactElement => {
   const dispatch = useDispatch();
   const highlightedCategory = useHighlightedCategory();
 
-  const onMouseEnter = () => dispatch(setHighlightedCategory(name));
-  const onClick = () => dispatch(pushCategory(name));
+  const onMouseEnter = (): void => {
+    dispatch(setHighlightedCategory(name));
+  };
+  const onClick = (): void => {
+    dispatch(pushCategory(name));
+  };
   return (
     <Typography
       sx={{
@@ -30,7 +39,7 @@ export const LegendTitle = ({ name, amount }: LegendTitleProps) => {
       onClick={onClick}
     >
       {name}
-      <br />${amount.toFixed(2)}
+      <br />${amount.toFixed(centsPrecision)}
     </Typography>
   );
 };

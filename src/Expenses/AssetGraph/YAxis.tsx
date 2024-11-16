@@ -1,11 +1,11 @@
-import { Graph } from "./graph";
+import type { Graph } from "./graph";
 import { computeY } from "./utils";
 
 interface YAxisProps {
   graph: Graph;
 }
 
-export const YAxis = ({ graph }: YAxisProps) => {
+export const YAxis = ({ graph }: YAxisProps): React.ReactElement => {
   const { dims, xMargins, yMargins, yRange } = graph;
   return (
     <path

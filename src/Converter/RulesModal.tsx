@@ -3,6 +3,7 @@ import { Modal } from "../components/Modal";
 import { Box, TextField } from "@mui/material";
 import { RulesValidation } from "./RulesValidation";
 import { useDispatch } from "react-redux";
+import type { Rule } from "../redux/slices/rules";
 import { setRules } from "../redux/slices/rules";
 
 interface IProps {
@@ -10,7 +11,7 @@ interface IProps {
   onClose: () => void;
 }
 
-export const RulesModal = ({ open, onClose }: IProps) => {
+export const RulesModal = ({ open, onClose }: IProps): React.ReactElement => {
   const dispatch = useDispatch();
   const [rulesStr, setRulesStr] = useState(
     localStorage.getItem("RULES") ?? "[]"
@@ -18,11 +19,11 @@ export const RulesModal = ({ open, onClose }: IProps) => {
 
   const onChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  ): void => {
     setRulesStr(event.target.value);
     localStorage.setItem("RULES", event.target.value);
     try {
-      const rules = JSON.parse(event.target.value);
+      const rules = JSON.parse(event.target.value) as Rule[];
       dispatch(setRules(rules));
     } catch (err) {
       console.error(err);

@@ -11,7 +11,7 @@ enum TAB {
   ASSETS = "ASSETS",
 }
 
-export const AnalyzePage = () => {
+export const AnalyzePage = (): React.ReactElement => {
   const [tab, setTab] = useState(TAB.ASSETS);
   const gnuFile = useGNUFile();
   const [accounts, transactions] = processGNUFile(gnuFile.content);
@@ -33,7 +33,9 @@ export const AnalyzePage = () => {
           >
             <Tabs
               value={tab}
-              onChange={(_e, v) => setTab(v)}
+              onChange={(_e, v) => {
+                setTab(v as TAB);
+              }}
               variant="fullWidth"
             >
               <Tab label={TAB.EXPENSES} value={TAB.EXPENSES} />

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import type { RootState } from "../store";
 
 export interface SelectedCategoryState {
   value: string[];
@@ -41,5 +41,5 @@ export const {
   pushAllCategories,
 } = selectedCategorySlice.actions;
 export const selectedCategoryReducer = selectedCategorySlice.reducer;
-export const useSelectedCategory = () =>
+export const useSelectedCategory = (): string[] =>
   useSelector((state: RootState) => state.selectedCategory.value);

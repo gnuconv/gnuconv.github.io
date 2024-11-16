@@ -15,19 +15,24 @@ const darkTheme = createTheme({
   },
 });
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+((): void => {
+  const elem = document.getElementById("root");
+  if (!elem) {
+    console.error("no root node found");
+    return;
+  }
+  const root = ReactDOM.createRoot(elem);
 
-root.render(
-  <React.StrictMode>
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Provider store={store}>
-        <ThemeProvider theme={darkTheme}>
-          <CssBaseline />
-          <App />
-        </ThemeProvider>
-      </Provider>
-    </LocalizationProvider>
-  </React.StrictMode>
-);
+  root.render(
+    <React.StrictMode>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Provider store={store}>
+          <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <App />
+          </ThemeProvider>
+        </Provider>
+      </LocalizationProvider>
+    </React.StrictMode>
+  );
+})();
