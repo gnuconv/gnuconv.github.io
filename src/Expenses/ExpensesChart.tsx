@@ -6,7 +6,8 @@ import { useSelectedCategory } from "../redux/slices/selectedCategory";
 import { LegendTitle } from "./LegendTitle";
 import { SVGRow } from "./SVGRow";
 import { PopCategory } from "./PopCategory";
-import { GraphNode, processChart } from "./gnuProcessor";
+import { GraphNode, processChart, processGNUFile } from "./gnuProcessor";
+import { AssetGraph } from "./AssetGraph";
 
 export const margin = 0.003;
 
@@ -27,8 +28,8 @@ export const ExpensesChart = (): React.ReactElement => {
   const selectedCategory = useSelectedCategory();
   const gnuFile = useGNUFile();
   if (!start || !end || !gnuFile.content) return <></>;
-  console.log(gnuFile.content);
-  const tree = processChart(gnuFile.content, start, end);
+  const [accounts, transactions] = processGNUFile(gnuFile.content);
+  const tree = processChart(accounts, transactions, start, end);
 
   const root = findNode(tree, selectedCategory);
 
@@ -42,6 +43,7 @@ export const ExpensesChart = (): React.ReactElement => {
 
   return (
     <Box sx={{ p: 5 }}>
+      <AssetGraph accounts={accounts} transactions={transactions} />
       <Box
         sx={{
           display: "flex",
