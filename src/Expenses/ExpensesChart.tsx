@@ -7,7 +7,7 @@ import { LegendTitle } from "./LegendTitle";
 import { SVGRow } from "./SVGRow";
 import { PopCategory } from "./PopCategory";
 import { GraphNode, processChart, processGNUFile } from "./gnuProcessor";
-import { AssetGraph } from "./AssetGraph";
+import { AssetGraph } from "./AssetGraph/AssetGraph";
 
 export const margin = 0.003;
 
