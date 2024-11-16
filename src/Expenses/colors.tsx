@@ -1,16 +1,16 @@
 // https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf
 
-// Paul Tol's Muted palette
+// https://www.heavy.ai/blog/12-color-palettes-for-telling-better-stories-with-your-data
 export const Palette = [
-  "#dddddd",
-  "#2f2585",
-  "#337538",
-  "#5da899",
-  "#94caec",
-  "#dcce7d",
-  "#c26a77",
-  "#9f4a97",
-  "#7e2954",
+  "#ea5543",
+  "#f46c9c",
+  "#ef9c1f",
+  "#edbe30",
+  "#ede05a",
+  "#bccf31",
+  "#85bb44",
+  "#3badef",
+  "#b43dc7",
 ];
 
 const darker = ([a, b, c]: number[]) => [

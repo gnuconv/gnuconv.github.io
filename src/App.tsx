@@ -1,11 +1,11 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { Converter } from "./Converter/Converter";
 import { useState } from "react";
-import { ExpensesPage } from "./Expenses/ExpensesPage";
+import { AnalyzePage } from "./Analyze/AnalyzePage";
 
 enum TAB {
   CONVERT,
-  EXPENSES,
+  ANALYZE,
 }
 
 export const App = () => {
@@ -26,7 +26,7 @@ export const App = () => {
       >
         <Tabs value={tab} onChange={(_e, v) => setTab(v)} variant="fullWidth">
           <Tab label="convert" value={TAB.CONVERT} />
-          <Tab label="expenses" value={TAB.EXPENSES} />
+          <Tab label="analyze" value={TAB.ANALYZE} />
         </Tabs>
       </Box>
       <Box
@@ -40,7 +40,7 @@ export const App = () => {
         }}
       >
         {tab === TAB.CONVERT && <Converter />}
-        {tab === TAB.EXPENSES && <ExpensesPage />}
+        {tab === TAB.ANALYZE && <AnalyzePage />}
       </Box>
     </Box>
   );

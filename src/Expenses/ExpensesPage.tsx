@@ -1,9 +1,14 @@
 import { Box, Paper } from "@mui/material";
 import { Timeframe } from "./Timeframe";
-import { GNUFileSelector } from "./gnuFileSelector";
 import { ExpensesChart } from "./ExpensesChart";
+import { GNUAccount, GNUTransaction } from "./chartUtils";
+import { GNUFileSelector } from "./gnuFileSelector";
+interface ExpensesPageProps {
+  accounts: GNUAccount[];
+  transactions: GNUTransaction[];
+}
 
-export const ExpensesPage = () => {
+export const ExpensesPage = ({ accounts, transactions }: ExpensesPageProps) => {
   return (
     <Box
       sx={{
@@ -26,7 +31,7 @@ export const ExpensesPage = () => {
         <Timeframe />
       </Paper>
       <Box sx={{ width: "100%" }}>
-        <ExpensesChart />
+        <ExpensesChart accounts={accounts} transactions={transactions} />
       </Box>
     </Box>
   );

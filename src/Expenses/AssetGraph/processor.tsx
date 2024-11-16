@@ -22,47 +22,40 @@ export const processGraphData = (
       transactions.some((t) => t.splits.some((s) => s.account === a.id))
     );
 
-  const lines = graphAccounts.map((a) =>
-    computeAccountGraphPoint(a, transactions)
+  const lines = graphAccounts.map((a, i) =>
+    computeAccountGraphPoint(a, transactions, Palette[i])
   );
-
-  lines.forEach((l, i) => (l.color = Palette[i]));
 
   return lines;
 };
 
 const computeAccountGraphPoint = (
   account: GNUAccount,
-  transactions: GNUTransaction[]
+  transactions: GNUTransaction[],
+  color: string
 ): Account => {
-  const accountTransaction = transactions
-    .filter(
-      (t) =>
-        t.splits[0].account === account?.id ||
-        t.splits[1].account === account?.id
-    )
-    .sort((a, b) => a.date - b.date);
-
+  transactions.sort((a, b) => a.date - b.date);
+  const points: Point[] = [];
   let balance = 0;
-  const subTransactions = accountTransaction.map((t) => {
-    const index = t.splits[0].account === account?.id ? 0 : 1;
-    balance += t.splits[index].value;
-    return {
+  // This algorithm is slow so we're writing it to be faster.
+  for (let i = 0; i < transactions.length; i++) {
+    const t = transactions[i];
+    if (
+      t.splits[0].account !== account.id &&
+      t.splits[1].account !== account.id
+    )
+      continue;
+    const splitIndex = t.splits[0].account === account?.id ? 0 : 1;
+    balance += t.splits[splitIndex].value;
+    if (transactions[i].date == transactions[i + 1]?.date) continue;
+    points.push({
       date: t.date,
       value: balance,
-    };
-  });
-
-  const points = [];
-
-  for (let i = 0; i < subTransactions.length; i++) {
-    if (subTransactions[i].date == subTransactions[i + 1]?.date) continue;
-    points.push(subTransactions[i]);
+    });
   }
-
   return {
     name: account.name,
-    color: "white",
+    color: color,
     points: points,
   };
 };
