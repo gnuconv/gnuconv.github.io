@@ -1,14 +1,18 @@
 import { Box, Paper } from "@mui/material";
 import { Timeframe } from "./Timeframe";
 import { ExpensesChart } from "./ExpensesChart";
-import { GNUAccount, GNUTransaction } from "./chartUtils";
+import type { GNUAccount, GNUTransaction } from "./chartUtils";
 import { GNUFileSelector } from "./gnuFileSelector";
+import React from "react";
 interface ExpensesPageProps {
   accounts: GNUAccount[];
   transactions: GNUTransaction[];
 }
 
-export const ExpensesPage = ({ accounts, transactions }: ExpensesPageProps) => {
+export const ExpensesPage = ({
+  accounts,
+  transactions,
+}: ExpensesPageProps): React.ReactElement => {
   return (
     <Box
       sx={{

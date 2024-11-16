@@ -1,5 +1,5 @@
 import { Fragment } from "react/jsx-runtime";
-import { Graph, Line } from "./graph";
+import type { Graph, Line } from "./graph";
 import { computeX, computeY } from "./utils";
 import { GraphLinePath } from "./GraphLinePath";
 
@@ -9,7 +9,13 @@ interface GraphLineProps {
   highlight: boolean;
 }
 
-export const GraphLine = ({ graph, line, highlight }: GraphLineProps) => {
+const circleRadius = 3;
+
+export const GraphLine = ({
+  graph,
+  line,
+  highlight,
+}: GraphLineProps): React.ReactElement => {
   const { dims, xMargins, xRange, yMargins, yRange } = graph;
 
   const extraSize = highlight ? 1 : 0;
@@ -34,7 +40,12 @@ export const GraphLine = ({ graph, line, highlight }: GraphLineProps) => {
         const y = computeY(dims, yMargins, yRange, p.value);
         return (
           <Fragment key={line.name + i}>
-            <circle cx={x} cy={y} fill={line.color} r={3 + extraSize} />
+            <circle
+              cx={x}
+              cy={y}
+              fill={line.color}
+              r={circleRadius + extraSize}
+            />
             {i > 0 && (
               <GraphLinePath
                 graph={graph}

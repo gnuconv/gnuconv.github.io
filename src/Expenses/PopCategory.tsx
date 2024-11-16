@@ -3,9 +3,11 @@ import { popCategory } from "../redux/slices/selectedCategory";
 import { IconButton } from "@mui/material";
 import HistoryIcon from "@mui/icons-material/History";
 
-export const PopCategory = () => {
+export const PopCategory = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const onClick = () => dispatch(popCategory());
+  const onClick = (): void => {
+    dispatch(popCategory());
+  };
   return (
     <IconButton onClick={onClick}>
       <HistoryIcon />

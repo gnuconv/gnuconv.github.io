@@ -1,12 +1,15 @@
 import { Fragment } from "react/jsx-runtime";
 import { computeY } from "./utils";
-import { Graph } from "./graph";
+import type { Graph } from "./graph";
 
 interface YLabelsProps {
   graph: Graph;
 }
 
-export const YLabels = ({ graph }: YLabelsProps) => {
+const half = 0.5;
+const textOffset = 5;
+
+export const YLabels = ({ graph }: YLabelsProps): React.ReactElement => {
   const { dims, xMargins, yMargins, yRange, yLabels } = graph;
   return (
     <>
@@ -20,14 +23,18 @@ export const YLabels = ({ graph }: YLabelsProps) => {
               yMargins,
               yRange,
               a
-            )} L${dims[0] * xMargins[0] * 0.5},${computeY(
+            )} L${dims[0] * xMargins[0] * half},${computeY(
               dims,
               yMargins,
               yRange,
               a
             )}`}
           />
-          <text x={0} y={computeY(dims, yMargins, yRange, a) - 5} fill="white">
+          <text
+            x={0}
+            y={computeY(dims, yMargins, yRange, a) - textOffset}
+            fill="white"
+          >
             {a}
           </text>
         </Fragment>

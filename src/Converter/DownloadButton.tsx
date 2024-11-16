@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { saveAs } from "file-saver";
 import Papa from "papaparse";
 import DownloadIcon from "@mui/icons-material/Download";
-import { Transaction } from "./InputFile";
+import type { Transaction } from "./InputFile";
 
 interface IProps {
   AccountName: string;
@@ -14,7 +14,7 @@ export const DownloadButton = ({
   AccountName,
   Transactions,
 }: IProps): React.ReactElement => {
-  const onClick = () => {
+  const onClick = (): void => {
     const lines = Papa.unparse(Transactions, { header: false });
     const blob = new Blob([lines], {
       type: "text/plain",

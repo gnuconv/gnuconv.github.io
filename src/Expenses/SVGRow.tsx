@@ -1,7 +1,8 @@
 import { margin } from "./ExpensesChart";
 import { SVGBox } from "./SVGBox";
 import { createPalette } from "./colors";
-import { GraphNode, calculateSize } from "./gnuProcessor";
+import type { GraphNode } from "./gnuProcessor";
+import { calculateSize } from "./gnuProcessor";
 
 interface SVGRowProps {
   palette: string[];
@@ -33,7 +34,7 @@ export const SVGRow = ({
   nodes,
   x,
   y,
-}: SVGRowProps) => {
+}: SVGRowProps): React.ReactElement => {
   const totalSize = calculateSize(nodes);
   const ratio = width / totalSize;
   const subWidth = 1 - (nodes.length - 1) * margin;
@@ -48,8 +49,8 @@ export const SVGRow = ({
     children: n.children,
   }));
 
-  const calculateWidth = (nodes: DataPoint[]) =>
-    nodes.reduce((acc: number, c: DataPoint) => acc + c.width, 0);
+  const calculateWidth = (points: DataPoint[]): number =>
+    points.reduce((acc: number, c: DataPoint) => acc + c.width, 0);
 
   data.forEach(
     (n, i) => (n.x = x + calculateWidth(data.slice(0, i)) + width * margin * i)
@@ -61,7 +62,7 @@ export const SVGRow = ({
         key={`B${i}`}
         {...n}
         canvasWidth={canvasWidth}
-        canHighlight={!!n.children?.length}
+        canHighlight={(n.children?.length ?? 0) > 0}
         categories={categories.concat(n.name)}
       />
     );

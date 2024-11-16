@@ -7,7 +7,7 @@ import { Typography } from "@mui/material";
 import { setTransactionsFileContent } from "../redux/slices/transactionsFileContent";
 import { useDispatch } from "react-redux";
 
-export const Converter = () => {
+export const Converter = (): React.ReactElement => {
   const dispatch = useDispatch();
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>

@@ -4,22 +4,22 @@ import { useFileType } from "../redux/slices/fileType";
 import { useRules } from "../redux/slices/rules";
 import { useTransactionsFileContent } from "../redux/slices/transactionsFileContent";
 
-export const ProcessFiles = () => {
+export const ProcessFiles = (): React.ReactElement => {
   const upload = useTransactionsFileContent();
   const rules = useRules();
   const fileType = useFileType();
-  if (!upload || !rules || !fileType) return <></>;
+  if (!upload || !rules) return <></>;
 
   // process file
   const transactions = processors[fileType](upload);
 
   // transform transactions
-  for (let i = 0; i < transactions.length; i++) {
+  for (const t of transactions) {
     rules.forEach((rule) => {
-      const re = new RegExp(`${rule.match}`, "g");
-      if (transactions[i].description.match(re)) {
-        transactions[i].destination = rule.dest;
-        transactions[i].description = rule.desc;
+      const re = new RegExp(rule.match, "g");
+      if (t.description.match(re)) {
+        t.destination = rule.dest;
+        t.description = rule.desc;
       }
     });
   }

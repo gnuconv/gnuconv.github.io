@@ -2,7 +2,7 @@ import { Fragment } from "react/jsx-runtime";
 
 import dayjs from "dayjs";
 import { computeX } from "./utils";
-import { Graph } from "./graph";
+import type { Graph } from "./graph";
 
 const monthNames = [
   "jan",
@@ -23,7 +23,11 @@ interface XLabelsProps {
   graph: Graph;
 }
 
-export const XLabels = ({ graph }: XLabelsProps) => {
+const half = 0.5;
+const monthPadding = 2;
+const textOffset = 12;
+
+export const XLabels = ({ graph }: XLabelsProps): React.ReactElement => {
   const { dims, xMargins, xRange, xYearsLabels, xMonthslabels } = graph;
   return (
     <>
@@ -39,7 +43,7 @@ export const XLabels = ({ graph }: XLabelsProps) => {
         const x0 = Math.max(min, start);
         let prev = <></>;
         if (i === 0) {
-          prev = <path d={`M${x0},${0} L${x0},${15}`} stroke="white" />;
+          prev = <path d={`M${x0},0 L${x0},15`} stroke="white" />;
         }
 
         const max = computeX(dims, xMargins, xRange, xRange[1]);
@@ -51,14 +55,14 @@ export const XLabels = ({ graph }: XLabelsProps) => {
         );
         const x1 = Math.min(max, end);
 
-        const mid = (x0 + x1) / 2;
+        const mid = (x0 + x1) * half;
         return (
           <Fragment key={i}>
             {prev}
             <text x={mid} y={15} fill="white">
               {y}
             </text>
-            <path d={`M${x1},${0} L${x1},${15}`} stroke="white" />
+            <path d={`M${x1},0 L${x1},15`} stroke="white" />
           </Fragment>
         );
       })}
@@ -66,7 +70,9 @@ export const XLabels = ({ graph }: XLabelsProps) => {
         const min = computeX(dims, xMargins, xRange, xRange[0]);
         const max = computeX(dims, xMargins, xRange, xRange[1]);
 
-        const monthStart = dayjs(`${m[0]}-${(m[1] + 1 + "").padStart(2, "0")}`);
+        const monthStart = dayjs(
+          `${m[0]}-${(m[1] + 1 + "").padStart(monthPadding, "0")}`
+        );
         const x0 = Math.max(
           min,
           computeX(dims, xMargins, xRange, monthStart.unix())
@@ -80,17 +86,17 @@ export const XLabels = ({ graph }: XLabelsProps) => {
 
         let prev = <></>;
         if (i === 0) {
-          prev = <path stroke="white" d={`M${x0},${15} L${x0},${30}`} />;
+          prev = <path stroke="white" d={`M${x0},15 L${x0},30`} />;
         }
 
-        const mid = (x0 + x1) / 2;
+        const mid = (x0 + x1) * half;
         return (
           <Fragment key={i}>
             {prev}
-            <text x={mid - 12} fill="white" y={30}>
+            <text x={mid - textOffset} fill="white" y={30}>
               {monthNames[m[1]]}
             </text>
-            <path stroke="white" d={`M${x1},${15} L${x1},${30}`} />
+            <path stroke="white" d={`M${x1},15 L${x1},30`} />
           </Fragment>
         );
       })}

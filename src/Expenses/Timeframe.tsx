@@ -8,33 +8,34 @@ import dayjs from "dayjs";
 import { clearCategories } from "../redux/slices/selectedCategory";
 import { setHighlightedCategory } from "../redux/slices/highlightedCategory";
 
-export const Timeframe = () => {
+const msToNs = 1000;
+export const Timeframe = (): React.ReactElement => {
   const dispatch = useDispatch();
   const { start, end } = useTimeframe();
 
-  const setStartDate = (d: dayjs.Dayjs | null) => {
+  const setStartDate = (d: dayjs.Dayjs | null): void => {
     if (!d) return;
     dispatch(clearCategories());
     dispatch(setHighlightedCategory(""));
     dispatch(setTimeframe({ start: d.unix(), end: end }));
   };
 
-  const setEndDate = (d: dayjs.Dayjs | null) => {
+  const setEndDate = (d: dayjs.Dayjs | null): void => {
     if (!d) return;
     dispatch(clearCategories());
     dispatch(setHighlightedCategory(""));
     dispatch(setTimeframe({ start: start, end: d.unix() }));
   };
 
-  const addMonth = (n: number) => () => {
+  const addMonth = (n: number) => (): void => {
     dispatch(clearCategories());
     dispatch(setHighlightedCategory(""));
     dispatch(
       setTimeframe({
-        start: dayjs(start * 1000)
+        start: dayjs(start * msToNs)
           .add(n, "month")
           .unix(),
-        end: dayjs(end * 1000)
+        end: dayjs(end * msToNs)
           .add(n, "month")
           .unix(),
       })
@@ -46,13 +47,13 @@ export const Timeframe = () => {
       <DatePicker
         sx={{ my: 2 }}
         label="start date"
-        value={dayjs(start * 1000)}
+        value={dayjs(start * msToNs)}
         onChange={setStartDate}
       />
       <DatePicker
         sx={{ my: 2 }}
         label="end date"
-        value={dayjs(end * 1000)}
+        value={dayjs(end * msToNs)}
         onChange={setEndDate}
       />
       <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>

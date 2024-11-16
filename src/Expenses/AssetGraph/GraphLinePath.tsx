@@ -1,4 +1,4 @@
-import { Graph, Line, Point } from "./graph";
+import type { Graph, Line, Point } from "./graph";
 import { computeX, computeY } from "./utils";
 
 interface GraphLinePathProps {
@@ -8,12 +8,14 @@ interface GraphLinePathProps {
   extraSize: number;
 }
 
+const strokeWidth = 2;
+
 export const GraphLinePath = ({
   graph,
   line,
   points,
   extraSize,
-}: GraphLinePathProps) => {
+}: GraphLinePathProps): React.ReactElement => {
   const { dims, xMargins, xRange, yMargins, yRange } = graph;
   const x = computeX(dims, xMargins, xRange, points[0].date);
   const y = computeY(dims, yMargins, yRange, points[0].value);
@@ -23,7 +25,7 @@ export const GraphLinePath = ({
   return (
     <path
       d={`M${x},${y} L${x2},${y2}`}
-      strokeWidth={2 + extraSize}
+      strokeWidth={strokeWidth + extraSize}
       stroke={line.color}
     />
   );

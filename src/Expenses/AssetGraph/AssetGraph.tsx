@@ -1,4 +1,4 @@
-import { GNUAccount, GNUTransaction } from "../chartUtils";
+import type { GNUAccount, GNUTransaction } from "../chartUtils";
 import { Box } from "@mui/material";
 import { useMemo, useState } from "react";
 
@@ -17,13 +17,19 @@ interface AssetGraphProps {
   transactions: GNUTransaction[];
 }
 
-export const AssetGraph = ({ accounts, transactions }: AssetGraphProps) => {
-  const allLines = useMemo(() => processGraphData(accounts, transactions), []);
+export const AssetGraph = ({
+  accounts,
+  transactions,
+}: AssetGraphProps): React.ReactElement => {
+  const allLines = useMemo(
+    () => processGraphData(accounts, transactions),
+    [accounts, transactions]
+  );
   const [visibleAccounts, setVisibleAccounts] = useState(
-    allLines.reduce((acc, c) => {
+    allLines.reduce<Record<string, boolean>>((acc, c) => {
       acc[c.name] = true;
       return acc;
-    }, {} as Record<string, boolean>)
+    }, {})
   );
   const [highlight, setHighlight] = useState("");
 
@@ -53,14 +59,18 @@ export const AssetGraph = ({ accounts, transactions }: AssetGraphProps) => {
             key={i}
             account={l}
             disabled={!visibleAccounts[l.name]}
-            onClick={() =>
-              setVisibleAccounts((visibleAccounts) => ({
-                ...visibleAccounts,
-                [l.name]: !visibleAccounts[l.name],
-              }))
-            }
-            onEnter={() => setHighlight(l.name)}
-            onLeave={() => setHighlight("")}
+            onClick={() => {
+              setVisibleAccounts((va) => ({
+                ...va,
+                [l.name]: !va[l.name],
+              }));
+            }}
+            onEnter={() => {
+              setHighlight(l.name);
+            }}
+            onLeave={() => {
+              setHighlight("");
+            }}
           />
         ))}
       </Box>

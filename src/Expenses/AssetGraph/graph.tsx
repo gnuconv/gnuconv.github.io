@@ -1,13 +1,15 @@
 import dayjs from "dayjs";
-import { Account } from "./processor";
+import type { Account } from "./processor";
+
+const msToNs = 1000;
 
 const computeXLabels = (
   xRange: [number, number]
 ): [number[], [number, number][]] => {
   const years: number[] = [];
   const months: [number, number][] = [];
-  const earliest = dayjs(xRange[0] * 1000).startOf("month");
-  const latest = dayjs(xRange[1] * 1000).startOf("month");
+  const earliest = dayjs(xRange[0] * msToNs).startOf("month");
+  const latest = dayjs(xRange[1] * msToNs).startOf("month");
   let y = earliest.year();
   while (y <= latest.year()) {
     years.push(y);
@@ -22,10 +24,30 @@ const computeXLabels = (
   return [years, months];
 };
 
-const possibleSteps = [
-  1, 3, 10, 30, 100, 300, 1000, 3000, 10000, 30000, 100000, 300000, 1000000,
-  3000000,
-];
+const defaultWidth = 1200;
+const defaultHeight = 700;
+const xMarginsStart = 0.05;
+const xMarginsEnd = 0;
+const yMarginsStart = 0.1;
+const yMarginsEnd = 0.005;
+
+const yAxisDivisions = 10;
+const base10 = 10;
+const triple = 3;
+
+const computeStep = (yRange: [number, number]): number => {
+  const tenthScale = (yRange[1] - yRange[0]) / yAxisDivisions;
+  let i = 0;
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
+  while (true) {
+    const step0 = Math.pow(base10, i);
+    if (step0 > tenthScale) return step0;
+    const step1 = triple * step0;
+    if (step1 > tenthScale) return step1;
+    i++;
+  }
+};
 
 export interface Point {
   date: number;
@@ -58,48 +80,47 @@ export const computeGraphMeta = (
   const lines = allLines.filter((l) => visibleAccounts[l.name]);
 
   const minX = lines.reduce(
-    (acc, c) =>
+    (acc0, c0) =>
       Math.min(
-        c.points.reduce((acc, c) => Math.min(acc, c.date), 1e99),
-        acc
+        c0.points.reduce((acc1, c1) => Math.min(acc1, c1.date), Infinity),
+        acc0
       ),
-    1e99
+    Infinity
   );
 
   const maxX = lines.reduce(
-    (acc, c) =>
+    (acc0, c0) =>
       Math.max(
-        c.points.reduce((acc, c) => Math.max(acc, c.date), 0),
-        acc
+        c0.points.reduce((acc1, c1) => Math.max(acc1, c1.date), 0),
+        acc0
       ),
     0
   );
 
   const minY = lines.reduce(
-    (acc, c) =>
+    (acc0, c0) =>
       Math.min(
-        c.points.reduce((acc, c) => Math.min(acc, c.value), 1e99),
-        acc
+        c0.points.reduce((acc1, c1) => Math.min(acc1, c1.value), Infinity),
+        acc0
       ),
-    1e99
+    Infinity
   );
   const maxY = lines.reduce(
-    (acc, c) =>
+    (acc0, c0) =>
       Math.max(
-        c.points.reduce((acc, c) => Math.max(acc, c.value), 0),
-        acc
+        c0.points.reduce((acc1, c1) => Math.max(acc1, c1.value), 0),
+        acc0
       ),
     0
   );
 
-  const dims: [number, number] = [1200, 700];
-  const xMargins: [number, number] = [0.05, 0];
-  const yMargins: [number, number] = [0.1, 0.005];
+  const dims: [number, number] = [defaultWidth, defaultHeight];
+  const xMargins: [number, number] = [xMarginsStart, xMarginsEnd];
+  const yMargins: [number, number] = [yMarginsStart, yMarginsEnd];
   const xRange: [number, number] = [minX, maxX];
   const yRange: [number, number] = [minY, maxY];
 
-  const step =
-    possibleSteps.find((s) => s > (yRange[1] - yRange[0]) / 10) ?? 1000;
+  const step = computeStep(yRange);
 
   const yLabels: number[] = [];
 

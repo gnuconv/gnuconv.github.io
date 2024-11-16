@@ -17,7 +17,11 @@ const style = {
   p: 4,
 };
 
-export const Modal = ({ open, onClose, children }: IProps) => {
+export const Modal = ({
+  open,
+  onClose,
+  children,
+}: IProps): React.ReactElement => {
   return (
     <M open={open} onClose={onClose}>
       <Card sx={style}>{children}</Card>

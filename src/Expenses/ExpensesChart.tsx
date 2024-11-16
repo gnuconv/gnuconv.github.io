@@ -6,8 +6,9 @@ import { useSelectedCategory } from "../redux/slices/selectedCategory";
 import { LegendTitle } from "./LegendTitle";
 import { SVGRow } from "./SVGRow";
 import { PopCategory } from "./PopCategory";
-import { GraphNode, processChart } from "./gnuProcessor";
-import { GNUAccount, GNUTransaction } from "./chartUtils";
+import type { GraphNode } from "./gnuProcessor";
+import { processChart } from "./gnuProcessor";
+import type { GNUAccount, GNUTransaction } from "./chartUtils";
 
 export const margin = 0.003;
 
@@ -28,6 +29,8 @@ interface ExpensesChartProps {
   transactions: GNUTransaction[];
 }
 
+const centsPrecision = 2;
+
 export const ExpensesChart = ({
   accounts,
   transactions,
@@ -44,7 +47,8 @@ export const ExpensesChart = ({
 
   const expenses = root.size;
   const canvasWidth = 10000;
-  const lineHeight = canvasWidth / 30;
+  const canvasDivision = 30;
+  const lineHeight = canvasWidth / canvasDivision;
 
   const depth = maxDepth(root) - 1;
 
@@ -59,7 +63,7 @@ export const ExpensesChart = ({
         }}
       >
         <Typography variant="h3">
-          {root.name} total: ${expenses.toFixed(2)}
+          {root.name} total: ${expenses.toFixed(centsPrecision)}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
