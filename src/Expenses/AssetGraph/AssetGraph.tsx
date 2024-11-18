@@ -11,6 +11,7 @@ import { processGraphData } from "./processor";
 import { computeGraphMeta } from "./graph";
 import { GraphLine } from "./GraphLine";
 import { GNUFileSelector } from "../gnuFileSelector";
+import { Grid } from "./Grid";
 
 interface AssetGraphProps {
   accounts: GNUAccount[];
@@ -79,16 +80,18 @@ export const AssetGraph = ({
         height={dims[1]}
         style={{ backgroundColor: "#121212" }}
       >
-        <XAxis graph={graphData} />
+        <Grid graph={graphData} />
         <YAxis graph={graphData} />
         <YLabels graph={graphData} />
         <XLabels graph={graphData} />
+        <XAxis graph={graphData} />
         {lines.map((l, i) => (
           <GraphLine
             key={i}
             graph={graphData}
             line={l}
             highlight={highlight === l.name}
+            dim={highlight !== "" && highlight !== l.name}
           />
         ))}
       </svg>

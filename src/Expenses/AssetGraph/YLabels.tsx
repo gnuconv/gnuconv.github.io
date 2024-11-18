@@ -6,9 +6,6 @@ interface YLabelsProps {
   graph: Graph;
 }
 
-const half = 0.5;
-const textOffset = 5;
-
 export const YLabels = ({ graph }: YLabelsProps): React.ReactElement => {
   const { dims, xMargins, yMargins, yRange, yLabels } = graph;
   return (
@@ -23,18 +20,14 @@ export const YLabels = ({ graph }: YLabelsProps): React.ReactElement => {
               yMargins,
               yRange,
               a
-            )} L${dims[0] * xMargins[0] * half},${computeY(
+            )} L${dims[0] * xMargins[0] * 0.5},${computeY(
               dims,
               yMargins,
               yRange,
               a
             )}`}
           />
-          <text
-            x={0}
-            y={computeY(dims, yMargins, yRange, a) - textOffset}
-            fill="white"
-          >
+          <text x={0} y={computeY(dims, yMargins, yRange, a) - 5} fill="white">
             {a}
           </text>
         </Fragment>

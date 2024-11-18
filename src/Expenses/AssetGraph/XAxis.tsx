@@ -11,14 +11,12 @@ export const XAxis = ({ graph }: XAxisProps): React.ReactElement => {
   if (heightOfBalanceZero < 0 || heightOfBalanceZero > dims[1]) return <></>;
 
   return (
-    <>
-      <path
-        stroke="#8888"
-        strokeWidth={2}
-        d={`M${xMargins[0] * dims[0]},${heightOfBalanceZero} L${
-          dims[0]
-        },${heightOfBalanceZero}`}
-      />
-    </>
+    <path
+      stroke="#444"
+      strokeWidth={4}
+      d={`M${xMargins[0] * dims[0]},${heightOfBalanceZero} L${
+        dims[0]
+      },${heightOfBalanceZero}`}
+    />
   );
 };

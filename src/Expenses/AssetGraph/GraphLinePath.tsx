@@ -6,6 +6,7 @@ interface GraphLinePathProps {
   line: Line;
   points: [Point, Point];
   extraSize: number;
+  alpha: string;
 }
 
 const strokeWidth = 2;
@@ -15,6 +16,7 @@ export const GraphLinePath = ({
   line,
   points,
   extraSize,
+  alpha,
 }: GraphLinePathProps): React.ReactElement => {
   const { dims, xMargins, xRange, yMargins, yRange } = graph;
   const x = computeX(dims, xMargins, xRange, points[0].date);
@@ -26,7 +28,7 @@ export const GraphLinePath = ({
     <path
       d={`M${x},${y} L${x2},${y2}`}
       strokeWidth={strokeWidth + extraSize}
-      stroke={line.color}
+      stroke={line.color + alpha}
     />
   );
 };
