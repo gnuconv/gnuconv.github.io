@@ -5,16 +5,16 @@ interface LineToggleProps {
   account: Account;
   disabled: boolean;
   onClick: () => void;
-  onEnter: () => void;
-  onLeave: () => void;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 export const LineToggle = ({
   account,
   disabled,
   onClick,
-  onEnter,
-  onLeave,
+  onMouseEnter: onEnter,
+  onMouseLeave: onLeave,
 }: LineToggleProps): React.ReactElement => {
   return (
     <Button

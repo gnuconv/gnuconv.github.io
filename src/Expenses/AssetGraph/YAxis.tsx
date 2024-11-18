@@ -1,12 +1,8 @@
-import type { Graph } from "./graph";
+import { useGraph } from "./GraphContext";
 import { computeY } from "./utils";
 
-interface YAxisProps {
-  graph: Graph;
-}
-
-export const YAxis = ({ graph }: YAxisProps): React.ReactElement => {
-  const { dims, xMargins, yMargins, yRange } = graph;
+export const YAxis = (): React.ReactElement => {
+  const { dims, xMargins, yMargins, yRange } = useGraph();
   const y0 = computeY(dims, yMargins, yRange, yRange[0]);
   const y1 = computeY(dims, yMargins, yRange, yRange[1]);
   return (

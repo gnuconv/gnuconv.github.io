@@ -1,102 +1,51 @@
-import type { GNUAccount, GNUTransaction } from "../chartUtils";
-import { Box } from "@mui/material";
-import { useMemo, useState } from "react";
-
-import { LineToggle } from "./LineToggle";
+import type { Graph } from "./graph";
+import { GraphContext } from "./GraphContext";
+import { GraphLine } from "./GraphLine";
+import { Grid } from "./Grid";
 import { XAxis } from "./XAxis";
+import { XMonthLabels } from "./XMonthLabels";
+import { XYearLabels } from "./XYearLabels";
 import { YAxis } from "./YAxis";
 import { YLabels } from "./YLabels";
-import { processGraphData } from "./processor";
-import { computeGraphMeta } from "./graph";
-import { GraphLine } from "./GraphLine";
-import { GNUFileSelector } from "../gnuFileSelector";
-import { Grid } from "./Grid";
-import { XYearLabels } from "./XYearLabels";
-import { XMonthLabels } from "./XMonthLabels";
 
 interface AssetGraphProps {
-  accounts: GNUAccount[];
-  transactions: GNUTransaction[];
+  graph: Graph;
+  highlight: string;
 }
 
 export const AssetGraph = ({
-  accounts,
-  transactions,
+  graph,
+  highlight,
 }: AssetGraphProps): React.ReactElement => {
-  const allLines = useMemo(
-    () => processGraphData(accounts, transactions),
-    [accounts, transactions]
-  );
-  const [visibleAccounts, setVisibleAccounts] = useState(
-    allLines.reduce<Record<string, boolean>>((acc, c) => {
-      acc[c.name] = true;
-      return acc;
-    }, {})
-  );
-  const [highlight, setHighlight] = useState("");
+  const { dims, lines } = graph;
 
-  const graphData = computeGraphMeta(allLines, visibleAccounts);
-  const { dims, lines } = graphData;
-
+  const renderLines = lines
+    .slice()
+    .sort(
+      (a, b) => (a.name === highlight ? 1 : 0) - (b.name === highlight ? 1 : 0)
+    );
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        mt: 2,
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "start",
-          justifyContent: "start",
-          flexDirection: "column",
-          mr: 2,
-        }}
-      >
-        <GNUFileSelector />
-        {allLines.map((l, i) => (
-          <LineToggle
-            key={i}
-            account={l}
-            disabled={!visibleAccounts[l.name]}
-            onClick={() => {
-              setVisibleAccounts((va) => ({
-                ...va,
-                [l.name]: !va[l.name],
-              }));
-            }}
-            onEnter={() => {
-              setHighlight(l.name);
-            }}
-            onLeave={() => {
-              setHighlight("");
-            }}
-          />
-        ))}
-      </Box>
+    <GraphContext.Provider value={graph}>
       <svg
         width={dims[0]}
         height={dims[1]}
         style={{ backgroundColor: "#121212" }}
       >
-        <Grid graph={graphData} />
-        <YAxis graph={graphData} />
-        <YLabels graph={graphData} />
-        <XYearLabels graph={graphData} />
-        <XMonthLabels graph={graphData} />
-        <XAxis graph={graphData} />
-        {lines.map((l, i) => (
+        <Grid />
+        <XAxis />
+        <YAxis />
+        <YLabels />
+        <XYearLabels />
+        <XMonthLabels />
+        {renderLines.map((l, i) => (
           <GraphLine
             key={i}
-            graph={graphData}
             line={l}
             highlight={highlight === l.name}
             dim={highlight !== "" && highlight !== l.name}
           />
         ))}
       </svg>
-    </Box>
+    </GraphContext.Provider>
   );
 };

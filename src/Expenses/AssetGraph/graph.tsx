@@ -27,26 +27,14 @@ const computeXLabels = (
   return [years, months];
 };
 
-const defaultWidth = 1200;
-const defaultHeight = 700;
-const xMarginsStart = 0.05;
-const xMarginsEnd = 0;
-const yMarginsStart = 0.1;
-const yMarginsEnd = 0.005;
-
-const yAxisDivisions = 10;
-const base10 = 10;
-const triple = 3;
-
 const computeStep = (yRange: [number, number]): number => {
-  const tenthScale = (yRange[1] - yRange[0]) / yAxisDivisions;
+  const tenthScale = (yRange[1] - yRange[0]) / 10;
   let i = 0;
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
   while (true) {
-    const step0 = Math.pow(base10, i);
+    const step0 = Math.pow(10, i);
     if (step0 > tenthScale) return step0;
-    const step1 = triple * step0;
+    const step1 = 3 * step0;
     if (step1 > tenthScale) return step1;
     i++;
   }
@@ -99,63 +87,46 @@ export interface Graph {
   lines: Line[];
 }
 
-export const computeGraphMeta = (
+const reduceLines = (
+  lines: Account[],
+  f: typeof Math.min,
+  a: (p: Point) => number,
+  initial: number
+): number =>
+  lines.reduce(
+    (acc0, c0) =>
+      f(
+        c0.points.reduce((acc1, c1) => f(acc1, a(c1)), initial),
+        acc0
+      ),
+    initial
+  );
+
+export const computeGraph = (
   allLines: Account[],
   visibleAccounts: Record<string, boolean>
 ): Graph => {
   const lines = allLines.filter((l) => visibleAccounts[l.name]);
 
-  const minX = lines.reduce(
-    (acc0, c0) =>
-      Math.min(
-        c0.points.reduce((acc1, c1) => Math.min(acc1, c1.date), Infinity),
-        acc0
-      ),
-    Infinity
-  );
+  const xRange: [number, number] = [
+    reduceLines(lines, Math.min, (c) => c.date, Infinity),
+    reduceLines(lines, Math.max, (c) => c.date, 0),
+  ];
 
-  const maxX = lines.reduce(
-    (acc0, c0) =>
-      Math.max(
-        c0.points.reduce((acc1, c1) => Math.max(acc1, c1.date), 0),
-        acc0
-      ),
-    0
-  );
+  const yRange: [number, number] = [
+    reduceLines(lines, Math.min, (c) => c.value, Infinity),
+    reduceLines(lines, Math.max, (c) => c.value, 0),
+  ];
 
-  const minY = lines.reduce(
-    (acc0, c0) =>
-      Math.min(
-        c0.points.reduce((acc1, c1) => Math.min(acc1, c1.value), Infinity),
-        acc0
-      ),
-    Infinity
-  );
-  const maxY = lines.reduce(
-    (acc0, c0) =>
-      Math.max(
-        c0.points.reduce((acc1, c1) => Math.max(acc1, c1.value), 0),
-        acc0
-      ),
-    0
-  );
-
-  const dims: [number, number] = [defaultWidth, defaultHeight];
-  const xMargins: [number, number] = [xMarginsStart, xMarginsEnd];
-  const yMargins: [number, number] = [yMarginsStart, yMarginsEnd];
-  const xRange: [number, number] = [minX, maxX];
-  const yRange: [number, number] = [minY, maxY];
-
-  const yLabels = computeYLabels(yRange);
   const [xYearsLabels, xMonthslabels] = computeXLabels(xRange);
 
   return {
-    dims: dims,
-    xMargins: xMargins,
-    yMargins: yMargins,
+    dims: [1200, 700],
+    xMargins: [0.05, 0],
+    yMargins: [0.1, 0.005],
     xRange: xRange,
     yRange: yRange,
-    yLabels: yLabels,
+    yLabels: computeYLabels(yRange),
     xYearsLabels: xYearsLabels,
     xMonthslabels: xMonthslabels,
 

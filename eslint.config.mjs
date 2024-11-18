@@ -58,6 +58,8 @@ export default [
         },
       ],
       "@typescript-eslint/no-magic-numbers": "off",
+      "no-constant-condition": "off",
+      "@typescript-eslint/no-unnecessary-condition": "off",
       // some variables need to be unused.
       "@typescript-eslint/no-unused-vars": [
         "error",
