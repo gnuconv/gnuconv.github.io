@@ -1,18 +1,16 @@
-// https://www.nceas.ucsb.edu/sites/default/files/2022-06/Colorblind%20Safe%20Color%20Schemes.pdf
-
-// https://www.heavy.ai/blog/12-color-palettes-for-telling-better-stories-with-your-data
 export const Palette = [
-  "#ea5543",
-  "#f46c9c",
-  "#ef9c1f",
-  "#edbe30",
-  "#ede05a",
-  "#bccf31",
-  "#85bb44",
-  "#3badef",
-  "#b43dc7",
+  "#e60049",
+  "#3fb6ff",
+  "#4ee98f",
+  "#e6d600",
+  "#9a18f5",
+  "#f8a204",
+  "#db09b5",
+  "#b3d4ff",
+  "#3cbda0",
 ];
 
+// exponent used to make a color darker.
 const darkerExpo = 0.96;
 const darker = ([a, b, c]: number[]): number[] => [
   Math.pow(a, darkerExpo),
