@@ -6,12 +6,13 @@ import { LineToggle } from "./LineToggle";
 import { XAxis } from "./XAxis";
 import { YAxis } from "./YAxis";
 import { YLabels } from "./YLabels";
-import { XLabels } from "./XLabels";
 import { processGraphData } from "./processor";
 import { computeGraphMeta } from "./graph";
 import { GraphLine } from "./GraphLine";
 import { GNUFileSelector } from "../gnuFileSelector";
 import { Grid } from "./Grid";
+import { XYearLabels } from "./XYearLabels";
+import { XMonthLabels } from "./XMonthLabels";
 
 interface AssetGraphProps {
   accounts: GNUAccount[];
@@ -83,7 +84,8 @@ export const AssetGraph = ({
         <Grid graph={graphData} />
         <YAxis graph={graphData} />
         <YLabels graph={graphData} />
-        <XLabels graph={graphData} />
+        <XYearLabels graph={graphData} />
+        <XMonthLabels graph={graphData} />
         <XAxis graph={graphData} />
         {lines.map((l, i) => (
           <GraphLine
