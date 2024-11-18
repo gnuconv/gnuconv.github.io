@@ -5,16 +5,17 @@ const msToNs = 1000;
 
 const computeXLabels = (
   xRange: [number, number]
-): [number[], [number, number][]] => {
-  const years: number[] = [];
+): [dayjs.Dayjs[], [number, number][]] => {
+  const years: dayjs.Dayjs[] = [];
   const months: [number, number][] = [];
   const earliest = dayjs(xRange[0] * msToNs).startOf("month");
   const latest = dayjs(xRange[1] * msToNs).startOf("month");
-  let y = earliest.year();
-  while (y <= latest.year()) {
+  let y = earliest.startOf("year");
+  while (y.isBefore(latest)) {
     years.push(y);
-    y++;
+    y = y.add(1, "year");
   }
+  years.push(y.add(1, "year"));
 
   let m = earliest;
   while (m.unix() <= latest.unix()) {
@@ -67,7 +68,7 @@ export interface Graph {
   xRange: [number, number];
   yRange: [number, number];
   yLabels: number[];
-  xYearsLabels: number[];
+  xYearsLabels: dayjs.Dayjs[];
   xMonthslabels: [number, number][];
 
   lines: Line[];
