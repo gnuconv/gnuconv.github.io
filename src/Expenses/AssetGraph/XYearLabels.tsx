@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import type { Graph } from "./graph";
 import { computeX } from "./utils";
 import { Fragment } from "react/jsx-runtime";
@@ -16,14 +15,11 @@ export const XYearLabels = ({
 
   const lineHeight = (dims[1] * yMargins[0]) / 2;
 
-  const yearUnix = xYearsLabels.map((y) => dayjs(`${y}-01-01`).unix());
-  yearUnix.push(
-    dayjs(`${xYearsLabels[xYearsLabels.length - 1] + 1}-01-01`).unix()
-  );
+  const yearUnix = xYearsLabels.map((y) => y.unix());
   return (
     <>
       <path d={`M${graphXMin},0 L${graphXMin},${lineHeight}`} stroke="white" />
-      {xYearsLabels.map((y, i) => {
+      {xYearsLabels.slice(0, -1).map((y, i) => {
         const yearXMin = computeX(dims, xMargins, xRange, yearUnix[i]);
         const x0 = Math.max(graphXMin, yearXMin);
 
@@ -39,7 +35,7 @@ export const XYearLabels = ({
               fill="white"
               fontSize="20"
             >
-              {y}
+              {y.year()}
             </text>
             <path d={`M${x1},0 L${x1},${lineHeight}`} stroke="white" />
           </Fragment>
