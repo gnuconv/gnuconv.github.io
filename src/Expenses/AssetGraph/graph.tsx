@@ -5,23 +5,25 @@ const msToNs = 1000;
 
 const computeXLabels = (
   xRange: [number, number]
-): [dayjs.Dayjs[], [number, number][]] => {
+): [dayjs.Dayjs[], dayjs.Dayjs[]] => {
   const years: dayjs.Dayjs[] = [];
-  const months: [number, number][] = [];
-  const earliest = dayjs(xRange[0] * msToNs).startOf("month");
-  const latest = dayjs(xRange[1] * msToNs).startOf("month");
+  const months: dayjs.Dayjs[] = [];
+  const earliest = dayjs(xRange[0] * msToNs);
+  const latest = dayjs(xRange[1] * msToNs);
   let y = earliest.startOf("year");
   while (y.isBefore(latest)) {
     years.push(y);
     y = y.add(1, "year");
   }
-  years.push(y.add(1, "year"));
+  years.push(y);
 
-  let m = earliest;
-  while (m.unix() <= latest.unix()) {
-    months.push([m.year(), m.month()]);
+  let m = earliest.startOf("month");
+  while (m.isBefore(latest)) {
+    months.push(m);
     m = m.add(1, "month");
   }
+  months.push(m);
+
   return [years, months];
 };
 
@@ -50,6 +52,29 @@ const computeStep = (yRange: [number, number]): number => {
   }
 };
 
+const computeYLabels = (yRange: [number, number]): number[] => {
+  const step = computeStep(yRange);
+  const yLabels: number[] = [];
+
+  let i = 0;
+  while (i * step < yRange[1]) {
+    yLabels.push(i * step);
+    i++;
+  }
+  yLabels.push(i * step);
+  yRange[1] = i * step;
+  if (yRange[0] < 0) {
+    i = -1;
+    while (i * step > yRange[0]) {
+      yLabels.push(i * step);
+      i--;
+    }
+    yLabels.push(i * step);
+    yRange[0] = i * step;
+  }
+  return yLabels;
+};
+
 export interface Point {
   date: number;
   value: number;
@@ -69,7 +94,7 @@ export interface Graph {
   yRange: [number, number];
   yLabels: number[];
   xYearsLabels: dayjs.Dayjs[];
-  xMonthslabels: [number, number][];
+  xMonthslabels: dayjs.Dayjs[];
 
   lines: Line[];
 }
@@ -121,27 +146,7 @@ export const computeGraphMeta = (
   const xRange: [number, number] = [minX, maxX];
   const yRange: [number, number] = [minY, maxY];
 
-  const step = computeStep(yRange);
-
-  const yLabels: number[] = [];
-
-  let i = 0;
-  while (i * step < yRange[1]) {
-    yLabels.push(i * step);
-    i++;
-  }
-  yLabels.push(i * step);
-  yRange[1] = i * step;
-  if (yRange[0] < 0) {
-    i = -1;
-    while (i * step > yRange[0]) {
-      yLabels.push(i * step);
-      i--;
-    }
-    yLabels.push(i * step);
-    yRange[0] = i * step;
-  }
-
+  const yLabels = computeYLabels(yRange);
   const [xYearsLabels, xMonthslabels] = computeXLabels(xRange);
 
   return {
