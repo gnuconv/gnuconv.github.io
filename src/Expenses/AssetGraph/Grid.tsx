@@ -1,13 +1,9 @@
 import { computeX, computeY } from "./utils";
-import type { Graph } from "./graph";
+import { useGraph } from "./GraphContext";
 
-interface GridProps {
-  graph: Graph;
-}
-
-export const Grid = ({ graph }: GridProps): React.ReactElement => {
+export const Grid = (): React.ReactElement => {
   const { dims, xMargins, yMargins, xRange, yRange, yLabels, xMonthslabels } =
-    graph;
+    useGraph();
   return (
     <>
       {yLabels.map((a) => {

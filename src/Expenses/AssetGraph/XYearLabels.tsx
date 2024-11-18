@@ -1,15 +1,9 @@
-import type { Graph } from "./graph";
+import { useGraph } from "./GraphContext";
 import { computeX } from "./utils";
 import { Fragment } from "react/jsx-runtime";
 
-interface XYearLabelsProps {
-  graph: Graph;
-}
-
-export const XYearLabels = ({
-  graph,
-}: XYearLabelsProps): React.ReactElement => {
-  const { dims, xMargins, yMargins, xRange, xYearsLabels } = graph;
+export const XYearLabels = (): React.ReactElement => {
+  const { dims, xMargins, yMargins, xRange, xYearsLabels } = useGraph();
   const graphXMin = computeX(dims, xMargins, xRange, xRange[0]);
   const graphXMax = computeX(dims, xMargins, xRange, xRange[1]);
 

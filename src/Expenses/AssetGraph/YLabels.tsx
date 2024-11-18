@@ -1,13 +1,9 @@
 import { Fragment } from "react/jsx-runtime";
 import { computeY } from "./utils";
-import type { Graph } from "./graph";
+import { useGraph } from "./GraphContext";
 
-interface YLabelsProps {
-  graph: Graph;
-}
-
-export const YLabels = ({ graph }: YLabelsProps): React.ReactElement => {
-  const { dims, xMargins, yMargins, yRange, yLabels } = graph;
+export const YLabels = (): React.ReactElement => {
+  const { dims, xMargins, yMargins, yRange, yLabels } = useGraph();
   return (
     <>
       {yLabels.map((a) => (

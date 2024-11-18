@@ -1,9 +1,5 @@
-import type { Graph } from "./graph";
+import { useGraph } from "./GraphContext";
 import { computeX } from "./utils";
-
-interface XMonthLabelsProps {
-  graph: Graph;
-}
 
 const monthNames = [
   "jan",
@@ -22,10 +18,8 @@ const monthNames = [
 
 const textOffset = 12;
 
-export const XMonthLabels = ({
-  graph,
-}: XMonthLabelsProps): React.ReactElement => {
-  const { dims, xMargins, yMargins, xRange, xMonthslabels } = graph;
+export const XMonthLabels = (): React.ReactElement => {
+  const { dims, xMargins, yMargins, xRange, xMonthslabels } = useGraph();
 
   const min = computeX(dims, xMargins, xRange, xRange[0]);
   const max = computeX(dims, xMargins, xRange, xRange[1]);

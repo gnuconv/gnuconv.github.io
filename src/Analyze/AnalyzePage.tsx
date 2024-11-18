@@ -1,6 +1,6 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import { AssetGraph } from "../Expenses/AssetGraph/AssetGraph";
+import { AssetPage } from "../Expenses/AssetGraph/AssetPage";
 import { useGNUFile } from "../redux/slices/gnuFile";
 import { processGNUFile } from "../Expenses/gnuProcessor";
 import { ExpensesPage } from "../Expenses/ExpensesPage";
@@ -47,7 +47,7 @@ export const AnalyzePage = (): React.ReactElement => {
               <ExpensesPage accounts={accounts} transactions={transactions} />
             )}
             {tab === TAB.ASSETS && (
-              <AssetGraph accounts={accounts} transactions={transactions} />
+              <AssetPage accounts={accounts} transactions={transactions} />
             )}
           </Box>
         </>
