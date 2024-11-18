@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import type { Graph } from "./graph";
 import { computeX } from "./utils";
 
@@ -21,7 +20,6 @@ const monthNames = [
   "dec",
 ];
 
-const monthPadding = 2;
 const textOffset = 12;
 
 export const XMonthLabels = ({
@@ -32,22 +30,15 @@ export const XMonthLabels = ({
   const min = computeX(dims, xMargins, xRange, xRange[0]);
   const max = computeX(dims, xMargins, xRange, xRange[1]);
 
+  const monthsUnix = xMonthslabels.map((m) => m.unix());
   return (
     <>
-      {xMonthslabels.map((m, i) => {
-        const monthStart = dayjs(
-          `${m[0]}-${(m[1] + 1 + "").padStart(monthPadding, "0")}`
-        );
-        const x0 = Math.max(
-          min,
-          computeX(dims, xMargins, xRange, monthStart.unix())
-        );
+      {xMonthslabels.slice(0, -1).map((m, i) => {
+        const monthStart = computeX(dims, xMargins, xRange, monthsUnix[i]);
+        const x0 = Math.max(min, monthStart);
 
-        const monthEnd = monthStart.add(1, "month");
-        const x1 = Math.min(
-          max,
-          computeX(dims, xMargins, xRange, monthEnd.unix())
-        );
+        const monthEnd = computeX(dims, xMargins, xRange, monthsUnix[i + 1]);
+        const x1 = Math.min(max, monthEnd);
 
         const mid = (x0 + x1) * 0.5;
         return (
@@ -57,7 +48,7 @@ export const XMonthLabels = ({
             fill="white"
             y={dims[1] * yMargins[0] - 10}
           >
-            {monthNames[m[1]]}
+            {monthNames[m.month()]}
           </text>
         );
       })}
