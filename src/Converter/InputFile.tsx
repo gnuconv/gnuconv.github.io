@@ -27,7 +27,7 @@ export const InputFile = ({
 
   return (
     <Button variant="contained" component="label">
-      {isEmpty ? "UPLOAD .GNUCASH FILE" : "CHANGE"}
+      {isEmpty ? "UPLOAD" : "CHANGE"}
       <input onChange={handleFileUpload} hidden multiple type="file" />
     </Button>
   );

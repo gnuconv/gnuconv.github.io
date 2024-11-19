@@ -1,11 +1,11 @@
-import type { GNUAccount, GNUTransaction } from "../chartUtils";
+import type { GNUAccount, GNUTransaction } from "../Expenses/chartUtils";
 import { Box } from "@mui/material";
 import { useMemo, useState } from "react";
 
 import { LineToggle } from "./LineToggle";
-import { processGraphData } from "./processor";
+import { processGNUData } from "./processor";
 import { computeGraph } from "./graph";
-import { GNUFileSelector } from "../gnuFileSelector";
+import { GNUFileSelector } from "../Expenses/gnuFileSelector";
 import { AssetGraph } from "./AssetGraph";
 
 interface AssetGraphProps {
@@ -18,7 +18,7 @@ export const AssetPage = ({
   transactions,
 }: AssetGraphProps): React.ReactElement => {
   const allLines = useMemo(
-    () => processGraphData(accounts, transactions),
+    () => processGNUData(accounts, transactions),
     [accounts, transactions]
   );
   const [visibleAccounts, setVisibleAccounts] = useState(

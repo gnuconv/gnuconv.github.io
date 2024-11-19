@@ -5,9 +5,7 @@ export const calculateSize = (n: GraphNode | GraphNode[]): number => {
   if (Array.isArray(n)) return n.reduce((acc, c) => acc + calculateSize(c), 0);
 
   if (n.size) return n.size;
-  if (n.children)
-    return n.children.reduce((acc, c) => acc + calculateSize(c), 0);
-  return 0;
+  return n.children.reduce((acc, c) => acc + calculateSize(c), 0);
 };
 
 interface AccountTreeTransaction {
@@ -81,7 +79,7 @@ export interface GraphNode {
   name: string;
   color: string;
   size: number;
-  children?: GraphNode[];
+  children: GraphNode[];
 }
 
 const convertAccountTree = (node: AccountTreeNode): GraphNode => {
@@ -93,6 +91,7 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
         name: t.name,
         size: t.value,
         color: stringToColour(t.name),
+        children: [],
       })),
       size: 0,
     };
@@ -115,6 +114,7 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
     name: "",
     color: "",
     size: 0,
+    children: [],
   };
 };
 
@@ -146,7 +146,6 @@ export const processChart = (
   );
 
   const out = convertAccountTree(accountTree);
-  if (out.children)
-    out.children = out.children.filter((c) => !c.name.includes("UNKNOWN"));
+  out.children = out.children.filter((c) => !c.name.includes("UNKNOWN"));
   return out;
 };

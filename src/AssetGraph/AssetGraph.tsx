@@ -26,11 +26,7 @@ export const AssetGraph = ({
     );
   return (
     <GraphContext.Provider value={graph}>
-      <svg
-        width={dims[0]}
-        height={dims[1]}
-        style={{ backgroundColor: "#121212" }}
-      >
+      <svg style={{ maxHeight: "700px" }} viewBox={`0 0 ${dims[0]} ${dims[1]}`}>
         <Grid />
         <XAxis />
         <YAxis />
