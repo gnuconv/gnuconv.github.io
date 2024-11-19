@@ -1,6 +1,6 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import { AssetPage } from "../Expenses/AssetGraph/AssetPage";
+import { AssetPage } from "../AssetGraph/AssetPage";
 import { useGNUFile } from "../redux/slices/gnuFile";
 import { processGNUFile } from "../Expenses/gnuProcessor";
 import { ExpensesPage } from "../Expenses/ExpensesPage";
@@ -12,7 +12,7 @@ enum TAB {
 }
 
 export const AnalyzePage = (): React.ReactElement => {
-  const [tab, setTab] = useState(TAB.ASSETS);
+  const [tab, setTab] = useState(TAB.EXPENSES);
   const gnuFile = useGNUFile();
   const [accounts, transactions] = processGNUFile(gnuFile.content);
 

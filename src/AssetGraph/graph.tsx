@@ -27,15 +27,18 @@ const computeXLabels = (
   return [years, months];
 };
 
+const partials = [1, 2, 3, 5];
+
 const computeStep = (yRange: [number, number]): number => {
   const tenthScale = (yRange[1] - yRange[0]) / 10;
   let i = 0;
 
   while (true) {
-    const step0 = Math.pow(10, i);
-    if (step0 > tenthScale) return step0;
-    const step1 = 3 * step0;
-    if (step1 > tenthScale) return step1;
+    const pow = Math.pow(10, i);
+    for (const partial of partials) {
+      const step = pow * partial;
+      if (step > tenthScale) return step;
+    }
     i++;
   }
 };

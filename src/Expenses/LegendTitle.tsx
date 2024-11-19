@@ -11,8 +11,6 @@ interface LegendTitleProps {
   amount: number;
 }
 
-const centsPrecision = 2;
-
 export const LegendTitle = ({
   name,
   amount,
@@ -39,7 +37,7 @@ export const LegendTitle = ({
       onClick={onClick}
     >
       {name}
-      <br />${amount.toFixed(centsPrecision)}
+      <br />${amount.toFixed(2)}
     </Typography>
   );
 };

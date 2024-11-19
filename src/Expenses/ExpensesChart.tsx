@@ -13,7 +13,7 @@ import type { GNUAccount, GNUTransaction } from "./chartUtils";
 export const margin = 0.003;
 
 const maxDepth = (n: GraphNode): number => {
-  if (!n.children) return 1;
+  if (!n.children.length) return 1;
   return 1 + Math.max(...n.children.map(maxDepth));
 };
 
@@ -24,12 +24,17 @@ const findNode = (root: GraphNode, path: string[]): GraphNode => {
   return findNode(child, path.slice(1));
 };
 
+const sortNodes = (n: GraphNode): void => {
+  n.children.sort((a, b) => b.size - a.size);
+  n.children.forEach((c) => {
+    sortNodes(c);
+  });
+};
+
 interface ExpensesChartProps {
   accounts: GNUAccount[];
   transactions: GNUTransaction[];
 }
-
-const centsPrecision = 2;
 
 export const ExpensesChart = ({
   accounts,
@@ -42,8 +47,8 @@ export const ExpensesChart = ({
   const tree = processChart(accounts, transactions, start, end);
 
   const root = findNode(tree, selectedCategory);
-
-  const nodes = root.children?.sort((a, b) => b.size - a.size) ?? [];
+  sortNodes(root);
+  const nodes = root.children;
 
   const expenses = root.size;
   const canvasWidth = 10000;
@@ -63,7 +68,7 @@ export const ExpensesChart = ({
         }}
       >
         <Typography variant="h3">
-          {root.name} total: ${expenses.toFixed(centsPrecision)}
+          {root.name} total: ${expenses.toFixed(2)}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>

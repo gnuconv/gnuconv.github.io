@@ -39,15 +39,17 @@ export const SVGRow = ({
   const ratio = width / totalSize;
   const subWidth = 1 - (nodes.length - 1) * margin;
 
-  const data = nodes.map((n, i) => ({
-    name: n.name,
-    color: palette[i % palette.length],
-    x: 0,
-    y: y,
-    width: calculateSize(n) * ratio * subWidth,
-    height: height,
-    children: n.children,
-  }));
+  const data = nodes
+    .map((n, i) => ({
+      name: n.name,
+      color: palette[i % palette.length],
+      x: 0,
+      y: y,
+      width: calculateSize(n) * ratio * subWidth,
+      height: height,
+      children: n.children,
+    }))
+    .filter((n) => n.width > 0);
 
   const calculateWidth = (points: DataPoint[]): number =>
     points.reduce((acc: number, c: DataPoint) => acc + c.width, 0);
