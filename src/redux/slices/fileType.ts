@@ -7,11 +7,16 @@ export interface FileTypeState {
   value: FileType;
 }
 
-export type FileType = "TD" | "RBC" | "DESJARDINS";
-export const FileTypes: FileType[] = ["TD", "RBC", "DESJARDINS"];
+export type FileType = "TD CC" | "TD CHECKING" | "RBC" | "DESJARDINS";
+export const FileTypes: FileType[] = [
+  "TD CC",
+  "TD CHECKING",
+  "RBC",
+  "DESJARDINS",
+];
 
 const initialState: FileTypeState = {
-  value: "TD",
+  value: "TD CHECKING",
 };
 
 export const fileTypeSlice = createSlice({

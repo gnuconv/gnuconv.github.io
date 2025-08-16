@@ -11,7 +11,28 @@ const parseCSV = (content: string): string[][] =>
   Papa.parse(content).data as string[][];
 
 export const processors: Record<FileType, (str: string) => Transaction[]> = {
-  TD: (str: string) => {
+  "TD CHECKING": (str: string) => {
+    const rows: string[][] = parseCSV(str).filter(
+      (c) => c.length > 1
+    ) as unknown as string[][];
+
+    const parseAmount = (row: string[]): number => {
+      if (row[2] !== "") return -1 * parseFloat(row[2]);
+      if (row[3] !== "") return parseFloat(row[3]);
+      return 0;
+    };
+
+    return rows.map((r) => {
+      return {
+        account: "TD",
+        date: r[0],
+        description: r[1],
+        destination: "Expenses:UNKNOWN",
+        amount: parseAmount(r),
+      };
+    });
+  },
+  "TD CC": (str: string) => {
     const rows: string[][] = parseCSV(str).filter(
       (c) => c.length > 1
     ) as unknown as string[][];

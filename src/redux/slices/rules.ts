@@ -15,7 +15,7 @@ export interface Rule {
 
 const loadInitialRules = (): Rule[] | undefined => {
   const rules = localStorage.getItem("RULES");
-  if (rules === null || rules === "") return undefined;
+  if (rules === null || rules === "") return [];
   try {
     return JSON.parse(rules) as Rule[];
   } catch (err) {
