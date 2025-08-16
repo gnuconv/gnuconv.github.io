@@ -1,22 +1,21 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { AssetPage } from "../AssetGraph/AssetPage";
-import { useGNUFile } from "../redux/slices/gnuFile";
+import {
+  selectGNUFileContent,
+  selectHasGNUFile,
+} from "../redux/slices/gnuFile";
 import { processGNUFile } from "../Expenses/gnuProcessor";
 import { ExpensesPage } from "../Expenses/ExpensesPage";
 import { GNUFileSelector } from "../Expenses/gnuFileSelector";
-
-const TAB = Object.freeze({
-  EXPENSES: "EXPENSES",
-  ASSETS: "ASSETS",
-});
-
-type TAB = keyof typeof TAB;
+import { Tab as TTab } from "../Tab";
+import { useAppSelector } from "../redux/hooks";
 
 export const AnalyzePage = (): React.ReactElement => {
-  const [tab, setTab] = useState<TAB>(TAB.EXPENSES);
-  const gnuFile = useGNUFile();
-  const [accounts, transactions] = processGNUFile(gnuFile.content);
+  const [tab, setTab] = useState<TTab>(TTab.EXPENSES);
+  const hasGNUFile = useAppSelector(selectHasGNUFile);
+  const filecontent = useAppSelector(selectGNUFileContent);
+  const [accounts, transactions] = processGNUFile(filecontent);
 
   return (
     <Box
@@ -26,7 +25,7 @@ export const AnalyzePage = (): React.ReactElement => {
         flexDirection: "column",
       }}
     >
-      {gnuFile.filename ? (
+      {hasGNUFile ? (
         <>
           <Box
             sx={{
@@ -36,19 +35,19 @@ export const AnalyzePage = (): React.ReactElement => {
             <Tabs
               value={tab}
               onChange={(_e, v) => {
-                setTab(v as TAB);
+                setTab(v as TTab);
               }}
               variant="fullWidth"
             >
-              <Tab label={TAB.EXPENSES} value={TAB.EXPENSES} />
-              <Tab label={TAB.ASSETS} value={TAB.ASSETS} />
+              <Tab label={TTab.EXPENSES} value={TTab.EXPENSES} />
+              <Tab label={TTab.ASSETS} value={TTab.ASSETS} />
             </Tabs>
           </Box>
           <Box sx={{ width: "100%" }}>
-            {tab === TAB.EXPENSES && (
+            {tab === TTab.EXPENSES && (
               <ExpensesPage accounts={accounts} transactions={transactions} />
             )}
-            {tab === TAB.ASSETS && (
+            {tab === TTab.ASSETS && (
               <AssetPage accounts={accounts} transactions={transactions} />
             )}
           </Box>

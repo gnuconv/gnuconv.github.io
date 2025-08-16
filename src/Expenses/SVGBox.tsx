@@ -1,9 +1,10 @@
 import { useDispatch } from "react-redux";
 import {
-  setHighlightedCategory,
-  useHighlightedCategory,
+  selectHighlightedCategory,
+  onHighlightedCategoryChange,
 } from "../redux/slices/highlightedCategory";
 import { pushAllCategories } from "../redux/slices/selectedCategory";
+import { useAppSelector } from "../redux/hooks";
 
 interface SVGBoxProps {
   x: number;
@@ -23,10 +24,10 @@ const margin = 0.05;
 export const SVGBox = (n: SVGBoxProps): React.ReactElement => {
   const border = 0.002;
   const dispatch = useDispatch();
-  const highlightedCategory = useHighlightedCategory();
+  const highlightedCategory = useAppSelector(selectHighlightedCategory);
   const onMouseEnter = (): void => {
     if (!n.canHighlight) return;
-    dispatch(setHighlightedCategory(n.name));
+    dispatch(onHighlightedCategoryChange(n.name));
   };
   const onClick = (): void => {
     if (!n.canHighlight || !n.categories) return;

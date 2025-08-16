@@ -4,19 +4,19 @@ import React from "react";
 import {
   FileType,
   selectFileType,
-  setFileType,
+  onFileTypeChange,
 } from "../redux/slices/fileType";
 import { useDispatch } from "react-redux";
-import { setTransactionsFileContent } from "../redux/slices/transactionsFileContent";
+import { onTransactionFileChange } from "../redux/slices/transactionsFileContent";
 import { useAppSelector } from "../redux/hooks";
 
 export const FileTypeSelector = (): React.ReactElement => {
   const dispatch = useDispatch();
   const fileType = useAppSelector(selectFileType);
 
-  const onChange = (event: SelectChangeEvent): void => {
-    dispatch(setFileType(event.target.value as FileType));
-    dispatch(setTransactionsFileContent(""));
+  const onChange = (event: SelectChangeEvent<FileType>): void => {
+    dispatch(onFileTypeChange(event.target.value));
+    dispatch(onTransactionFileChange(""));
   };
 
   return (

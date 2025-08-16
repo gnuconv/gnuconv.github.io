@@ -1,10 +1,11 @@
 import { useDispatch } from "react-redux";
 import {
-  setHighlightedCategory,
-  useHighlightedCategory,
+  selectHighlightedCategory,
+  onHighlightedCategoryChange,
 } from "../redux/slices/highlightedCategory";
 import { pushCategory } from "../redux/slices/selectedCategory";
 import { Typography } from "@mui/material";
+import { useAppSelector } from "../redux/hooks";
 
 interface LegendTitleProps {
   name: string;
@@ -16,10 +17,10 @@ export const LegendTitle = ({
   amount,
 }: LegendTitleProps): React.ReactElement => {
   const dispatch = useDispatch();
-  const highlightedCategory = useHighlightedCategory();
+  const highlightedCategory = useAppSelector(selectHighlightedCategory);
 
   const onMouseEnter = (): void => {
-    dispatch(setHighlightedCategory(name));
+    dispatch(onHighlightedCategoryChange(name));
   };
   const onClick = (): void => {
     dispatch(pushCategory(name));

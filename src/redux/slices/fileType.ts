@@ -23,13 +23,13 @@ export const fileTypeSlice = createSlice({
   name: "fileType",
   initialState,
   reducers: {
-    setFileType: (state, action: PayloadAction<FileType>) => {
+    onFileTypeChange: (state, action: PayloadAction<FileType>) => {
       state.value = action.payload;
     },
   },
 });
 
-export const { setFileType } = fileTypeSlice.actions;
+export const { onFileTypeChange } = fileTypeSlice.actions;
 export const fileTypeReducer = fileTypeSlice.reducer;
 
 export const selectFileType = (state: RootState): FileType =>

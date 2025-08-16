@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 import type { RootState } from "../store";
 import dayjs from "dayjs";
 
@@ -18,14 +17,17 @@ export const timeframeSlice = createSlice({
   name: "timeframe",
   initialState,
   reducers: {
-    setTimeframe: (state, action: PayloadAction<TimeframeState>) => {
-      state.start = action.payload.start;
-      state.end = action.payload.end;
+    setStartDate: (state, action: PayloadAction<number>) => {
+      state.start = action.payload;
+    },
+    setEndDate: (state, action: PayloadAction<number>) => {
+      state.end = action.payload;
     },
   },
 });
 
-export const { setTimeframe } = timeframeSlice.actions;
+export const { setStartDate, setEndDate } = timeframeSlice.actions;
 export const timeframeReducer = timeframeSlice.reducer;
-export const useTimeframe = (): TimeframeState =>
-  useSelector((state: RootState) => state.timeframe);
+export const selectStartDate = (state: RootState): number =>
+  state.timeframe.start;
+export const selectEndDate = (state: RootState): number => state.timeframe.end;

@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
 import { InputFile } from "../Converter/InputFile";
-import { setGNUFile, useGNUFile } from "../redux/slices/gnuFile";
+import { selectGNUFileName, onGNUFileUploaded } from "../redux/slices/gnuFile";
 import { Box, Typography } from "@mui/material";
+import { useAppSelector } from "../redux/hooks";
 
 const getFileContent = async (f: File): Promise<string> => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,11 +14,11 @@ const getFileContent = async (f: File): Promise<string> => {
 
 export const GNUFileSelector = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const { filename } = useGNUFile();
+  const filename = useAppSelector(selectGNUFileName);
 
   const onChange = async (f: File): Promise<void> => {
     const text = await getFileContent(f);
-    dispatch(setGNUFile({ filename: f.name, content: text }));
+    dispatch(onGNUFileUploaded({ filename: f.name, content: text }));
   };
 
   return (

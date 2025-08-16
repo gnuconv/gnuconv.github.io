@@ -4,7 +4,7 @@ import { InputFile } from "./InputFile";
 import { ProcessFiles } from "./ProcessFiles";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
-import { setTransactionsFileContent } from "../redux/slices/transactionsFileContent";
+import { onTransactionFileChange } from "../redux/slices/transactionsFileContent";
 import { useDispatch } from "react-redux";
 
 export const Converter = (): React.ReactElement => {
@@ -22,7 +22,7 @@ export const Converter = (): React.ReactElement => {
         isEmpty={true}
         onChange={async (f: File) => {
           const content = await f.text();
-          dispatch(setTransactionsFileContent(content));
+          dispatch(onTransactionFileChange(content));
         }}
       />
       <ProcessFiles />

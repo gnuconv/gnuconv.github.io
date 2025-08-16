@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 import type { RootState } from "../store";
 
 export interface GNUFileState {
@@ -17,14 +16,19 @@ export const gnuFileSlice = createSlice({
   name: "gnuFile",
   initialState,
   reducers: {
-    setGNUFile: (state, action: PayloadAction<GNUFileState>) => {
+    onGNUFileUploaded: (state, action: PayloadAction<GNUFileState>) => {
       state.filename = action.payload.filename;
       state.content = action.payload.content;
     },
   },
 });
 
-export const { setGNUFile } = gnuFileSlice.actions;
+export const { onGNUFileUploaded } = gnuFileSlice.actions;
 export const gnuFileReducer = gnuFileSlice.reducer;
-export const useGNUFile = (): GNUFileState =>
-  useSelector((state: RootState) => state.gnuFile);
+
+export const selectGNUFileName = (state: RootState): string =>
+  state.gnuFile.filename;
+export const selectGNUFileContent = (state: RootState): string =>
+  state.gnuFile.content;
+export const selectHasGNUFile = (state: RootState): boolean =>
+  state.gnuFile.filename !== "";

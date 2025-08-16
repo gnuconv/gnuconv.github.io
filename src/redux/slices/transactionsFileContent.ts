@@ -14,14 +14,13 @@ export const transactionsFileContentSlice = createSlice({
   name: "transactionsFileContent",
   initialState,
   reducers: {
-    setTransactionsFileContent: (state, action: PayloadAction<string>) => {
+    onTransactionFileChange: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
   },
 });
 
-export const { setTransactionsFileContent } =
-  transactionsFileContentSlice.actions;
+export const { onTransactionFileChange } = transactionsFileContentSlice.actions;
 
 export const transactionsFileContentReducer =
   transactionsFileContentSlice.reducer;

@@ -1,14 +1,16 @@
-import { useGNUFile } from "../redux/slices/gnuFile";
-import { useTimeframe } from "../redux/slices/timeframe";
+import { selectGNUFileContent } from "../redux/slices/gnuFile";
+
 import { Palette } from "./colors";
 import { Box, Typography } from "@mui/material";
-import { useSelectedCategory } from "../redux/slices/selectedCategory";
+import { selectCategory } from "../redux/slices/selectedCategory";
 import { LegendTitle } from "./LegendTitle";
 import { SVGRow } from "./SVGRow";
 import { PopCategory } from "./PopCategory";
 import type { GraphNode } from "./gnuProcessor";
 import { processChart } from "./gnuProcessor";
 import type { GNUAccount, GNUTransaction } from "./chartUtils";
+import { useAppSelector } from "../redux/hooks";
+import { selectEndDate, selectStartDate } from "../redux/slices/timeframe";
 
 export const margin = 0.003;
 
@@ -40,10 +42,11 @@ export const ExpensesChart = ({
   accounts,
   transactions,
 }: ExpensesChartProps): React.ReactElement => {
-  const { start, end } = useTimeframe();
-  const selectedCategory = useSelectedCategory();
-  const gnuFile = useGNUFile();
-  if (!start || !end || !gnuFile.content) return <></>;
+  const start = useAppSelector(selectStartDate);
+  const end = useAppSelector(selectEndDate);
+  const selectedCategory = useAppSelector(selectCategory);
+  const gnuFileContent = useAppSelector(selectGNUFileContent);
+  if (!start || !end || !gnuFileContent) return <></>;
   const tree = processChart(accounts, transactions, start, end);
 
   const root = findNode(tree, selectedCategory);
