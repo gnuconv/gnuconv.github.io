@@ -4,6 +4,7 @@ import { saveAs } from "file-saver";
 import Papa from "papaparse";
 import DownloadIcon from "@mui/icons-material/Download";
 import type { Transaction } from "./InputFile";
+import { UnknownTransactions } from "./UnknownTransactions";
 
 interface IProps {
   AccountName: string;
@@ -21,9 +22,16 @@ export const DownloadButton = ({
     });
     saveAs(blob, `${AccountName}.csv`);
   };
+
+  const unknownTransactions = Transactions.filter((t) =>
+    t.destination.includes("UNKNOWN")
+  );
   return (
-    <Button onClick={onClick}>
-      {AccountName}.csv <DownloadIcon />
-    </Button>
+    <>
+      <Button onClick={onClick}>
+        {AccountName}.csv <DownloadIcon />
+      </Button>
+      <UnknownTransactions transactions={unknownTransactions} />
+    </>
   );
 };

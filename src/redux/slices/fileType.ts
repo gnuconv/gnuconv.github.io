@@ -1,22 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 import type { RootState } from "../store";
 
 export interface FileTypeState {
   value: FileType;
 }
 
-export type FileType = "TD CC" | "TD CHECKING" | "RBC" | "DESJARDINS";
-export const FileTypes: FileType[] = [
-  "TD CC",
-  "TD CHECKING",
-  "RBC",
-  "DESJARDINS",
-];
+export const FileType = Object.freeze({
+  ["TD CC"]: "TD CC",
+  ["TD CHECKING"]: "TD CHECKING",
+  ["RBC"]: "RBC",
+  ["DESJARDINS"]: "DESJARDINS",
+});
+
+export type FileType = keyof typeof FileType;
 
 const initialState: FileTypeState = {
-  value: "TD CHECKING",
+  value: FileType["TD CHECKING"],
 };
 
 export const fileTypeSlice = createSlice({
@@ -31,5 +31,6 @@ export const fileTypeSlice = createSlice({
 
 export const { setFileType } = fileTypeSlice.actions;
 export const fileTypeReducer = fileTypeSlice.reducer;
-export const useFileType = (): FileType =>
-  useSelector((state: RootState) => state.fileType.value);
+
+export const selectFileType = (state: RootState): FileType =>
+  state.fileType.value;

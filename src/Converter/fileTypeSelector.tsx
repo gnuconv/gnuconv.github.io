@@ -1,14 +1,18 @@
 import type { SelectChangeEvent } from "@mui/material";
 import { MenuItem, Select } from "@mui/material";
 import React from "react";
-import type { FileType } from "../redux/slices/fileType";
-import { FileTypes, setFileType, useFileType } from "../redux/slices/fileType";
+import {
+  FileType,
+  selectFileType,
+  setFileType,
+} from "../redux/slices/fileType";
 import { useDispatch } from "react-redux";
 import { setTransactionsFileContent } from "../redux/slices/transactionsFileContent";
+import { useAppSelector } from "../redux/hooks";
 
 export const FileTypeSelector = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const fileType = useFileType();
+  const fileType = useAppSelector(selectFileType);
 
   const onChange = (event: SelectChangeEvent): void => {
     dispatch(setFileType(event.target.value as FileType));
@@ -17,7 +21,7 @@ export const FileTypeSelector = (): React.ReactElement => {
 
   return (
     <Select sx={{ width: "100%" }} value={fileType} onChange={onChange}>
-      {FileTypes.map((v) => (
+      {Object.values(FileType).map((v) => (
         <MenuItem key={v} value={v}>
           {v}
         </MenuItem>

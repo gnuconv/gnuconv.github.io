@@ -69,13 +69,6 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
       .slice(1)
       .filter((c) => c.length > 1) as unknown as string[][];
     return rows.map((r) => {
-      console.log({
-        account: `${r[0]} ${r[1]}`,
-        date: mdyToYmd(r[2]),
-        description: formatDesc(r[4], r[5]),
-        destination: "Expenses:UNKNOWN",
-        amount: parseFloat(r[6]),
-      });
       return {
         account: `${r[0]} ${r[1]}`,
         date: mdyToYmd(r[2]),
