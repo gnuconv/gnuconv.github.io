@@ -4,9 +4,8 @@ import { setGNUFile, useGNUFile } from "../redux/slices/gnuFile";
 import { Box, Typography } from "@mui/material";
 
 const getFileContent = async (f: File): Promise<string> => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ds = new (window as any).DecompressionStream("gzip");
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const decompressedStream = f.stream().pipeThrough(ds);
   const resp = await new Response(decompressedStream).blob();
   return resp.text();

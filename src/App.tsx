@@ -3,13 +3,15 @@ import { Converter } from "./Converter/Converter";
 import { useState } from "react";
 import { AnalyzePage } from "./Analyze/AnalyzePage";
 
-enum TAB {
-  CONVERT = "CONVERT",
-  ANALYZE = "ANALYZE",
-}
+const TAB = Object.freeze({
+  CONVERT: "CONVERT",
+  ANALYZE: "ANALYZE",
+});
+
+type TAB = keyof typeof TAB;
 
 export const App = (): React.ReactElement => {
-  const [tab, setTab] = useState(TAB.CONVERT);
+  const [tab, setTab] = useState<TAB>(TAB.CONVERT);
   return (
     <Box
       sx={{

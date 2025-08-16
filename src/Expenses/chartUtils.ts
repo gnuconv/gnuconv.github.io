@@ -44,7 +44,7 @@ export interface GNUTransaction {
   splits: GNUSplit[];
 }
 
-const calculate = (s: string): number => eval(s) as number; // eslint-disable-line no-eval
+const calculate = (s: string): number => eval(s) as number;
 
 export const ExtractSplits = (doc: Element | null): GNUSplit[] => {
   if (!doc) return [];
