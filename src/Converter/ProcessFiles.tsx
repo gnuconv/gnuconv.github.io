@@ -12,7 +12,7 @@ export const ProcessFiles = (): React.ReactElement => {
 
   // process file
   const transactions = processors[fileType](upload);
-
+  console.log(transactions);
   // transform transactions
   for (const t of transactions) {
     rules.forEach((rule) => {

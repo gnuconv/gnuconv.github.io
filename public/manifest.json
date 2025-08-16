@@ -1,8 +1,0 @@
-{
-  "short_name": "gnu conv",
-  "name": "Convert various bank statements to gnucash format",
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
-}

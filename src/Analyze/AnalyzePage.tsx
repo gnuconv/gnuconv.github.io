@@ -6,13 +6,15 @@ import { processGNUFile } from "../Expenses/gnuProcessor";
 import { ExpensesPage } from "../Expenses/ExpensesPage";
 import { GNUFileSelector } from "../Expenses/gnuFileSelector";
 
-enum TAB {
-  EXPENSES = "EXPENSES",
-  ASSETS = "ASSETS",
-}
+const TAB = Object.freeze({
+  EXPENSES: "EXPENSES",
+  ASSETS: "ASSETS",
+});
+
+type TAB = keyof typeof TAB;
 
 export const AnalyzePage = (): React.ReactElement => {
-  const [tab, setTab] = useState(TAB.EXPENSES);
+  const [tab, setTab] = useState<TAB>(TAB.EXPENSES);
   const gnuFile = useGNUFile();
   const [accounts, transactions] = processGNUFile(gnuFile.content);
 

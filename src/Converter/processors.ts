@@ -63,18 +63,27 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
       const x = [];
       if (desc1) x.push(desc1.trim());
       if (desc2) x.push(desc2.trim());
-      return x.join("/");
+      return x.join("/") ?? "";
     };
     const rows: string[][] = parseCSV(str)
       .slice(1)
       .filter((c) => c.length > 1) as unknown as string[][];
-    return rows.map((r) => ({
-      account: `${r[0]} ${r[1]}`,
-      date: mdyToYmd(r[2]),
-      description: formatDesc(r[4], r[5]),
-      destination: "Expenses:UNKNOWN",
-      amount: parseFloat(r[6]),
-    }));
+    return rows.map((r) => {
+      console.log({
+        account: `${r[0]} ${r[1]}`,
+        date: mdyToYmd(r[2]),
+        description: formatDesc(r[4], r[5]),
+        destination: "Expenses:UNKNOWN",
+        amount: parseFloat(r[6]),
+      });
+      return {
+        account: `${r[0]} ${r[1]}`,
+        date: mdyToYmd(r[2]),
+        description: formatDesc(r[4], r[5]),
+        destination: "Expenses:UNKNOWN",
+        amount: parseFloat(r[6]),
+      };
+    });
   },
   DESJARDINS: (str: string) => {
     const rows = parseCSV(str).filter((r) => r.length > 1);
