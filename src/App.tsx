@@ -1,17 +1,11 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box } from "@mui/material";
 import { Converter } from "./Converter/Converter";
-import { useState } from "react";
 import { AnalyzePage } from "./Analyze/AnalyzePage";
-
-const TAB = Object.freeze({
-  CONVERT: "CONVERT",
-  ANALYZE: "ANALYZE",
-});
-
-type TAB = keyof typeof TAB;
+import { PageWrapper } from "./PageWrapper";
+import { Page } from "./redux/slices/page";
+import { Header } from "./Header";
 
 export const App = (): React.ReactElement => {
-  const [tab, setTab] = useState<TAB>(TAB.CONVERT);
   return (
     <Box
       sx={{
@@ -21,21 +15,8 @@ export const App = (): React.ReactElement => {
         flexDirection: "column",
       }}
     >
-      <Box
-        sx={{
-          width: "100vw",
-        }}
-      >
-        <Tabs
-          value={tab}
-          onChange={(_e, v) => {
-            setTab(v as TAB);
-          }}
-          variant="fullWidth"
-        >
-          <Tab label={TAB.CONVERT} value={TAB.CONVERT} />
-          <Tab label={TAB.ANALYZE} value={TAB.ANALYZE} />
-        </Tabs>
+      <Box sx={{ width: "100vw" }}>
+        <Header />
       </Box>
       <Box
         sx={{
@@ -47,8 +28,12 @@ export const App = (): React.ReactElement => {
           overflow: "scroll",
         }}
       >
-        {tab === TAB.CONVERT && <Converter />}
-        {tab === TAB.ANALYZE && <AnalyzePage />}
+        <PageWrapper page={Page.CONVERT}>
+          <Converter />
+        </PageWrapper>
+        <PageWrapper page={Page.ANALYZE}>
+          <AnalyzePage />
+        </PageWrapper>
       </Box>
     </Box>
   );

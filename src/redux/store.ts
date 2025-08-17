@@ -15,6 +15,7 @@ import {
   selectedCategoryReducer,
   selectedCategorySlice,
 } from "./slices/selectedCategory";
+import { pageReducer, pageSlice } from "./slices/page";
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ export const store = configureStore({
     [timeframeSlice.name]: timeframeReducer,
     [highlightedCategorySlice.name]: highlightedCategoryReducer,
     [selectedCategorySlice.name]: selectedCategoryReducer,
+    [pageSlice.name]: pageReducer,
   },
 });
 
