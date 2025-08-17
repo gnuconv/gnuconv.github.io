@@ -15,8 +15,8 @@ import { useMemo } from "react";
 export const margin = 0.003;
 
 const maxDepth = (n: GraphNode): number => {
-  if (!n.children.length) return 1;
-  return 1 + Math.max(...n.children.map(maxDepth));
+  if (!n.children?.length) return 1;
+  return 1 + Math.max(...(n.children?.map(maxDepth) ?? []));
 };
 
 const findNode = (root: GraphNode, path: string[]): GraphNode => {
@@ -27,8 +27,8 @@ const findNode = (root: GraphNode, path: string[]): GraphNode => {
 };
 
 const sortNodes = (n: GraphNode): void => {
-  n.children.sort((a, b) => b.size - a.size);
-  n.children.forEach((c) => {
+  n.children?.sort((a, b) => b.size - a.size);
+  n.children?.forEach((c) => {
     sortNodes(c);
   });
 };
@@ -52,7 +52,7 @@ export const ExpensesChart = (): React.ReactElement => {
     return n;
   }, [selectedCategory, tree]);
 
-  const nodes = root.children;
+  const nodes = root.children ?? [];
 
   const expenses = root.size;
   const canvasWidth = 10000;

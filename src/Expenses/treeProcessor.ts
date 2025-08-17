@@ -55,25 +55,6 @@ const makeTreeNode = (
   };
 };
 
-const bitShift = 5;
-const numColorComponents = 3;
-const base16 = 16;
-const hexComponentColorLength = 2;
-const colorMask = 0xff;
-const colorIncrement = 8;
-const stringToColour = (str: string): string => {
-  let hash = 0;
-  str.split("").forEach((char) => {
-    hash = char.charCodeAt(0) + ((hash << bitShift) - hash);
-  });
-  let colour = "#";
-  for (let i = 0; i < numColorComponents; i++) {
-    const value = (hash >> (i * colorIncrement)) & colorMask;
-    colour += value.toString(base16).padStart(hexComponentColorLength, "0");
-  }
-  return colour;
-};
-
 export type GraphNode = {
   name: string;
   size: number;
@@ -87,7 +68,6 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
       children: node.transactions.map((t) => ({
         name: t.name,
         size: t.value,
-        color: stringToColour(t.name),
         children: [],
       })),
       size: 0,
@@ -98,7 +78,6 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
   if (node.children) {
     const out = {
       name: node.account.name,
-      color: stringToColour(node.account.name),
       children: node.children
         .map(convertAccountTree)
         .filter((c) => calculateSize(c) > 0),
