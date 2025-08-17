@@ -1,11 +1,9 @@
 import dayjs from "dayjs";
-
-export interface GNUAccount {
-  name: string;
-  type: string;
-  id: string;
-  parent: string;
-}
+import type {
+  GNUAccount,
+  GNUSplit,
+  GNUTransaction,
+} from "../redux/slices/gnuFile";
 
 export const getFirst = (
   e: Element | null | undefined,
@@ -29,20 +27,6 @@ export const ExtractAccounts = (doc: Document): GNUAccount[] => {
   }
   return accounts;
 };
-
-export interface GNUSplit {
-  id: string;
-  value: number;
-  account: string;
-}
-
-export interface GNUTransaction {
-  id: string;
-  description: string;
-  value: number;
-  date: number;
-  splits: GNUSplit[];
-}
 
 const calculate = (s: string): number => eval(s) as number;
 

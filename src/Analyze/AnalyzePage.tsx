@@ -1,10 +1,6 @@
 import { Box } from "@mui/material";
 import { AssetPage } from "../AssetGraph/AssetPage";
-import {
-  selectGNUFileContent,
-  selectHasGNUFile,
-} from "../redux/slices/gnuFile";
-import { processGNUFile } from "../Expenses/gnuProcessor";
+import { selectHasGNUFile } from "../redux/slices/gnuFile";
 import { ExpensesPage } from "../Expenses/ExpensesPage";
 import { GNUFileSelector } from "../Expenses/gnuFileSelector";
 import { useAppSelector } from "../redux/hooks";
@@ -14,8 +10,6 @@ import { AnalyzePage as AP } from "../redux/slices/analyzePage";
 
 export const AnalyzePage = (): React.ReactElement => {
   const hasGNUFile = useAppSelector(selectHasGNUFile);
-  const filecontent = useAppSelector(selectGNUFileContent);
-  const [accounts, transactions] = processGNUFile(filecontent);
 
   return (
     <Box
@@ -36,10 +30,10 @@ export const AnalyzePage = (): React.ReactElement => {
           </Box>
           <Box sx={{ width: "100%" }}>
             <AnalyzePageWrapper page={AP.EXPENSES}>
-              <ExpensesPage accounts={accounts} transactions={transactions} />
+              <ExpensesPage />
             </AnalyzePageWrapper>
             <AnalyzePageWrapper page={AP.ASSETS}>
-              <AssetPage accounts={accounts} transactions={transactions} />
+              <AssetPage />
             </AnalyzePageWrapper>
           </Box>
         </>

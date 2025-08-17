@@ -6,8 +6,8 @@ export const Header = (): React.ReactElement => {
   const page = useAppSelector(selectPage);
   const dispatch = useAppDispatch();
 
-  const onChange = (_e: unknown, v: unknown): void => {
-    dispatch(onPageChange(v as Page));
+  const onChange = (_e: unknown, v: Page): void => {
+    dispatch(onPageChange(v));
   };
 
   return (

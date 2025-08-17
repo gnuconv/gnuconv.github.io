@@ -1,4 +1,8 @@
-import { selectGNUFileContent } from "../redux/slices/gnuFile";
+import {
+  selectAccounts,
+  selectGNUFileContent,
+  selectTransactions,
+} from "../redux/slices/gnuFile";
 
 import { Palette } from "./colors";
 import { Box, Typography } from "@mui/material";
@@ -8,7 +12,6 @@ import { SVGRow } from "./SVGRow";
 import { PopCategory } from "./PopCategory";
 import type { GraphNode } from "./gnuProcessor";
 import { processChart } from "./gnuProcessor";
-import type { GNUAccount, GNUTransaction } from "./chartUtils";
 import { useAppSelector } from "../redux/hooks";
 import { selectEndDate, selectStartDate } from "../redux/slices/timeframe";
 
@@ -33,15 +36,9 @@ const sortNodes = (n: GraphNode): void => {
   });
 };
 
-interface ExpensesChartProps {
-  accounts: GNUAccount[];
-  transactions: GNUTransaction[];
-}
-
-export const ExpensesChart = ({
-  accounts,
-  transactions,
-}: ExpensesChartProps): React.ReactElement => {
+export const ExpensesChart = (): React.ReactElement => {
+  const accounts = useAppSelector(selectAccounts);
+  const transactions = useAppSelector(selectTransactions);
   const start = useAppSelector(selectStartDate);
   const end = useAppSelector(selectEndDate);
   const selectedCategory = useAppSelector(selectCategory);

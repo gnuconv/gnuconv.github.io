@@ -1,5 +1,5 @@
-import type { GNUAccount, GNUTransaction } from "../Expenses/chartUtils";
 import { Palette } from "../Expenses/colors";
+import type { GNUAccount, GNUTransaction } from "../redux/slices/gnuFile";
 
 interface Point {
   date: number;
@@ -46,9 +46,6 @@ const computeNetWorthLine = (
   graphAccounts: GNUAccount[],
   transactions: GNUTransaction[]
 ): Account => {
-  // graphAccounts = graphAccounts.filter((l) =>
-  //   ["Oliver Checking", "Joint Credit Card"].includes(l.name)
-  // );
   const all = transactions.filter((t) =>
     t.splits.some((s) => graphAccounts.some((a) => a.id === s.account))
   );

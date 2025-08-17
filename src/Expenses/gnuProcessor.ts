@@ -1,4 +1,4 @@
-import type { GNUAccount, GNUTransaction } from "./chartUtils";
+import type { GNUAccount, GNUTransaction } from "../redux/slices/gnuFile";
 import { ExtractAccounts, ExtractTransactions } from "./chartUtils";
 
 export const calculateSize = (n: GraphNode | GraphNode[]): number => {

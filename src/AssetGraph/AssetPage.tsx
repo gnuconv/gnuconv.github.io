@@ -1,4 +1,3 @@
-import type { GNUAccount, GNUTransaction } from "../Expenses/chartUtils";
 import { Box } from "@mui/material";
 import { useMemo, useState } from "react";
 
@@ -7,18 +6,14 @@ import { processGNUData } from "./processor";
 import { computeGraph } from "./graph";
 import { GNUFileSelector } from "../Expenses/gnuFileSelector";
 import { AssetGraph } from "./AssetGraph";
+import { useAppSelector } from "../redux/hooks";
+import { selectAccounts, selectTransactions } from "../redux/slices/gnuFile";
 
-interface AssetGraphProps {
-  accounts: GNUAccount[];
-  transactions: GNUTransaction[];
-}
-
-export const AssetPage = ({
-  accounts,
-  transactions,
-}: AssetGraphProps): React.ReactElement => {
+export const AssetPage = (): React.ReactElement => {
+  const accounts = useAppSelector(selectAccounts);
+  const transactions = useAppSelector(selectTransactions);
   const allLines = useMemo(
-    () => processGNUData(accounts, transactions),
+    () => processGNUData([...accounts], [...transactions]),
     [accounts, transactions]
   );
   const [visibleAccounts, setVisibleAccounts] = useState(

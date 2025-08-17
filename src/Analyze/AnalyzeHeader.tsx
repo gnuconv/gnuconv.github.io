@@ -10,8 +10,8 @@ export const AnalyzeHeader = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const analyzePage = useAppSelector(selectAnalyzePage);
 
-  const onChange = (_e: unknown, v: unknown): void => {
-    dispatch(onAnalyzePageChange(v as AnalyzePage));
+  const onChange = (_e: unknown, v: AnalyzePage): void => {
+    dispatch(onAnalyzePageChange(v));
   };
 
   return (
