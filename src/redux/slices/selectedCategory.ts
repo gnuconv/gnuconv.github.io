@@ -41,3 +41,5 @@ export const {
 } = selectedCategorySlice.actions;
 export const selectCategory = (state: RootState): string[] =>
   state.selectedCategory.value;
+export const selectHasCategory = (state: RootState): boolean =>
+  state.selectedCategory.value.length > 0;

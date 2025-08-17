@@ -75,7 +75,14 @@ export const ExpensesChart = (): React.ReactElement => {
           {root.name} total: ${expenses.toFixed(2)}
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
         <PopCategory />
         {nodes.map((n, i) => (
           <LegendTitle key={i} name={n.name} amount={n.size} />
