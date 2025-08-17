@@ -1,6 +1,6 @@
 import { margin } from "./ExpensesChart";
 import { SVGBox } from "./SVGBox";
-import { createPalette } from "./colors";
+import { darken } from "./colors";
 import type { GraphNode } from "./treeProcessor";
 import { calculateSize } from "./treeProcessor";
 
@@ -72,7 +72,7 @@ export const SVGRow = ({
       elements.push(
         <SVGRow
           categories={categories.concat(n.name)}
-          palette={createPalette(n.color, n.children.length)}
+          palette={[darken(n.color)]}
           key={`R${i}`}
           canvasWidth={canvasWidth}
           width={n.width}

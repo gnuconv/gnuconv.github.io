@@ -35,21 +35,14 @@ const darker = ([a, b, c]: Color): Color => [
   Math.pow(c, darkerExpo),
 ];
 
+export const darken = (s: string): string => {
+  const col = parseColor(s);
+  const d = darker(col);
+  return colorToCSS(d);
+};
 const hexBase = 16;
 const hexComponentColorLength = 2;
 const hexComponentColorCount = 3;
 
 const toHex = (n: number): string =>
   Math.round(n).toString(hexBase).padStart(hexComponentColorLength, "0");
-
-export const createPalette = (s: string, amt: number): string[] => {
-  const col = parseColor(s);
-
-  const rgbs: Color[] = [];
-  rgbs.push(darker(col));
-  for (let i = 1; i < amt; i++) {
-    rgbs.push(darker(rgbs[i - 1]));
-  }
-
-  return rgbs.map(colorToCSS);
-};
