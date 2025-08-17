@@ -7,7 +7,7 @@ import { computeGraph } from "./graph";
 import { GNUFileSelector } from "../Expenses/gnuFileSelector";
 import { AssetGraph } from "./AssetGraph";
 import { useAppSelector } from "../redux/hooks";
-import { selectAccounts, selectTransactions } from "../redux/slices/gnuFile";
+import { selectAccounts, selectTransactions } from "../redux/slices/gnu";
 
 export const AssetPage = (): React.ReactElement => {
   const accounts = useAppSelector(selectAccounts);

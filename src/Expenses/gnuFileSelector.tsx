@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { InputFile } from "../Converter/InputFile";
-import { selectGNUFileName, onGNUFileUploaded } from "../redux/slices/gnuFile";
+import { onGNUFileUploaded, selectHasGNUFile } from "../redux/slices/gnu";
 import { Box, Typography } from "@mui/material";
 import { useAppSelector } from "../redux/hooks";
 
@@ -14,7 +14,7 @@ const getFileContent = async (f: File): Promise<string> => {
 
 export const GNUFileSelector = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const filename = useAppSelector(selectGNUFileName);
+  const hasGNUFile = useAppSelector(selectHasGNUFile);
 
   const onChange = async (f: File): Promise<void> => {
     const text = await getFileContent(f);
@@ -30,8 +30,8 @@ export const GNUFileSelector = (): React.ReactElement => {
         alignItems: "center",
       }}
     >
-      <InputFile onChange={onChange} isEmpty={!filename} />
-      {filename && <Typography sx={{ mt: 2 }}>{filename}</Typography>}
+      <InputFile onChange={onChange} isEmpty={!hasGNUFile} />
+      {hasGNUFile && <Typography sx={{ mt: 2 }}>{hasGNUFile}</Typography>}
     </Box>
   );
 };

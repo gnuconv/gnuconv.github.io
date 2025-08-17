@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { GNUFileSelector } from "../Expenses/gnuFileSelector";
 import { useAppSelector } from "../redux/hooks";
-import { selectHasGNUFile } from "../redux/slices/gnuFile";
+import { selectHasGNUFile } from "../redux/slices/gnu";
 
 type SelectFileGuardProps = React.PropsWithChildren<object>;
 

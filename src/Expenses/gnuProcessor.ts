@@ -1,4 +1,4 @@
-import type { GNUAccount, GNUTransaction } from "../redux/slices/gnuFile";
+import type { GNUAccount, GNUTransaction } from "../redux/slices/gnu";
 
 export const calculateSize = (n: GraphNode | GraphNode[]): number => {
   if (Array.isArray(n)) return n.reduce((acc, c) => acc + calculateSize(c), 0);

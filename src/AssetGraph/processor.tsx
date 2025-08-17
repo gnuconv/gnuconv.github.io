@@ -1,5 +1,5 @@
 import { Palette } from "../Expenses/colors";
-import type { GNUAccount, GNUTransaction } from "../redux/slices/gnuFile";
+import type { GNUAccount, GNUTransaction } from "../redux/slices/gnu";
 
 interface Point {
   date: number;

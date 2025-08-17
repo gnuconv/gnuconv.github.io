@@ -1,8 +1,8 @@
 import {
   selectAccounts,
-  selectGNUFileContent,
+  selectHasGNUFile,
   selectTransactions,
-} from "../redux/slices/gnuFile";
+} from "../redux/slices/gnu";
 
 import { Palette } from "./colors";
 import { Box, Typography } from "@mui/material";
@@ -42,8 +42,8 @@ export const ExpensesChart = (): React.ReactElement => {
   const start = useAppSelector(selectStartDate);
   const end = useAppSelector(selectEndDate);
   const selectedCategory = useAppSelector(selectCategory);
-  const gnuFileContent = useAppSelector(selectGNUFileContent);
-  if (!start || !end || !gnuFileContent) return <></>;
+  const hasGNUFile = useAppSelector(selectHasGNUFile);
+  if (!start || !end || !hasGNUFile) return <></>;
   const tree = processChart(accounts, transactions, start, end);
 
   const root = findNode(tree, selectedCategory);

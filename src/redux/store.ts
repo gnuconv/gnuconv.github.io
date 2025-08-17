@@ -5,7 +5,7 @@ import {
   transactionsFileContentReducer,
   transactionsFileContentSlice,
 } from "./slices/transactionsFileContent";
-import { gnuFileReducer, gnuFileSlice } from "./slices/gnuFile";
+import { gnuReducer, gnuSlice } from "./slices/gnu";
 import { timeframeReducer, timeframeSlice } from "./slices/timeframe";
 import {
   highlightedCategoryReducer,
@@ -23,7 +23,7 @@ export const store = configureStore({
     [fileTypeSlice.name]: fileTypeReducer,
     [rulesSlice.name]: rulesReducer,
     [transactionsFileContentSlice.name]: transactionsFileContentReducer,
-    [gnuFileSlice.name]: gnuFileReducer,
+    [gnuSlice.name]: gnuReducer,
     [timeframeSlice.name]: timeframeReducer,
     [highlightedCategorySlice.name]: highlightedCategoryReducer,
     [selectedCategorySlice.name]: selectedCategoryReducer,
