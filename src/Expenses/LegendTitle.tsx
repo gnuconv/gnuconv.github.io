@@ -1,11 +1,10 @@
 import { useDispatch } from "react-redux";
-import {
-  selectHighlightedCategory,
-  onHighlightedCategoryChange,
-} from "../redux/slices/highlightedCategory";
+import { onHighlightedCategoryChange } from "../redux/slices/highlightedCategory";
 import { pushCategory } from "../redux/slices/selectedCategory";
 import { Typography } from "@mui/material";
 import { useAppSelector } from "../redux/hooks";
+import { useCallback } from "react";
+import type { RootState } from "../redux/store";
 
 interface LegendTitleProps {
   name: string;
@@ -17,7 +16,12 @@ export const LegendTitle = ({
   amount,
 }: LegendTitleProps): React.ReactElement => {
   const dispatch = useDispatch();
-  const highlightedCategory = useAppSelector(selectHighlightedCategory);
+  const isHighlighted = useAppSelector(
+    useCallback(
+      (state: RootState) => state.highlightedCategory.value === name,
+      [name]
+    )
+  );
 
   const onMouseEnter = (): void => {
     dispatch(onHighlightedCategoryChange(name));
@@ -29,7 +33,7 @@ export const LegendTitle = ({
     <Typography
       sx={{
         mx: 1,
-        backgroundColor: highlightedCategory === name ? "#666" : "",
+        backgroundColor: isHighlighted ? "#666" : "",
         p: 2,
         cursor: "pointer",
         borderRadius: 1,
