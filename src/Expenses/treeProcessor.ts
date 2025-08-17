@@ -76,7 +76,6 @@ const stringToColour = (str: string): string => {
 
 export type GraphNode = {
   name: string;
-  color: string;
   size: number;
   children: GraphNode[];
 };
@@ -85,7 +84,6 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
   if (node.transactions) {
     const out = {
       name: node.account.name,
-      color: stringToColour(node.account.name),
       children: node.transactions.map((t) => ({
         name: t.name,
         size: t.value,
@@ -111,7 +109,6 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
   }
   return {
     name: "",
-    color: "",
     size: 0,
     children: [],
   };
