@@ -11,14 +11,13 @@ export const AnalyzePage = (): React.ReactElement => {
     <Box
       sx={{
         height: "100%",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
       }}
     >
       <SelectFileGuard>
-        <Box sx={{ width: "100vw" }}>
-          <AnalyzeHeader />
-        </Box>
+        <AnalyzeHeader />
         <Box sx={{ width: "100%" }}>
           <AnalyzePageWrapper page={AP.EXPENSES}>
             <ExpensesPage />
