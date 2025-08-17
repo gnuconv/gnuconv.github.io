@@ -30,7 +30,6 @@ export const fileTypeSlice = createSlice({
 });
 
 export const { onFileTypeChange } = fileTypeSlice.actions;
-export const fileTypeReducer = fileTypeSlice.reducer;
 
 export const selectFileType = (state: RootState): FileType =>
   state.fileType.value;

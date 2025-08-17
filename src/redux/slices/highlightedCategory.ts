@@ -21,6 +21,5 @@ export const highlightedCategorySlice = createSlice({
 });
 
 export const { onHighlightedCategoryChange } = highlightedCategorySlice.actions;
-export const highlightedCategoryReducer = highlightedCategorySlice.reducer;
 export const selectHighlightedCategory = (state: RootState): string =>
   state.highlightedCategory.value;

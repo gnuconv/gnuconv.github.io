@@ -50,7 +50,6 @@ export const gnuSlice = createSlice({
 });
 
 export const { onGNUFileUploaded } = gnuSlice.actions;
-export const gnuReducer = gnuSlice.reducer;
 
 export const selectHasGNUFile = (state: RootState): boolean =>
   !!state.gnu.filename;

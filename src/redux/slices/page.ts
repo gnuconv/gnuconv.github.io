@@ -28,6 +28,5 @@ export const pageSlice = createSlice({
 });
 
 export const { onPageChange } = pageSlice.actions;
-export const pageReducer = pageSlice.reducer;
 
 export const selectPage = (state: RootState): Page => state.page.value;

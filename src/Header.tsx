@@ -6,14 +6,15 @@ export const Header = (): React.ReactElement => {
   const page = useAppSelector(selectPage);
   const dispatch = useAppDispatch();
 
-  const onChange = (_e: unknown, v: Page): void => {
+  const onChange = (_: unknown, v: Page): void => {
     dispatch(onPageChange(v));
   };
 
   return (
     <Tabs value={page} onChange={onChange} variant="fullWidth">
-      <Tab label={Page.CONVERT} value={Page.CONVERT} />
-      <Tab label={Page.ANALYZE} value={Page.ANALYZE} />
+      {Object.values(Page).map((p) => (
+        <Tab key={p} label={p} value={p} />
+      ))}
     </Tabs>
   );
 };

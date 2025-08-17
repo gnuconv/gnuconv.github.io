@@ -28,7 +28,6 @@ export const analyzePageSlice = createSlice({
 });
 
 export const { onAnalyzePageChange } = analyzePageSlice.actions;
-export const analyzePageReducer = analyzePageSlice.reducer;
 
 export const selectAnalyzePage = (state: RootState): AnalyzePage =>
   state.analyzePage.value;

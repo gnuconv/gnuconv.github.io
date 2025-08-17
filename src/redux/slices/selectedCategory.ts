@@ -39,6 +39,5 @@ export const {
   clearCategories,
   pushAllCategories,
 } = selectedCategorySlice.actions;
-export const selectedCategoryReducer = selectedCategorySlice.reducer;
 export const selectCategory = (state: RootState): string[] =>
   state.selectedCategory.value;

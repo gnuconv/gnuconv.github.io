@@ -1,34 +1,25 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { fileTypeReducer, fileTypeSlice } from "./slices/fileType";
-import { rulesReducer, rulesSlice } from "./slices/rules";
-import {
-  transactionsFileContentReducer,
-  transactionsFileContentSlice,
-} from "./slices/transactionsFileContent";
-import { gnuReducer, gnuSlice } from "./slices/gnu";
-import { timeframeReducer, timeframeSlice } from "./slices/timeframe";
-import {
-  highlightedCategoryReducer,
-  highlightedCategorySlice,
-} from "./slices/highlightedCategory";
-import {
-  selectedCategoryReducer,
-  selectedCategorySlice,
-} from "./slices/selectedCategory";
-import { pageReducer, pageSlice } from "./slices/page";
-import { analyzePageReducer, analyzePageSlice } from "./slices/analyzePage";
+import { fileTypeSlice } from "./slices/fileType";
+import { rulesSlice } from "./slices/rules";
+import { transactionsFileContentSlice } from "./slices/transactionsFileContent";
+import { gnuSlice } from "./slices/gnu";
+import { timeframeSlice } from "./slices/timeframe";
+import { highlightedCategorySlice } from "./slices/highlightedCategory";
+import { selectedCategorySlice } from "./slices/selectedCategory";
+import { pageSlice } from "./slices/page";
+import { analyzePageSlice } from "./slices/analyzePage";
 
 export const store = configureStore({
   reducer: {
-    [fileTypeSlice.name]: fileTypeReducer,
-    [rulesSlice.name]: rulesReducer,
-    [transactionsFileContentSlice.name]: transactionsFileContentReducer,
-    [gnuSlice.name]: gnuReducer,
-    [timeframeSlice.name]: timeframeReducer,
-    [highlightedCategorySlice.name]: highlightedCategoryReducer,
-    [selectedCategorySlice.name]: selectedCategoryReducer,
-    [pageSlice.name]: pageReducer,
-    [analyzePageSlice.name]: analyzePageReducer,
+    [fileTypeSlice.name]: fileTypeSlice.reducer,
+    [rulesSlice.name]: rulesSlice.reducer,
+    [transactionsFileContentSlice.name]: transactionsFileContentSlice.reducer,
+    [gnuSlice.name]: gnuSlice.reducer,
+    [timeframeSlice.name]: timeframeSlice.reducer,
+    [highlightedCategorySlice.name]: highlightedCategorySlice.reducer,
+    [selectedCategorySlice.name]: selectedCategorySlice.reducer,
+    [pageSlice.name]: pageSlice.reducer,
+    [analyzePageSlice.name]: analyzePageSlice.reducer,
   },
 });
 

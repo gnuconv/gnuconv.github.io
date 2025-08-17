@@ -27,7 +27,6 @@ export const timeframeSlice = createSlice({
 });
 
 export const { setStartDate, setEndDate } = timeframeSlice.actions;
-export const timeframeReducer = timeframeSlice.reducer;
 export const selectStartDate = (state: RootState): number =>
   state.timeframe.start;
 export const selectEndDate = (state: RootState): number => state.timeframe.end;

@@ -77,7 +77,6 @@ export const rulesSlice = createSlice({
 });
 
 export const { onRuleFileUpload } = rulesSlice.actions;
-export const rulesReducer = rulesSlice.reducer;
 
 export const selectRules = (state: RootState): Rule[] | undefined =>
   state.rules.rules;

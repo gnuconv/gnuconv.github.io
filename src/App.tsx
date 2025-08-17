@@ -5,6 +5,11 @@ import { PageWrapper } from "./PageWrapper";
 import { Page } from "./redux/slices/page";
 import { Header } from "./Header";
 
+const pages: [Page, () => React.ReactElement][] = [
+  [Page.CONVERT, Converter],
+  [Page.ANALYZE, AnalyzePage],
+];
+
 export const App = (): React.ReactElement => {
   return (
     <Box
@@ -28,12 +33,11 @@ export const App = (): React.ReactElement => {
           overflow: "scroll",
         }}
       >
-        <PageWrapper page={Page.CONVERT}>
-          <Converter />
-        </PageWrapper>
-        <PageWrapper page={Page.ANALYZE}>
-          <AnalyzePage />
-        </PageWrapper>
+        {pages.map((p) => (
+          <PageWrapper key={p[0]} page={p[0]}>
+            {p[1]()}
+          </PageWrapper>
+        ))}
       </Box>
     </Box>
   );

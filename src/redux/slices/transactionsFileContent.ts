@@ -22,7 +22,5 @@ export const transactionsFileContentSlice = createSlice({
 
 export const { onTransactionFileChange } = transactionsFileContentSlice.actions;
 
-export const transactionsFileContentReducer =
-  transactionsFileContentSlice.reducer;
 export const selectTransactionFileContent = (state: RootState): string =>
   state.transactionsFileContent.value;
