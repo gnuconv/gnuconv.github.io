@@ -1,5 +1,4 @@
 import type { GNUAccount, GNUTransaction } from "../redux/slices/gnuFile";
-import { ExtractAccounts, ExtractTransactions } from "./chartUtils";
 
 export const calculateSize = (n: GraphNode | GraphNode[]): number => {
   if (Array.isArray(n)) return n.reduce((acc, c) => acc + calculateSize(c), 0);
@@ -116,17 +115,6 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
     size: 0,
     children: [],
   };
-};
-
-export const processGNUFile = (
-  content: string
-): [GNUAccount[], GNUTransaction[]] => {
-  if (!content) return [[], []];
-  const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(content, "text/xml");
-  const accounts = ExtractAccounts(xmlDoc);
-  const transactions = ExtractTransactions(xmlDoc);
-  return [accounts, transactions];
 };
 
 export const processChart = (
