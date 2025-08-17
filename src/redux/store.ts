@@ -16,6 +16,7 @@ import {
   selectedCategorySlice,
 } from "./slices/selectedCategory";
 import { pageReducer, pageSlice } from "./slices/page";
+import { analyzePageReducer, analyzePageSlice } from "./slices/analyzePage";
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export const store = configureStore({
     [highlightedCategorySlice.name]: highlightedCategoryReducer,
     [selectedCategorySlice.name]: selectedCategoryReducer,
     [pageSlice.name]: pageReducer,
+    [analyzePageSlice.name]: analyzePageReducer,
   },
 });
 

@@ -1,5 +1,4 @@
-import { Box, Tab, Tabs } from "@mui/material";
-import { useState } from "react";
+import { Box } from "@mui/material";
 import { AssetPage } from "../AssetGraph/AssetPage";
 import {
   selectGNUFileContent,
@@ -8,11 +7,12 @@ import {
 import { processGNUFile } from "../Expenses/gnuProcessor";
 import { ExpensesPage } from "../Expenses/ExpensesPage";
 import { GNUFileSelector } from "../Expenses/gnuFileSelector";
-import { Tab as TTab } from "../Tab";
 import { useAppSelector } from "../redux/hooks";
+import { AnalyzeHeader } from "./AnalyzeHeader";
+import { AnalyzePageWrapper } from "./AnalyzePageWrapper";
+import { AnalyzePage as AP } from "../redux/slices/analyzePage";
 
 export const AnalyzePage = (): React.ReactElement => {
-  const [tab, setTab] = useState<TTab>(TTab.EXPENSES);
   const hasGNUFile = useAppSelector(selectHasGNUFile);
   const filecontent = useAppSelector(selectGNUFileContent);
   const [accounts, transactions] = processGNUFile(filecontent);
@@ -32,24 +32,15 @@ export const AnalyzePage = (): React.ReactElement => {
               width: "100vw",
             }}
           >
-            <Tabs
-              value={tab}
-              onChange={(_e, v) => {
-                setTab(v as TTab);
-              }}
-              variant="fullWidth"
-            >
-              <Tab label={TTab.EXPENSES} value={TTab.EXPENSES} />
-              <Tab label={TTab.ASSETS} value={TTab.ASSETS} />
-            </Tabs>
+            <AnalyzeHeader />
           </Box>
           <Box sx={{ width: "100%" }}>
-            {tab === TTab.EXPENSES && (
+            <AnalyzePageWrapper page={AP.EXPENSES}>
               <ExpensesPage accounts={accounts} transactions={transactions} />
-            )}
-            {tab === TTab.ASSETS && (
+            </AnalyzePageWrapper>
+            <AnalyzePageWrapper page={AP.ASSETS}>
               <AssetPage accounts={accounts} transactions={transactions} />
-            )}
+            </AnalyzePageWrapper>
           </Box>
         </>
       ) : (
