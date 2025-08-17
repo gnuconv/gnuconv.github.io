@@ -15,6 +15,7 @@ import { onHighlightedCategoryChange } from "../redux/slices/highlightedCategory
 import { useAppSelector } from "../redux/hooks";
 
 const msToNs = 1000;
+
 export const Timeframe = (): React.ReactElement => {
   const dispatch = useDispatch();
   const start = useAppSelector(selectStartDate);
@@ -35,22 +36,8 @@ export const Timeframe = (): React.ReactElement => {
   };
 
   const addMonth = (n: number) => (): void => {
-    dispatch(clearCategories());
-    dispatch(onHighlightedCategoryChange(""));
-    dispatch(
-      setStartDate(
-        dayjs(start * msToNs)
-          .add(n, "month")
-          .unix()
-      )
-    );
-    dispatch(
-      setEndDate(
-        dayjs(end * msToNs)
-          .add(n, "month")
-          .unix()
-      )
-    );
+    onStartDateChange(dayjs(start * msToNs).add(n, "month"));
+    onEndDateChange(dayjs(end * msToNs).add(n, "month"));
   };
 
   return (

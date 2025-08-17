@@ -1,12 +1,11 @@
 import { useDispatch } from "react-redux";
 import { InputFile } from "../Converter/InputFile";
 import { onGNUFileUploaded, selectHasGNUFile } from "../redux/slices/gnu";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useAppSelector } from "../redux/hooks";
 
 const getFileContent = async (f: File): Promise<string> => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ds = new (window as any).DecompressionStream("gzip");
+  const ds = new window.DecompressionStream("gzip");
   const decompressedStream = f.stream().pipeThrough(ds);
   const resp = await new Response(decompressedStream).blob();
   return resp.text();
@@ -31,7 +30,6 @@ export const GNUFileSelector = (): React.ReactElement => {
       }}
     >
       <InputFile onChange={onChange} isEmpty={!hasGNUFile} />
-      {hasGNUFile && <Typography sx={{ mt: 2 }}>{hasGNUFile}</Typography>}
     </Box>
   );
 };

@@ -117,7 +117,7 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
   };
 };
 
-export const processChart = (
+export const processTree = (
   accounts: GNUAccount[],
   transactions: GNUTransaction[],
   start: number,

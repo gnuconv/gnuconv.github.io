@@ -1,8 +1,8 @@
 import { margin } from "./ExpensesChart";
 import { SVGBox } from "./SVGBox";
 import { createPalette } from "./colors";
-import type { GraphNode } from "./gnuProcessor";
-import { calculateSize } from "./gnuProcessor";
+import type { GraphNode } from "./treeProcessor";
+import { calculateSize } from "./treeProcessor";
 
 interface SVGRowProps {
   palette: string[];

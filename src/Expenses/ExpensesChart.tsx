@@ -1,8 +1,4 @@
-import {
-  selectAccounts,
-  selectHasGNUFile,
-  selectTransactions,
-} from "../redux/slices/gnu";
+import { selectAccounts, selectTransactions } from "../redux/slices/gnu";
 
 import { Palette } from "./colors";
 import { Box, Typography } from "@mui/material";
@@ -10,10 +6,11 @@ import { selectCategory } from "../redux/slices/selectedCategory";
 import { LegendTitle } from "./LegendTitle";
 import { SVGRow } from "./SVGRow";
 import { PopCategory } from "./PopCategory";
-import type { GraphNode } from "./gnuProcessor";
-import { processChart } from "./gnuProcessor";
+import type { GraphNode } from "./treeProcessor";
+import { processTree } from "./treeProcessor";
 import { useAppSelector } from "../redux/hooks";
 import { selectEndDate, selectStartDate } from "../redux/slices/timeframe";
+import { useMemo } from "react";
 
 export const margin = 0.003;
 
@@ -42,12 +39,19 @@ export const ExpensesChart = (): React.ReactElement => {
   const start = useAppSelector(selectStartDate);
   const end = useAppSelector(selectEndDate);
   const selectedCategory = useAppSelector(selectCategory);
-  const hasGNUFile = useAppSelector(selectHasGNUFile);
-  if (!start || !end || !hasGNUFile) return <></>;
-  const tree = processChart(accounts, transactions, start, end);
+  if (!start || !end) return <></>;
 
-  const root = findNode(tree, selectedCategory);
-  sortNodes(root);
+  const tree = useMemo(
+    () => processTree(accounts, transactions, start, end),
+    [accounts, end, start, transactions]
+  );
+
+  const root = useMemo(() => {
+    const n = findNode(tree, selectedCategory);
+    sortNodes(n);
+    return n;
+  }, [selectedCategory, tree]);
+
   const nodes = root.children;
 
   const expenses = root.size;
