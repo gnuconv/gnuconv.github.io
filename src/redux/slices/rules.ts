@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
-export interface RulesState {
+export type RulesState = {
   rules?: Rule[];
   error?: string;
-}
+};
 
-export interface Rule {
+export type Rule = {
   match: string;
   desc: string;
   dest: string;
-}
+};
 
 const badObject = (i: unknown): RulesState => {
   return {

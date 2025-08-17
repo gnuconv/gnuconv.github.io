@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
-export interface TransactionsFileContentState {
+export type TransactionsFileContentState = {
   value: string;
-}
+};
 
 const initialState: TransactionsFileContentState = {
   value: "",

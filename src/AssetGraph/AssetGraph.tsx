@@ -8,10 +8,10 @@ import { XYearLabels } from "./XYearLabels";
 import { YAxis } from "./YAxis";
 import { YLabels } from "./YLabels";
 
-interface AssetGraphProps {
+type AssetGraphProps = {
   graph: Graph;
   highlight: string;
-}
+};
 
 export const AssetGraph = ({
   graph,

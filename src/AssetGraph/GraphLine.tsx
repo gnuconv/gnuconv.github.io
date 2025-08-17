@@ -3,11 +3,11 @@ import { computeX, computeY } from "./utils";
 import { GraphLinePath } from "./GraphLinePath";
 import { useGraph } from "./GraphContext";
 
-interface GraphLineProps {
+type GraphLineProps = {
   line: Line;
   highlight: boolean;
   dim: boolean;
-}
+};
 
 const circleRadius = 3;
 

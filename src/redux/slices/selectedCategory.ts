@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
-export interface SelectedCategoryState {
+export type SelectedCategoryState = {
   value: string[];
-}
+};
 
 const initialState: SelectedCategoryState = {
   value: [],

@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
-export interface FileTypeState {
+export type FileTypeState = {
   value: FileType;
-}
+};
 
 export const FileType = Object.freeze({
   ["TD CC"]: "TD CC",

@@ -6,7 +6,7 @@ import {
 import { pushAllCategories } from "../redux/slices/selectedCategory";
 import { useAppSelector } from "../redux/hooks";
 
-interface SVGBoxProps {
+type SVGBoxProps = {
   x: number;
   y: number;
   width: number;
@@ -16,7 +16,7 @@ interface SVGBoxProps {
   canvasWidth: number;
   canHighlight: boolean;
   categories?: string[];
-}
+};
 
 const half = 2;
 const margin = 0.05;

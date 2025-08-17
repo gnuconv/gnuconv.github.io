@@ -6,10 +6,10 @@ import DownloadIcon from "@mui/icons-material/Download";
 import type { Transaction } from "./InputFile";
 import { UnknownTransactions } from "./UnknownTransactions";
 
-interface IProps {
+type IProps = {
   AccountName: string;
   Transactions: Transaction[];
-}
+};
 
 export const DownloadButton = ({
   AccountName,

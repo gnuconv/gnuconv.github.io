@@ -3,33 +3,33 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { parseGNUFile } from "./gnuParse";
 
-export interface GNUAccount {
+export type GNUAccount = {
   name: string;
   type: string;
   id: string;
   parent: string;
-}
+};
 
-export interface GNUTransaction {
+export type GNUTransaction = {
   id: string;
   description: string;
   value: number;
   date: number;
   splits: GNUSplit[];
-}
+};
 
-export interface GNUSplit {
+export type GNUSplit = {
   id: string;
   value: number;
   account: string;
-}
+};
 
-export interface GNUFileState {
+export type GNUFileState = {
   filename?: string;
 
   accounts?: GNUAccount[];
   transactions?: GNUTransaction[];
-}
+};
 
 const initialState: GNUFileState = {};
 

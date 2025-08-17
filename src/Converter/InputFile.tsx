@@ -1,17 +1,17 @@
 import { Button } from "@mui/material";
 
-export interface Transaction {
+export type Transaction = {
   account: string;
   date: string;
   description: string;
   destination: string;
   amount: number;
-}
+};
 
-interface IProps {
+type IProps = {
   isEmpty: boolean;
   onChange: (f: File) => Promise<void>;
-}
+};
 
 export const InputFile = ({
   onChange,

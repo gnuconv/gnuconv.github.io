@@ -7,16 +7,16 @@ export const calculateSize = (n: GraphNode | GraphNode[]): number => {
   return n.children.reduce((acc, c) => acc + calculateSize(c), 0);
 };
 
-interface AccountTreeTransaction {
+type AccountTreeTransaction = {
   name: string;
   value: number;
-}
+};
 
-interface AccountTreeNode {
+type AccountTreeNode = {
   account: GNUAccount;
   transactions?: AccountTreeTransaction[];
   children?: AccountTreeNode[];
-}
+};
 
 const makeTreeNode = (
   accounts: GNUAccount[],
@@ -74,12 +74,12 @@ const stringToColour = (str: string): string => {
   return colour;
 };
 
-export interface GraphNode {
+export type GraphNode = {
   name: string;
   color: string;
   size: number;
   children: GraphNode[];
-}
+};
 
 const convertAccountTree = (node: AccountTreeNode): GraphNode => {
   if (node.transactions) {

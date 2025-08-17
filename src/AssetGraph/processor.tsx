@@ -1,16 +1,16 @@
 import { Palette } from "../Expenses/colors";
 import type { GNUAccount, GNUTransaction } from "../redux/slices/gnu";
 
-interface Point {
+type Point = {
   date: number;
   value: number;
-}
+};
 
-export interface Account {
+export type Account = {
   name: string;
   color: string;
   points: Point[];
-}
+};
 
 const computeAccountGraphPoint = (
   account: GNUAccount,

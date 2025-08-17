@@ -6,10 +6,10 @@ import { useAppSelector } from "../redux/hooks";
 import { useCallback } from "react";
 import type { RootState } from "../redux/store";
 
-interface LegendTitleProps {
+type LegendTitleProps = {
   name: string;
   amount: number;
-}
+};
 
 export const LegendTitle = ({
   name,

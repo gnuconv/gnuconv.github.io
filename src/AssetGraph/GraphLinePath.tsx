@@ -2,12 +2,12 @@ import type { Line, Point } from "./graph";
 import { useGraph } from "./GraphContext";
 import { computeX, computeY } from "./utils";
 
-interface GraphLinePathProps {
+type GraphLinePathProps = {
   line: Line;
   points: [Point, Point];
   extraSize: number;
   alpha: string;
-}
+};
 
 const strokeWidth = 2;
 

@@ -3,10 +3,10 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import dayjs from "dayjs";
 
-export interface TimeframeState {
+export type TimeframeState = {
   start: number;
   end: number;
-}
+};
 
 const initialState: TimeframeState = {
   start: dayjs().startOf("month").add(-1, "month").unix(),

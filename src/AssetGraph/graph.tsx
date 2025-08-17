@@ -66,18 +66,18 @@ const computeYLabels = (yRange: [number, number]): number[] => {
   return yLabels;
 };
 
-export interface Point {
+export type Point = {
   date: number;
   value: number;
-}
+};
 
-export interface Line {
+export type Line = {
   name: string;
   color: string;
   points: Point[];
-}
+};
 
-export interface Graph {
+export type Graph = {
   dims: [number, number];
   xMargins: [number, number];
   yMargins: [number, number];
@@ -88,7 +88,7 @@ export interface Graph {
   xMonthslabels: dayjs.Dayjs[];
 
   lines: Line[];
-}
+};
 
 const reduceLines = (
   lines: Account[],

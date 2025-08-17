@@ -4,7 +4,7 @@ import { createPalette } from "./colors";
 import type { GraphNode } from "./treeProcessor";
 import { calculateSize } from "./treeProcessor";
 
-interface SVGRowProps {
+type SVGRowProps = {
   palette: string[];
   canvasWidth: number;
   width: number;
@@ -13,9 +13,9 @@ interface SVGRowProps {
   y: number;
   nodes: GraphNode[];
   categories: string[];
-}
+};
 
-interface DataPoint {
+type DataPoint = {
   name: string;
   color: string;
   x: number;
@@ -23,7 +23,7 @@ interface DataPoint {
   width: number;
   height: number;
   children: GraphNode[] | undefined;
-}
+};
 
 export const SVGRow = ({
   categories,

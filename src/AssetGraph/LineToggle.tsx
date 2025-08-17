@@ -1,13 +1,13 @@
 import { Button } from "@mui/material";
 import type { Account } from "./processor";
 
-interface LineToggleProps {
+type LineToggleProps = {
   account: Account;
   disabled: boolean;
   onClick: () => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
-}
+};
 
 export const LineToggle = ({
   account,
