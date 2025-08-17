@@ -41,9 +41,11 @@ export const SVGBox = (n: SVGBoxProps): React.ReactElement => {
         width={n.width}
         height={n.height}
         fill={n.color}
-        stroke={highlightedCategory === n.name ? "white" : ""}
+        stroke={highlightedCategory === n.name && n.canHighlight ? "white" : ""}
         strokeWidth={
-          highlightedCategory === n.name ? n.canvasWidth * border : ""
+          highlightedCategory === n.name && n.canHighlight
+            ? n.canvasWidth * border
+            : ""
         }
         onMouseEnter={onMouseEnter}
         onClick={onClick}

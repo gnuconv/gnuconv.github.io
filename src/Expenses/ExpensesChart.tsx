@@ -72,7 +72,8 @@ export const ExpensesChart = (): React.ReactElement => {
         }}
       >
         <Typography variant="h3">
-          {root.name} total: ${expenses.toFixed(2)}
+          {["Expenses", ...selectedCategory].join(" > ")}: $
+          {expenses.toFixed(2)}
         </Typography>
       </Box>
       <Box
