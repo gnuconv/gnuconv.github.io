@@ -1,10 +1,9 @@
 import { useDispatch } from "react-redux";
-import {
-  selectHighlightedCategory,
-  onHighlightedCategoryChange,
-} from "../redux/slices/highlightedCategory";
+import { onHighlightedCategoryChange } from "../redux/slices/highlightedCategory";
 import { pushAllCategories } from "../redux/slices/selectedCategory";
 import { useAppSelector } from "../redux/hooks";
+import { useCallback } from "react";
+import type { RootState } from "../redux/store";
 
 type SVGBoxProps = {
   x: number;
@@ -24,7 +23,12 @@ const margin = 0.05;
 export const SVGBox = (n: SVGBoxProps): React.ReactElement => {
   const border = 0.002;
   const dispatch = useDispatch();
-  const highlightedCategory = useAppSelector(selectHighlightedCategory);
+  const isHighlighted = useAppSelector(
+    useCallback(
+      (state: RootState): boolean => state.highlightedCategory.value === n.name,
+      [n.name]
+    )
+  );
   const onMouseEnter = (): void => {
     if (!n.canHighlight) return;
     dispatch(onHighlightedCategoryChange(n.name));
@@ -41,11 +45,9 @@ export const SVGBox = (n: SVGBoxProps): React.ReactElement => {
         width={n.width}
         height={n.height}
         fill={n.color}
-        stroke={highlightedCategory === n.name && n.canHighlight ? "white" : ""}
+        stroke={isHighlighted && n.canHighlight ? "white" : ""}
         strokeWidth={
-          highlightedCategory === n.name && n.canHighlight
-            ? n.canvasWidth * border
-            : ""
+          isHighlighted && n.canHighlight ? n.canvasWidth * border : ""
         }
         onMouseEnter={onMouseEnter}
         onClick={onClick}
