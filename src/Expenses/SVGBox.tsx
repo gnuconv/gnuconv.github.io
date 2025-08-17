@@ -18,17 +18,18 @@ type SVGBoxProps = {
 };
 
 const half = 2;
-const margin = 0.05;
+const margin = 0.025;
+const border = 0.002;
 
 export const SVGBox = (n: SVGBoxProps): React.ReactElement => {
-  const border = 0.002;
   const dispatch = useDispatch();
-  const isHighlighted = useAppSelector(
+  const isHovered = useAppSelector(
     useCallback(
       (state: RootState): boolean => state.highlightedCategory.value === n.name,
       [n.name]
     )
   );
+  const isHighlighted = isHovered && n.canHighlight;
   const onMouseEnter = (): void => {
     if (!n.canHighlight) return;
     dispatch(onHighlightedCategoryChange(n.name));
@@ -37,32 +38,25 @@ export const SVGBox = (n: SVGBoxProps): React.ReactElement => {
     if (!n.canHighlight || !n.categories) return;
     dispatch(pushAllCategories(n.categories));
   };
+
   return (
-    <>
+    <g
+      onMouseEnter={onMouseEnter}
+      onClick={onClick}
+      transform={`translate(${n.x} ${n.y})`}
+      style={{ cursor: n.canHighlight ? "pointer" : "default" }}
+      fontSize={n.height / half}
+    >
       <rect
-        x={n.x}
-        y={n.y}
         width={n.width}
         height={n.height}
         fill={n.color}
-        stroke={isHighlighted && n.canHighlight ? "white" : ""}
-        strokeWidth={
-          isHighlighted && n.canHighlight ? n.canvasWidth * border : ""
-        }
-        onMouseEnter={onMouseEnter}
-        onClick={onClick}
-        style={{ cursor: n.canHighlight ? "pointer" : "default" }}
-      ></rect>
-      <text
-        x={n.x + n.width * margin}
-        y={n.y + n.height / half}
-        fontSize={n.height / half}
-        style={{ cursor: n.canHighlight ? "pointer" : "default" }}
-        onMouseEnter={onMouseEnter}
-        onClick={onClick}
-      >
+        stroke={isHighlighted ? "white" : ""}
+        strokeWidth={isHighlighted ? n.canvasWidth * border : ""}
+      />
+      <text x={n.width * margin} y={n.height / half}>
         {n.name}
       </text>
-    </>
+    </g>
   );
 };
