@@ -20,7 +20,7 @@ const findNode = (root: GraphNode, path: string[]): GraphNode => {
 };
 
 const sortNodes = (n: GraphNode): void => {
-  n.children?.sort((a, b) => b.size - a.size);
+  n.children?.sort((a, b) => b.add - a.add);
   n.children?.forEach((c) => {
     sortNodes(c);
   });
@@ -47,7 +47,7 @@ export const ExpensesChart = (): React.ReactElement => {
 
   const nodes = root.children ?? [];
 
-  const expenses = root.size;
+  const expenses = root.add + root.remove;
 
   return (
     <Box sx={{ p: 5 }}>
@@ -74,7 +74,7 @@ export const ExpensesChart = (): React.ReactElement => {
       >
         <PopCategory />
         {nodes.map((n, i) => (
-          <LegendTitle key={i} name={n.name} amount={n.size} />
+          <LegendTitle key={i} name={n.name} amount={n.add + n.remove} />
         ))}
       </Box>
       <IciclePlot root={root} />

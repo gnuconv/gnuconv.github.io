@@ -29,8 +29,8 @@ export const IcicleRow = ({
   const occupiedWidth = width - spacing * (r.children.length - 1);
   for (let i = 0; i < r.children.length; i++) {
     const n = r.children[i];
-    if (n.size < 0) continue;
-    const boxWidth = (n.size / r.size) * occupiedWidth;
+    if (n.add < 0) continue;
+    const boxWidth = (n.add / r.add) * occupiedWidth;
     const color = palette[i % palette.length];
     elements.push(
       <IcicleBox

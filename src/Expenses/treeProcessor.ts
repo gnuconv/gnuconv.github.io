@@ -1,10 +1,25 @@
 import type { GNUAccount, GNUTransaction } from "../redux/slices/gnu";
 
-export const calculateSize = (n: GraphNode | GraphNode[]): number => {
-  if (Array.isArray(n)) return n.reduce((acc, c) => acc + calculateSize(c), 0);
+export const calculateSize = (n: GraphNode | GraphNode[]): [number, number] => {
+  if (Array.isArray(n))
+    return n.reduce(
+      (acc, c) => {
+        const sub = calculateSize(c);
+        return [acc[0] + sub[0], acc[1] + sub[1]];
+      },
+      [0, 0]
+    );
 
-  if (n.size) return n.size;
-  return n.children?.reduce((acc, c) => acc + calculateSize(c), 0) ?? 0;
+  if (n.add || n.remove) return [n.add, n.remove];
+  return (
+    n.children?.reduce(
+      (acc, c) => {
+        const sub = calculateSize(c);
+        return [acc[0] + sub[0], acc[1] + sub[1]];
+      },
+      [0, 0]
+    ) ?? [0, 0]
+  );
 };
 
 type AccountTreeTransaction = {
@@ -45,7 +60,8 @@ const makeTreeNode = (
 
 export type GraphNode = {
   name: string;
-  size: number;
+  add: number;
+  remove: number;
   children?: GraphNode[];
 };
 
@@ -53,29 +69,32 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
   const out = {
     name: node.account.name,
     children: [] as GraphNode[],
-    size: 0,
+    add: 0,
+    remove: 0,
   };
 
   if (node.transactions) {
     out.children.push(
       ...node.transactions.map((t) => ({
         name: t.name,
-        size: t.value,
+        add: t.value > 0 ? t.value : 0,
+        remove: t.value < 0 ? t.value : 0,
       }))
     );
   }
 
   if (node.children) {
     out.children.push(
-      ...node.children
-        .map(convertAccountTree)
-        .filter((c) => calculateSize(c) > 0)
+      ...node.children.map(convertAccountTree).filter((c) => {
+        const sub = calculateSize(c);
+        return sub[0] > 0 || sub[1] > 0;
+      })
     );
-    out.size = calculateSize(out);
+    [out.add, out.remove] = calculateSize(out);
     return out;
   }
 
-  out.size = calculateSize(out);
+  [out.add, out.remove] = calculateSize(out);
   return out;
 };
 
