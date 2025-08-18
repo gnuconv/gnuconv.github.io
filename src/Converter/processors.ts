@@ -103,7 +103,7 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
       account: r[2],
       description: r[1],
       destination: "Expenses:UNKNOWN",
-      amount: r[4] === "Debit" ? parseFloat(r[5]) : -parseFloat(r[5]),
+      amount: parseFloat(r[5]) * (r[4] === "Debit" ? -1 : 1),
     }));
     return transactions;
   },
