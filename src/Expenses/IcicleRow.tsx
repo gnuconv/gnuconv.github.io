@@ -30,11 +30,16 @@ export const IcicleRow = ({
     width -
     spacing * (r.children.filter((n) => n.add + n.remove > 0).length - 1);
 
+  const rowAdjustedSize = r.children.reduce(
+    (acc, c) => acc + (c.children ? c.add + c.remove : c.add),
+    0
+  );
+
   for (let i = 0; i < r.children.length; i++) {
     const n = r.children[i];
     if ((n.remove < 0 && n.add === 0) || n.add + n.remove === 0) continue;
 
-    const boxWidth = (n.add / r.add) * occupiedWidth;
+    const boxWidth = ((n.add + n.remove) / rowAdjustedSize) * occupiedWidth;
     const color = palette[i % palette.length];
 
     elements.push(
