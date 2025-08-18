@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { LineToggle } from "./LineToggle";
 import { processGNUData } from "./processor";
 import { computeGraph } from "./graph";
-import { GNUFileSelector } from "../Expenses/GNUFileSelector";
+import { GNUFileSelector } from "../Expenses/GNUFileSelect";
 import { AssetGraph } from "./AssetGraph";
 import { useAppSelector } from "../redux/hooks";
 import { selectAccounts, selectTransactions } from "../redux/slices/gnu";

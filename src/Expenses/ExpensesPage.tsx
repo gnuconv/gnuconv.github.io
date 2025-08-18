@@ -1,7 +1,7 @@
 import { Box, Paper } from "@mui/material";
 import { Timeframe } from "./Timeframe";
 import { ExpensesChart } from "./ExpensesChart";
-import { GNUFileSelector } from "./GNUFileSelector";
+import { GNUFileSelector } from "./GNUFileSelect";
 import React from "react";
 
 export const ExpensesPage = (): React.ReactElement => {

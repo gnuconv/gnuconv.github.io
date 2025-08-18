@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { GNUFileSelector } from "../Expenses/GNUFileSelector";
+import { GNUFileSelector } from "../Expenses/GNUFileSelect";
 import { useAppSelector } from "../redux/hooks";
 import { selectHasGNUFile } from "../redux/slices/gnu";
 
