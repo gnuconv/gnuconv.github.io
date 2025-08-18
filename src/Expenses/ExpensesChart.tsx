@@ -9,18 +9,25 @@ import { selectEndDate, selectStartDate } from "../redux/slices/timeframe";
 import { useMemo } from "react";
 import { IciclePlot } from "./IciclePlot";
 import { Breadcrumbs } from "./Breadcrumbs";
+import { darken, Palette } from "./colors";
 
 export const margin = 0.003;
 
-const findNode = (root: GraphNode, path: string[]): GraphNode => {
-  if (path.length === 0) return root;
-  const child = root.children?.find((c) => c.name === path[0]);
-  if (!child) return root;
-  return findNode(child, path.slice(1));
+const findNode = (
+  root: GraphNode,
+  path: string[],
+  palette: string[]
+): [GraphNode, string[]] => {
+  if (path.length === 0 || !root.children) return [root, palette];
+  const child = root.children?.findIndex((c) => c.name === path[0]) ?? -1;
+  if (child === -1) return [root, palette];
+  return findNode(root.children?.[child], path.slice(1), [
+    darken(palette[child]),
+  ]);
 };
 
 const sortNodes = (n: GraphNode): void => {
-  n.children?.sort((a, b) => b.add - a.add);
+  n.children?.sort((a, b) => b.add + b.remove - (a.add + a.remove));
   n.children?.forEach((c) => {
     sortNodes(c);
   });
@@ -39,10 +46,10 @@ export const ExpensesChart = (): React.ReactElement => {
     [accounts, end, start, transactions]
   );
 
-  const root = useMemo(() => {
-    const n = findNode(tree, selectedCategory);
+  const [root, palette] = useMemo(() => {
+    const [n, palette] = findNode(tree, selectedCategory, Palette);
     sortNodes(n);
-    return n;
+    return [n, palette];
   }, [selectedCategory, tree]);
 
   const nodes = root.children ?? [];
@@ -81,7 +88,7 @@ export const ExpensesChart = (): React.ReactElement => {
             />
           ))}
       </Box>
-      <IciclePlot root={root} />
+      <IciclePlot root={root} palette={palette} />
     </Box>
   );
 };

@@ -1,14 +1,17 @@
 import { maxDepth } from "./chartUtils";
-import { Palette } from "./colors";
 import { IcicleRow } from "./IcicleRow";
 import type { GraphNode } from "./treeProcessor";
 
 type IciclePlotProps = {
   root: GraphNode;
+  palette: string[];
 };
 
 const margin = 0.003;
-export const IciclePlot = ({ root }: IciclePlotProps): React.ReactElement => {
+export const IciclePlot = ({
+  root,
+  palette,
+}: IciclePlotProps): React.ReactElement => {
   const fullWidth = 7000;
   const depth = maxDepth(root);
   const lineHeight = 200;
@@ -26,7 +29,7 @@ export const IciclePlot = ({ root }: IciclePlotProps): React.ReactElement => {
         startY={5}
         width={fullWidth}
         height={lineHeight}
-        palette={Palette}
+        palette={palette}
         spacing={fullWidth * 0.0025}
         categories={[]}
       />

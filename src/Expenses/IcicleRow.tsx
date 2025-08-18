@@ -28,12 +28,12 @@ export const IcicleRow = ({
   let dx = startX;
   const occupiedWidth =
     width -
-    spacing *
-      (r.children.filter((n) => n.add > 0 && n.add + n.remove !== 0).length -
-        1);
+    spacing * (r.children.filter((n) => n.add + n.remove > 0).length - 1);
+
   for (let i = 0; i < r.children.length; i++) {
     const n = r.children[i];
     if ((n.remove < 0 && n.add === 0) || n.add + n.remove === 0) continue;
+
     const boxWidth = (n.add / r.add) * occupiedWidth;
     const color = palette[i % palette.length];
 
