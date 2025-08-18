@@ -11,7 +11,7 @@ type IcicleBoxProps = {
   width: number;
   text: string;
   color: string;
-  canHighlight: boolean;
+  isParent: boolean;
   categories: string[];
 };
 
@@ -24,7 +24,7 @@ export const IcicleBox = ({
   height,
   text,
   color,
-  canHighlight,
+  isParent,
   categories,
 }: IcicleBoxProps): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -34,14 +34,13 @@ export const IcicleBox = ({
       [text]
     )
   );
-  const isHighlighted = isHovered && canHighlight;
 
   const onMouseEnter = (): void => {
-    if (!canHighlight) return;
+    if (!isParent) return;
     dispatch(onHighlightedCategoryChange(text));
   };
   const onClick = (): void => {
-    if (!canHighlight || !categories) return;
+    if (!isParent || !categories) return;
     dispatch(pushAllCategories(categories));
   };
 
@@ -50,14 +49,14 @@ export const IcicleBox = ({
       onMouseEnter={onMouseEnter}
       onClick={onClick}
       transform={`translate(${dx} ${dy})`}
-      style={{ cursor: canHighlight ? "pointer" : "default" }}
+      style={{ cursor: isParent ? "pointer" : "default" }}
     >
       <rect
         width={width}
         height={height}
         fill={color}
-        stroke={isHighlighted ? "white" : ""}
-        strokeWidth={isHighlighted ? border : ""}
+        stroke={isHovered ? "white" : ""}
+        strokeWidth={isHovered ? border : ""}
       />
       <text x={30} y={height * 0.6} fontSize={(height * 2) / 3}>
         {text}

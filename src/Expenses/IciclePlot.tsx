@@ -12,7 +12,6 @@ export const IciclePlot = ({ root }: IciclePlotProps): React.ReactElement => {
   const fullWidth = 7000;
   const depth = maxDepth(root);
   const lineHeight = 200;
-  console.log(root);
 
   return (
     <svg
@@ -24,7 +23,7 @@ export const IciclePlot = ({ root }: IciclePlotProps): React.ReactElement => {
       <IcicleRow
         r={root}
         startX={0}
-        startY={0}
+        startY={5}
         width={fullWidth}
         height={lineHeight}
         palette={Palette}
