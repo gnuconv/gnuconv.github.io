@@ -28,7 +28,7 @@ const colorToCSS = ([r, g, b]: Color): string =>
   `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 
 // exponent used to make a color darker.
-const darkerExpo = 0.96;
+const darkerExpo = 0.93;
 const darker = ([a, b, c]: Color): Color => [
   Math.pow(a, darkerExpo),
   Math.pow(b, darkerExpo),

@@ -1,23 +1,16 @@
 import { selectAccounts, selectTransactions } from "../redux/slices/gnu";
-
-import { Palette } from "./colors";
 import { Box, Typography } from "@mui/material";
 import { selectCategory } from "../redux/slices/selectedCategory";
 import { LegendTitle } from "./LegendTitle";
-import { SVGRow } from "./SVGRow";
 import { PopCategory } from "./PopCategory";
 import type { GraphNode } from "./treeProcessor";
 import { processTree } from "./treeProcessor";
 import { useAppSelector } from "../redux/hooks";
 import { selectEndDate, selectStartDate } from "../redux/slices/timeframe";
 import { useMemo } from "react";
+import { IciclePlot } from "./IciclePlot";
 
 export const margin = 0.003;
-
-const maxDepth = (n: GraphNode): number => {
-  if (!n.children?.length) return 1;
-  return 1 + Math.max(...(n.children?.map(maxDepth) ?? []));
-};
 
 const findNode = (root: GraphNode, path: string[]): GraphNode => {
   if (path.length === 0) return root;
@@ -55,11 +48,6 @@ export const ExpensesChart = (): React.ReactElement => {
   const nodes = root.children ?? [];
 
   const expenses = root.size;
-  const canvasWidth = 10000;
-  const canvasDivision = 30;
-  const lineHeight = canvasWidth / canvasDivision;
-
-  const depth = maxDepth(root) - 1;
 
   return (
     <Box sx={{ p: 5 }}>
@@ -89,23 +77,7 @@ export const ExpensesChart = (): React.ReactElement => {
           <LegendTitle key={i} name={n.name} amount={n.size} />
         ))}
       </Box>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="100%"
-        height="200"
-        viewBox={`0 0 ${canvasWidth} ${depth * lineHeight * (1 + margin)}`}
-      >
-        <SVGRow
-          categories={[]}
-          palette={Palette}
-          canvasWidth={canvasWidth}
-          width={canvasWidth}
-          height={lineHeight}
-          x={0}
-          y={0}
-          nodes={nodes}
-        />
-      </svg>
+      <IciclePlot root={root} />
     </Box>
   );
 };
