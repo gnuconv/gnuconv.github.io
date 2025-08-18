@@ -93,4 +93,18 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
       amount: parseAmount(r[7], r[8]),
     }));
   },
+  ZOE: (str: string) => {
+    const rows = parseCSV(str)
+      .filter((r) => r.length > 1)
+      .slice(1);
+
+    const transactions = rows.map((r) => ({
+      date: r[0].slice(0, 4) + "-" + r[0].slice(4, 6) + "-" + r[0].slice(6, 8),
+      account: r[2],
+      description: r[1],
+      destination: "Expenses:UNKNOWN",
+      amount: r[4] === "Debit" ? parseFloat(r[5]) : -parseFloat(r[5]),
+    }));
+    return transactions;
+  },
 };

@@ -11,6 +11,7 @@ export const FileType = Object.freeze({
   ["TD CHECKING"]: "TD CHECKING",
   ["RBC"]: "RBC",
   ["DESJARDINS"]: "DESJARDINS",
+  ZOE: "ZOE",
 });
 
 export type FileType = keyof typeof FileType;
