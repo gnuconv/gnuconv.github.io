@@ -4,7 +4,7 @@ export const calculateSize = (n: GraphNode | GraphNode[]): number => {
   if (Array.isArray(n)) return n.reduce((acc, c) => acc + calculateSize(c), 0);
 
   if (n.size) return n.size;
-  return n.children.reduce((acc, c) => acc + calculateSize(c), 0);
+  return n.children?.reduce((acc, c) => acc + calculateSize(c), 0) ?? 0;
 };
 
 type AccountTreeTransaction = {
@@ -58,39 +58,36 @@ const makeTreeNode = (
 export type GraphNode = {
   name: string;
   size: number;
-  children: GraphNode[];
+  children?: GraphNode[];
 };
 
 const convertAccountTree = (node: AccountTreeNode): GraphNode => {
+  const out = {
+    name: node.account.name,
+    children: [] as GraphNode[],
+    size: 0,
+  };
   if (node.transactions) {
-    const out = {
-      name: node.account.name,
-      children: node.transactions.map((t) => ({
+    out.children.push(
+      ...node.transactions.map((t) => ({
         name: t.name,
         size: t.value,
-        children: [],
-      })),
-      size: 0,
-    };
-    out.size = calculateSize(out);
-    return out;
+      }))
+    );
   }
+
   if (node.children) {
-    const out = {
-      name: node.account.name,
-      children: node.children
+    out.children.push(
+      ...node.children
         .map(convertAccountTree)
-        .filter((c) => calculateSize(c) > 0),
-      size: 0,
-    };
+        .filter((c) => calculateSize(c) > 0)
+    );
     out.size = calculateSize(out);
     return out;
   }
-  return {
-    name: "",
-    size: 0,
-    children: [],
-  };
+
+  out.size = calculateSize(out);
+  return out;
 };
 
 export const processTree = (
@@ -109,7 +106,5 @@ export const processTree = (
     expenses
   );
 
-  const out = convertAccountTree(accountTree);
-  out.children = out.children.filter((c) => !c.name.includes("UNKNOWN"));
-  return out;
+  return convertAccountTree(accountTree);
 };
