@@ -1,14 +1,14 @@
 import { selectAccounts, selectTransactions } from "../redux/slices/gnu";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { selectCategory } from "../redux/slices/selectedCategory";
 import { LegendTitle } from "./LegendTitle";
-import { PopCategory } from "./PopCategory";
 import type { GraphNode } from "./treeProcessor";
 import { processTree } from "./treeProcessor";
 import { useAppSelector } from "../redux/hooks";
 import { selectEndDate, selectStartDate } from "../redux/slices/timeframe";
 import { useMemo } from "react";
 import { IciclePlot } from "./IciclePlot";
+import { Breadcrumbs } from "./Breadcrumbs";
 
 export const margin = 0.003;
 
@@ -59,10 +59,7 @@ export const ExpensesChart = (): React.ReactElement => {
           p: 2,
         }}
       >
-        <Typography variant="h3">
-          {["Expenses", ...selectedCategory].join(" > ")}: $
-          {expenses.toFixed(2)}
-        </Typography>
+        <Breadcrumbs categories={selectedCategory} amount={expenses} />
       </Box>
       <Box
         sx={{
@@ -70,11 +67,16 @@ export const ExpensesChart = (): React.ReactElement => {
           justifyContent: "center",
           alignItems: "center",
           flexWrap: "wrap",
+          mb: 2,
         }}
       >
-        <PopCategory />
         {nodes.map((n, i) => (
-          <LegendTitle key={i} name={n.name} amount={n.add + n.remove} />
+          <LegendTitle
+            key={i}
+            name={n.name}
+            amount={n.add + n.remove}
+            canClick={!!n.children}
+          />
         ))}
       </Box>
       <IciclePlot root={root} />

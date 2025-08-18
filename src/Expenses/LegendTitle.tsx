@@ -9,11 +9,13 @@ import type { RootState } from "../redux/store";
 type LegendTitleProps = {
   name: string;
   amount: number;
+  canClick: boolean;
 };
 
 export const LegendTitle = ({
   name,
   amount,
+  canClick,
 }: LegendTitleProps): React.ReactElement => {
   const dispatch = useDispatch();
   const isHighlighted = useAppSelector(
@@ -39,7 +41,7 @@ export const LegendTitle = ({
         borderRadius: 1,
       }}
       onMouseEnter={onMouseEnter}
-      onClick={onClick}
+      onClick={canClick ? onClick : undefined}
     >
       {name}
       <br />${amount.toFixed(2)}
