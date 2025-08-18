@@ -26,12 +26,14 @@ export const IcicleRow = ({
   if (!r.children) return <></>;
   const elements: React.ReactElement[] = [];
   let dx = startX;
-  const occupiedWidth = width - spacing * (r.children.length - 1);
+  const occupiedWidth =
+    width - spacing * (r.children.filter((n) => n.add > 0).length - 1);
   for (let i = 0; i < r.children.length; i++) {
     const n = r.children[i];
-    if (n.size < 0) continue;
-    const boxWidth = (n.size / r.size) * occupiedWidth;
+    if (n.remove < 0 && n.add === 0) continue;
+    const boxWidth = (n.add / r.add) * occupiedWidth;
     const color = palette[i % palette.length];
+
     elements.push(
       <IcicleBox
         key={`B${i}`}
@@ -41,7 +43,7 @@ export const IcicleRow = ({
         width={boxWidth}
         text={n.name}
         color={color}
-        canHighlight={(n.children?.length ?? 0) > 0}
+        isParent={(n.children?.length ?? 0) > 0}
         categories={categories.concat(n.name)}
       />
     );

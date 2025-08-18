@@ -23,7 +23,7 @@ export const IciclePlot = ({ root }: IciclePlotProps): React.ReactElement => {
       <IcicleRow
         r={root}
         startX={0}
-        startY={0}
+        startY={5}
         width={fullWidth}
         height={lineHeight}
         palette={Palette}
