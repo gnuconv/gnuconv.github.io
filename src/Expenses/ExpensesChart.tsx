@@ -70,14 +70,16 @@ export const ExpensesChart = (): React.ReactElement => {
           mb: 2,
         }}
       >
-        {nodes.map((n, i) => (
-          <LegendTitle
-            key={i}
-            name={n.name}
-            amount={n.add + n.remove}
-            canClick={!!n.children}
-          />
-        ))}
+        {nodes
+          .filter((n) => n.add + n.remove !== 0)
+          .map((n, i) => (
+            <LegendTitle
+              key={i}
+              name={n.name}
+              amount={n.add + n.remove}
+              canClick={!!n.children}
+            />
+          ))}
       </Box>
       <IciclePlot root={root} />
     </Box>
