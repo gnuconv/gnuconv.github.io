@@ -15,7 +15,7 @@ export type GNUTransaction = {
   description: string;
   value: number;
   date: number;
-  splits: GNUSplit[];
+  splits: [GNUSplit, GNUSplit];
 };
 
 export type GNUSplit = {

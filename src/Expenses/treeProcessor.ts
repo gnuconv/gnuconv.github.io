@@ -28,23 +28,9 @@ const makeTreeNode = (
   const children = accounts
     .filter((a) => a.parent === account.id)
     .map((a) => makeTreeNode(accounts, transactions, start, end, a));
-  if (children.length > 0) {
-    return {
-      account,
-      children: children,
-    };
-  }
-
-  transactions.reduce((acc, t) => {
-    const split = t.splits.find((s) => s.account === account.id);
-    if (split && t.date >= start && t.date <= end && split.value > 0) {
-      return acc + split.value;
-    }
-    return acc;
-  }, 0);
-
-  return {
+  const out: AccountTreeNode = {
     account,
+    children: children.length > 0 ? children : undefined,
     transactions: transactions
       .filter((t) => t.date >= start && t.date <= end)
       .filter((t) => t.splits.some((s) => s.account === account.id))
@@ -53,6 +39,8 @@ const makeTreeNode = (
         value: t.splits.find((s) => s.account === account.id)?.value ?? 0,
       })),
   };
+
+  return out;
 };
 
 export type GraphNode = {
@@ -67,6 +55,7 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
     children: [] as GraphNode[],
     size: 0,
   };
+
   if (node.transactions) {
     out.children.push(
       ...node.transactions.map((t) => ({
