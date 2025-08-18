@@ -99,8 +99,8 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
       .slice(1);
 
     const transactions = rows.map((r) => ({
-      date: r[0].slice(0, 4) + "-" + r[0].slice(4, 6) + "-" + r[0].slice(6, 8),
       account: r[2],
+      date: r[0].slice(0, 4) + "-" + r[0].slice(4, 6) + "-" + r[0].slice(6, 8),
       description: r[1],
       destination: "Expenses:UNKNOWN",
       amount: parseFloat(r[5]) * (r[4] === "Debit" ? -1 : 1),
