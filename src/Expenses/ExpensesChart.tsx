@@ -22,7 +22,7 @@ const findNode = (
   const child = root.children?.findIndex((c) => c.name === path[0]) ?? -1;
   if (child === -1) return [root, palette];
   return findNode(root.children?.[child], path.slice(1), [
-    darken(palette[child]),
+    darken(palette[child % palette.length]),
   ]);
 };
 
