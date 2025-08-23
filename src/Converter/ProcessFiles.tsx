@@ -25,6 +25,18 @@ export const ProcessFiles = (): React.ReactElement => {
       </>
     );
   }
+
+  // Remove DELETE/DELETE transactions
+  transactions = transactions.filter(
+    (t) =>
+      !rules.some((r) => {
+        const re = new RegExp(r.match, "g");
+        return (
+          t.description.match(re) && r.dest === "DELETE" && r.desc === "DELETE"
+        );
+      })
+  );
+
   // transform transactions
   for (const t of transactions) {
     rules.forEach((rule) => {
