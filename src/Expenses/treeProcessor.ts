@@ -7,7 +7,7 @@ export const calculateSize = (n: GraphNode | GraphNode[]): [number, number] => {
         const sub = calculateSize(c);
         return [acc[0] + sub[0], acc[1] + sub[1]];
       },
-      [0, 0]
+      [0, 0],
     );
 
   if (n.add || n.remove) return [n.add, n.remove];
@@ -17,7 +17,7 @@ export const calculateSize = (n: GraphNode | GraphNode[]): [number, number] => {
         const sub = calculateSize(c);
         return [acc[0] + sub[0], acc[1] + sub[1]];
       },
-      [0, 0]
+      [0, 0],
     ) ?? [0, 0]
   );
 };
@@ -38,7 +38,7 @@ const makeTreeNode = (
   transactions: GNUTransaction[],
   start: number,
   end: number,
-  account: GNUAccount
+  account: GNUAccount,
 ): AccountTreeNode => {
   const children = accounts
     .filter((a) => a.parent === account.id)
@@ -79,7 +79,7 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
         name: t.name,
         add: t.value > 0 ? t.value : 0,
         remove: t.value < 0 ? t.value : 0,
-      }))
+      })),
     );
   }
 
@@ -88,7 +88,7 @@ const convertAccountTree = (node: AccountTreeNode): GraphNode => {
       ...node.children.map(convertAccountTree).filter((c) => {
         const sub = calculateSize(c);
         return sub[0] > 0 || sub[1] > 0;
-      })
+      }),
     );
     [out.add, out.remove] = calculateSize(out);
     return out;
@@ -102,16 +102,18 @@ export const processTree = (
   accounts: GNUAccount[],
   transactions: GNUTransaction[],
   start: number,
-  end: number
+  end: number,
 ): GraphNode => {
-  const expenses = accounts.find((a) => a.name === "Expenses");
+  const expenses = accounts.find((a) =>
+    ["Expenses", "Dépenses"].includes(a.name),
+  );
   if (!expenses) throw new Error("no root Expenses node found");
   const accountTree = makeTreeNode(
     accounts,
     transactions,
     start,
     end,
-    expenses
+    expenses,
   );
 
   return convertAccountTree(accountTree);
