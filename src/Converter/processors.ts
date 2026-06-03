@@ -25,7 +25,7 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
     };
 
     const parseAmount = (s: string): number => {
-      const mod = s.includes("CR ") ? -1 : 1;
+      const mod = s.includes("CR ") ? 1 : -1;
       const tmp = s.replace("$", "").replace(",", "").replace("CR ", "").trim();
 
       return mod * parseFloat(tmp);
