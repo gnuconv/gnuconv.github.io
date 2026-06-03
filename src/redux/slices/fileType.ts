@@ -7,17 +7,17 @@ export type FileTypeState = {
 };
 
 export const FileType = Object.freeze({
+  ["DESJARDINS CREDIT"]: "DESJARDINS CREDIT",
+  ["DESJARDINS"]: "DESJARDINS",
+  ["RBC"]: "RBC",
   ["TD CC"]: "TD CC",
   ["TD CHECKING"]: "TD CHECKING",
-  ["RBC"]: "RBC",
-  ["DESJARDINS"]: "DESJARDINS",
-  ZOE: "ZOE",
 });
 
 export type FileType = keyof typeof FileType;
 
 const initialState: FileTypeState = {
-  value: FileType["TD CHECKING"],
+  value: FileType["DESJARDINS CREDIT"],
 };
 
 export const fileTypeSlice = createSlice({

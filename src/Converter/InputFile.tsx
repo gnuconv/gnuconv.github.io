@@ -18,7 +18,7 @@ export const InputFile = ({
   isEmpty,
 }: IProps): React.ReactElement => {
   const handleFileUpload = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     if (!event.target.files) return;
     const [file] = event.target.files;

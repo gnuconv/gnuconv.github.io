@@ -7,13 +7,37 @@ const mdyToYmd = (date: string): string => {
   return `${parts[2]}-${parts[0]}-${parts[1]}`;
 };
 
-const parseCSV = (content: string): string[][] =>
-  Papa.parse(content).data as string[][];
+const twoPadded = (x: number | string): string =>
+  (x + "").toString().padStart(2, "0");
+
+const parseCSV = (
+  content: string,
+  config?: Parameters<typeof Papa.parse>[1],
+): string[][] => Papa.parse(content, config).data as string[][];
 
 export const processors: Record<FileType, (str: string) => Transaction[]> = {
+  "DESJARDINS CREDIT": (str: string) => {
+    const rows = parseCSV(str, { delimiter: "\t" });
+
+    const parseDate = (s: string): string => {
+      const date = new Date(Date.parse(s));
+      return `${date.getFullYear()}-${twoPadded(date.getMonth() + 1)}-${twoPadded(date.getDate())}`;
+    };
+
+    const parseAmount = (s: string): number =>
+      parseFloat(s.replace("$", "").replace(",", "").trim());
+
+    return rows.map((r) => ({
+      account: "CC",
+      date: parseDate(r[0]),
+      description: r[1],
+      destination: "Expenses:UNKNOWN",
+      amount: parseAmount(r[2]),
+    }));
+  },
   "TD CHECKING": (str: string) => {
     const rows: string[][] = parseCSV(str).filter(
-      (c) => c.length > 1
+      (c) => c.length > 1,
     ) as unknown as string[][];
 
     const parseAmount = (row: string[]): number => {
@@ -34,7 +58,7 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
   },
   "TD CC": (str: string) => {
     const rows: string[][] = parseCSV(str).filter(
-      (c) => c.length > 1
+      (c) => c.length > 1,
     ) as unknown as string[][];
 
     const formatDate = (date: string): string => {
@@ -92,19 +116,5 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
       destination: "Expenses:UNKNOWN",
       amount: parseAmount(r[7], r[8]),
     }));
-  },
-  ZOE: (str: string) => {
-    const rows = parseCSV(str)
-      .filter((r) => r.length > 1)
-      .slice(1);
-
-    const transactions = rows.map((r) => ({
-      account: r[2],
-      date: r[0].slice(0, 4) + "-" + r[0].slice(4, 6) + "-" + r[0].slice(6, 8),
-      description: r[1],
-      destination: "Expenses:UNKNOWN",
-      amount: parseFloat(r[5]) * (r[4] === "Debit" ? -1 : 1),
-    }));
-    return transactions;
   },
 };
