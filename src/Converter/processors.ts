@@ -24,8 +24,12 @@ export const processors: Record<FileType, (str: string) => Transaction[]> = {
       return `${date.getFullYear()}-${twoPadded(date.getMonth() + 1)}-${twoPadded(date.getDate())}`;
     };
 
-    const parseAmount = (s: string): number =>
-      parseFloat(s.replace("$", "").replace(",", "").trim());
+    const parseAmount = (s: string): number => {
+      const mod = s.includes("CR ") ? -1 : 1;
+      const tmp = s.replace("$", "").replace(",", "").replace("CR ", "").trim();
+
+      return mod * parseFloat(tmp);
+    };
 
     return rows.map((r) => ({
       account: "CC",
